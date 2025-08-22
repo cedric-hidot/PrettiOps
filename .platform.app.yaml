@@ -16,16 +16,15 @@ build:
     flavor: composer
 
 dependencies:
-    nodejs: 18
+    nodejs:
+        version: "18"
 
 hooks:
     build: |
         set -e
         # Install Node.js dependencies
-        cd frontend
         npm install
         npm run build
-        cd ..
         
     deploy: |
         set -e
