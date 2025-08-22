@@ -154,11 +154,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
     private ?\DateTimeImmutable $lockedUntil = null;
 
-    #[ORM\Column(type: Types::STRING, length: 20, enumType: 'user_status')]
+    #[ORM\Column(type: Types::STRING, length: 20)]
     #[Groups(['user:read:admin'])]
     private string $status = self::STATUS_ACTIVE;
 
-    #[ORM\Column(type: Types::STRING, length: 20, enumType: 'subscription_plan')]
+    #[ORM\Column(type: Types::STRING, length: 20)]
     #[Groups(['user:read'])]
     private string $subscriptionPlan = self::PLAN_FREEMIUM;
 

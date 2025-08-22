@@ -77,7 +77,7 @@ class Share
     #[Groups(['share:read'])]
     private string $shareToken;
 
-    #[ORM\Column(type: Types::STRING, length: 20, enumType: 'share_type')]
+    #[ORM\Column(type: Types::STRING, length: 20)]
     #[Assert\Choice(choices: [self::TYPE_VIEW, self::TYPE_EDIT, self::TYPE_REVIEW])]
     #[Groups(['share:read', 'share:write'])]
     private string $shareType = self::TYPE_VIEW;

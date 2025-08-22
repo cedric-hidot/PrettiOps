@@ -161,7 +161,7 @@ class Snippet
     #[Groups(['snippet:read:admin'])]
     private bool $isLatestVersion = true;
 
-    #[ORM\Column(type: Types::STRING, length: 20, enumType: 'snippet_visibility')]
+    #[ORM\Column(type: Types::STRING, length: 20)]
     #[Groups(['snippet:read', 'snippet:write'])]
     private string $visibility = self::VISIBILITY_PRIVATE;
 
