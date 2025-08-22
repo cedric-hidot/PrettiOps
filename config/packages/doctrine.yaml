@@ -40,13 +40,13 @@ doctrine:
             regions:
                 users_region:
                     cache_driver:
-                        type: redis
-                        host: '%env(REDIS_HOST)%'
+                        type: pool
+                        pool: cache.users
                     lifetime: 3600
                 snippets_region:
                     cache_driver:
-                        type: redis
-                        host: '%env(REDIS_HOST)%'
+                        type: pool
+                        pool: cache.snippets
                     lifetime: 1800
 
 when@test:
