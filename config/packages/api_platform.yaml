@@ -76,16 +76,4 @@ api_platform:
             enabled: false
         public: false
 
-when@prod:
-    api_platform:
-        # Enable aggressive caching in production
-        defaults:
-            cache_headers:
-                max_age: 3600
-                shared_max_age: 86400
-                public: true
-                vary: ['Content-Type', 'Authorization']
-        http_cache:
-            invalidation:
-                enabled: true
-                varnish_urls: ['%env(default:http://localhost:8080:VARNISH_URL)%']
+# Production configuration moved to config/packages/prod/api_platform_platform.yaml
