@@ -4,7 +4,7 @@ doctrine:
         server_version: '16'
         charset: utf8
         types:
-            uuid: 'Symfony\Component\Uid\UuidType'
+            uuid: 'Symfony\Bridge\Doctrine\Types\UuidType'
         mapping_types:
             enum: string
         profiling_collect_backtrace: '%kernel.debug%'
