@@ -59,7 +59,7 @@
         "symfony/stopwatch": "7.1.*",
         "symfony/web-profiler-bundle": "7.1.*",
         "symfony/var-dumper": "7.1.*",
-        "phpunit/phpunit": "^10.5",
+        "phpunit/phpunit": "^9.5",
         "symfony/phpunit-bridge": "7.1.*",
         "symfony/test-pack": "^1.1",
         "doctrine/doctrine-fixtures-bundle": "^3.5",
