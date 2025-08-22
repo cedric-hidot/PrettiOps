@@ -3,6 +3,11 @@
  * These match the design system components exactly
  */
 
+/* Import Tailwind directives for this file to work independently */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @layer components {
     /* Button Components */
     .btn {
