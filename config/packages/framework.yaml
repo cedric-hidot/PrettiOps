@@ -35,15 +35,15 @@ framework:
     rate_limiter:
         anonymous_api:
             policy: 'sliding_window'
-            limit: '%env(int:RATE_LIMIT_ANONYMOUS)%'
+            limit: '%env(default:100:int:RATE_LIMIT_ANONYMOUS)%'
             interval: '1 hour'
         authenticated_api:
             policy: 'sliding_window'
-            limit: '%env(int:RATE_LIMIT_AUTHENTICATED)%'
+            limit: '%env(default:1000:int:RATE_LIMIT_AUTHENTICATED)%'
             interval: '1 hour'
         api_key:
             policy: 'sliding_window'
-            limit: '%env(int:RATE_LIMIT_API_KEY)%'
+            limit: '%env(default:5000:int:RATE_LIMIT_API_KEY)%'
             interval: '1 hour'
 
     serializer:
@@ -61,7 +61,7 @@ when@prod:
     framework:
         cache:
             app: cache.adapter.redis
-            default_redis_provider: '%env(REDIS_URL)%'
+            default_redis_provider: '%env(default:redis://localhost:6379:REDIS_URL)%'
             pools:
                 cache.snippets:
                     adapter: cache.adapter.redis
@@ -70,7 +70,7 @@ when@prod:
                 cache.rate_limits:
                     adapter: cache.adapter.redis
         session:
-            handler_id: '%env(REDIS_URL)%'
+            handler_id: '%env(default:redis://localhost:6379:REDIS_URL)%'
 
 when@test:
     framework:

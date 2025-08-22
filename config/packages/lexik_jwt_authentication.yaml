@@ -2,7 +2,7 @@ lexik_jwt_authentication:
     secret_key: '%env(resolve:JWT_SECRET_KEY)%'
     public_key: '%env(resolve:JWT_PUBLIC_KEY)%'
     pass_phrase: '%env(JWT_PASSPHRASE)%'
-    token_ttl: '%env(int:JWT_TTL)%'
+    token_ttl: '%env(default:3600:int:JWT_TTL)%'
     
     # JWT Token Configuration
     token_extractors:

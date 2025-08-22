@@ -88,4 +88,4 @@ when@prod:
         http_cache:
             invalidation:
                 enabled: true
-                varnish_urls: ['%env(VARNISH_URL)%']
+                varnish_urls: ['%env(default:http://localhost:8080:VARNISH_URL)%']
