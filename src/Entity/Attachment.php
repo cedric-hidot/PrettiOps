@@ -21,7 +21,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Table(name: 'attachments')]
 #[ORM\Index(columns: ['snippet_id'], name: 'idx_attachment_snippet')]
 #[ORM\Index(columns: ['user_id'], name: 'idx_attachment_user')]
-#[ORM\Index(columns: ['stored_filename'], name: 'idx_attachment_filename', unique: true)]
+#[ORM\UniqueConstraint(columns: ['stored_filename'], name: 'idx_attachment_filename')]
 #[ORM\Index(columns: ['file_hash'], name: 'idx_attachment_hash')]
 #[ORM\Index(columns: ['virus_scan_status'], name: 'idx_attachment_scan_status')]
 #[ORM\Index(columns: ['created_at'], name: 'idx_attachment_created')]

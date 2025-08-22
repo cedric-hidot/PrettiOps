@@ -22,7 +22,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Table(name: 'shares')]
 #[ORM\Index(columns: ['snippet_id'], name: 'idx_share_snippet')]
 #[ORM\Index(columns: ['created_by_user_id'], name: 'idx_share_created_by')]
-#[ORM\Index(columns: ['share_token'], name: 'idx_share_token', unique: true)]
+#[ORM\UniqueConstraint(columns: ['share_token'], name: 'idx_share_token')]
 #[ORM\Index(columns: ['expires_at'], name: 'idx_share_expires')]
 #[ORM\Index(columns: ['created_at'], name: 'idx_share_created')]
 #[ORM\HasLifecycleCallbacks]
