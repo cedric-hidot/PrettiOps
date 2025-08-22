@@ -1,0 +1,5 @@
+parameters:
+    app.url: 'https://main-bvxea6i-neryyvaw4ajlu.fr-3.platformsh.site'
+    upload_directory: '%kernel.project_dir%/public/uploads'
+    encryption_key: '%env(default::PLATFORM_PROJECT_ENTROPY)%'
+    max_file_size: '10485760'

@@ -4,9 +4,12 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
-    upload_directory: '%env(UPLOAD_BASE_PATH)%'
-    encryption_key: '%env(ENCRYPTION_KEY)%'
-    max_file_size: '%env(MAX_FILE_SIZE)%'
+    upload_directory: '%env(default:kernel.project_dir:UPLOAD_BASE_PATH)%/public/uploads'
+    encryption_key: '%env(default:default_encryption_key:ENCRYPTION_KEY)%'
+    max_file_size: '%env(default:default_max_file_size:MAX_FILE_SIZE)%'
+    default_encryption_key: 'temporary_key_replace_in_production'
+    default_max_file_size: '10485760'
+    default_cipher: 'AES-256-CBC'
 
 services:
     # default configuration for services in *this* file
@@ -29,8 +32,8 @@ services:
     # Encryption Service
     App\Service\EncryptionService:
         arguments:
-            $encryptionKey: '%env(ENCRYPTION_KEY)%'
-            $cipher: '%env(AES_CIPHER)%'
+            $encryptionKey: '%encryption_key%'
+            $cipher: '%env(default:default_cipher:AES_CIPHER)%'
 
     # Token Masking Service
     App\Service\TokenMaskingService: ~

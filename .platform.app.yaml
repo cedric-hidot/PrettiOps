@@ -11,7 +11,8 @@ runtime:
 variables:
     env:
         APP_ENV: 'prod'
-        APP_DEBUG: false
+        APP_DEBUG: '0'
+        APP_SECRET: '%env(PLATFORM_PROJECT_ENTROPY)%'
 
 build:
     flavor: composer
@@ -29,8 +30,10 @@ hooks:
         
     deploy: |
         set -e
-        php bin/console cache:clear
-        php bin/console doctrine:migrations:migrate --no-interaction
+        php bin/console cache:clear --env=prod --no-debug
+        php bin/console cache:warmup --env=prod --no-debug
+        php bin/console assets:install --env=prod --no-debug
+        php bin/console doctrine:migrations:migrate --no-interaction --allow-no-migration
 
 web:
     locations:
