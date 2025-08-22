@@ -38,10 +38,6 @@ api_platform:
     collection:
         pagination:
             enabled: true
-            client_enabled: true
-            client_items_per_page: true
-            items_per_page: 30
-            maximum_items_per_page: 100
             page_parameter_name: 'page'
             enabled_parameter_name: 'pagination'
             items_per_page_parameter_name: 'itemsPerPage'
