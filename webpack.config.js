@@ -46,7 +46,8 @@ Encore
     .enableVersioning(Encore.isProduction())
 
     .configureBabel((config) => {
-        config.plugins.push('@babel/plugin-proposal-class-properties');
+        // Class properties are now enabled by default in @babel/preset-env
+        // No additional plugins needed
     })
 
     // enables @babel/preset-env polyfills
