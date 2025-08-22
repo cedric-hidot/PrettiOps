@@ -1,0 +1,287 @@
+{% extends 'auth/base.html.twig' %}
+
+{% set hide_navigation = true %}
+{% set hide_footer = true %}
+
+{% block title %}Sign Up - PrettiOps{% endblock %}
+{% block description %}Create your free PrettiOps account to start creating beautiful code emails{% endblock %}
+
+{% block body_controllers %}{{ parent() }} form{% endblock %}
+
+{% block auth_content %}
+<div class="auth-container">
+    <div class="auth-header">
+        <h1 class="auth-title">Create your account</h1>
+        <p class="auth-subtitle">Join thousands of developers making their emails beautiful</p>
+    </div>
+
+    {# Registration Form #}
+    <form 
+        method="post" 
+        class="space-y-6"
+        data-controller="form"
+        data-action="submit->form#submit"
+        data-form-validate-on-input-value="true"
+        data-form-show-success-value="true"
+        data-form-reset-on-success-value="false"
+        novalidate
+    >
+        {# CSRF Token #}
+        <input type="hidden" name="_token" value="{{ csrf_token('register') }}">
+        
+        {# Error/Success Messages #}
+        <div class="alert alert-error hidden" data-form-target="error" role="alert" aria-live="polite">
+        </div>
+        
+        <div class="alert alert-success hidden" data-form-target="success" role="alert" aria-live="polite">
+        </div>
+
+        {# Name Fields Row #}
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {# First Name #}
+            <div class="form-group">
+                <label for="first_name" class="form-label">
+                    First name
+                    <span class="text-red-500" aria-hidden="true">*</span>
+                </label>
+                <input 
+                    type="text" 
+                    id="first_name" 
+                    name="first_name" 
+                    class="form-input" 
+                    placeholder="John"
+                    required
+                    autocomplete="given-name"
+                    data-form-target="field"
+                    value="{{ form.first_name.vars.value|default('') }}"
+                >
+            </div>
+
+            {# Last Name #}
+            <div class="form-group">
+                <label for="last_name" class="form-label">
+                    Last name
+                    <span class="text-red-500" aria-hidden="true">*</span>
+                </label>
+                <input 
+                    type="text" 
+                    id="last_name" 
+                    name="last_name" 
+                    class="form-input" 
+                    placeholder="Doe"
+                    required
+                    autocomplete="family-name"
+                    data-form-target="field"
+                    value="{{ form.last_name.vars.value|default('') }}"
+                >
+            </div>
+        </div>
+
+        {# Email Field #}
+        <div class="form-group">
+            <label for="email" class="form-label">
+                Email address
+                <span class="text-red-500" aria-hidden="true">*</span>
+            </label>
+            <input 
+                type="email" 
+                id="email" 
+                name="email" 
+                class="form-input" 
+                placeholder="you@example.com"
+                required
+                autocomplete="email"
+                aria-describedby="email-help"
+                data-form-target="field"
+                value="{{ form.email.vars.value|default('') }}"
+            >
+            <div id="email-help" class="form-help">We'll use this for login and important notifications.</div>
+        </div>
+
+        {# Password Field #}
+        <div class="form-group">
+            <label for="password" class="form-label">
+                Password
+                <span class="text-red-500" aria-hidden="true">*</span>
+            </label>
+            <div class="relative">
+                <input 
+                    type="password" 
+                    id="password" 
+                    name="password" 
+                    class="form-input pr-12" 
+                    placeholder="Create a strong password"
+                    required
+                    autocomplete="new-password"
+                    minlength="8"
+                    aria-describedby="password-help"
+                    data-form-target="field"
+                    data-controller="password-toggle"
+                >
+                <button 
+                    type="button" 
+                    class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-600 focus:outline-none focus:text-gray-600"
+                    data-action="click->password-toggle#toggle"
+                    data-password-toggle-target="button"
+                    aria-label="Toggle password visibility"
+                >
+                    <svg class="w-5 h-5" data-password-toggle-target="showIcon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                    </svg>
+                    <svg class="w-5 h-5 hidden" data-password-toggle-target="hideIcon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L8.464 8.464M9.878 9.878l-.001-.001M14.12 14.12l1.414 1.414M14.12 14.12L12 16.242M14.12 14.12l.001-.001m-1.414 1.414l-2.122 2.122m7.071-7.071l-2.122-2.122M6.343 6.343L4.222 4.222" />
+                    </svg>
+                </button>
+            </div>
+            <div id="password-help" class="form-help">At least 8 characters with letters, numbers, and special characters.</div>
+        </div>
+
+        {# Password Confirmation Field #}
+        <div class="form-group">
+            <label for="password_confirm" class="form-label">
+                Confirm password
+                <span class="text-red-500" aria-hidden="true">*</span>
+            </label>
+            <input 
+                type="password" 
+                id="password_confirm" 
+                name="password_confirm" 
+                class="form-input" 
+                placeholder="Confirm your password"
+                required
+                autocomplete="new-password"
+                aria-describedby="password-confirm-help"
+                data-form-target="field"
+            >
+            <div id="password-confirm-help" class="form-help">Re-enter your password to confirm.</div>
+        </div>
+
+        {# Terms and Privacy Agreement #}
+        <div class="form-group">
+            <div class="flex items-start">
+                <input 
+                    type="checkbox" 
+                    id="terms_accepted" 
+                    name="terms_accepted" 
+                    class="w-4 h-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500 mt-1"
+                    required
+                    data-form-target="field"
+                >
+                <label for="terms_accepted" class="ml-3 text-sm text-gray-600">
+                    I agree to the 
+                    <a href="{{ path('terms') }}" class="text-purple-600 hover:text-purple-700 underline" target="_blank" rel="noopener">
+                        Terms of Service
+                    </a> 
+                    and 
+                    <a href="{{ path('privacy') }}" class="text-purple-600 hover:text-purple-700 underline" target="_blank" rel="noopener">
+                        Privacy Policy
+                    </a>
+                    <span class="text-red-500" aria-hidden="true">*</span>
+                </label>
+            </div>
+        </div>
+
+        {# Marketing Opt-in #}
+        <div class="form-group">
+            <div class="flex items-start">
+                <input 
+                    type="checkbox" 
+                    id="marketing_emails" 
+                    name="marketing_emails" 
+                    class="w-4 h-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500 mt-1"
+                >
+                <label for="marketing_emails" class="ml-3 text-sm text-gray-600">
+                    Send me product updates and tips via email (optional)
+                </label>
+            </div>
+        </div>
+
+        {# Submit Button #}
+        <button 
+            type="submit" 
+            class="btn btn-primary w-full"
+            data-form-target="submit"
+        >
+            <span data-form-target="loading" class="loading-spinner hidden"></span>
+            <span>Create Account</span>
+        </button>
+
+        {# OAuth Divider #}
+        <div class="relative my-6">
+            <div class="absolute inset-0 flex items-center">
+                <div class="w-full border-t border-gray-200"></div>
+            </div>
+            <div class="relative flex justify-center text-sm">
+                <span class="px-2 bg-white text-gray-500 uppercase tracking-wider text-xs font-medium">
+                    or sign up with
+                </span>
+            </div>
+        </div>
+
+        {# OAuth Buttons #}
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {# Google Sign Up #}
+            <button 
+                type="button" 
+                class="btn btn-secondary"
+                data-oauth-provider="google"
+            >
+                <svg class="w-5 h-5" viewBox="0 0 256 262" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M255.878 133.451c0-10.734-.871-18.567-2.756-26.69H130.55v48.448h71.947c-1.45 12.04-9.283 30.172-26.69 42.356l-.244 1.622 38.755 30.023 2.685.268c24.659-22.774 38.875-56.282 38.875-96.027" fill="#4285F4"/>
+                    <path d="M130.55 261.1c35.248 0 64.839-11.605 86.453-31.622l-41.196-31.913c-11.024 7.688-25.82 13.055-45.257 13.055-34.523 0-63.824-22.773-74.269-54.25l-1.531.13-40.298 31.187-.527 1.465C35.393 231.798 79.49 261.1 130.55 261.1" fill="#34A853"/>
+                    <path d="M56.281 156.37c-2.756-8.123-4.351-16.827-4.351-25.82 0-8.994 1.595-17.697 4.206-25.82l-.073-1.73L15.26 71.312l-1.335.635C5.077 89.644 0 109.517 0 130.55s5.077 40.905 13.925 58.602l42.356-32.782" fill="#FBBC05"/>
+                    <path d="M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0 79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251" fill="#EB4335"/>
+                </svg>
+                <span class="hidden sm:block">Google</span>
+            </button>
+
+            {# GitHub Sign Up #}
+            <button 
+                type="button" 
+                class="btn btn-secondary"
+                data-oauth-provider="github"
+            >
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                </svg>
+                <span class="hidden sm:block">GitHub</span>
+            </button>
+        </div>
+    </form>
+
+    {# Footer Links #}
+    <div class="auth-footer">
+        <p class="auth-footer-text">
+            Already have an account? 
+            <a href="{{ path('login') }}" class="auth-footer-link">
+                Sign in
+            </a>
+        </p>
+    </div>
+</div>
+{% endblock %}
+
+{# Additional JavaScript for this page #}
+{% block page_scripts %}
+    {{ encore_entry_script_tags('auth') }}
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Auto-focus on first name field
+            const firstNameField = document.getElementById('first_name');
+            if (firstNameField) {
+                firstNameField.focus();
+            }
+            
+            // Handle registration errors from backend
+            {% if form.vars.errors|length > 0 %}
+                if (window.notificationManager) {
+                    {% for error in form.vars.errors %}
+                        window.notificationManager.error('{{ error.message }}');
+                    {% endfor %}
+                }
+            {% endif %}
+        });
+    </script>
+{% endblock %}

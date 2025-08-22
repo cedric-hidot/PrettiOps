@@ -1,0 +1,198 @@
+{% extends 'base.html.twig' %}
+
+{#
+    Base template for authentication pages
+    Provides the auth-specific layout and styling
+#}
+
+{% block body %}
+<div class="min-h-screen flex flex-col bg-gradient-to-br from-gray-50 via-white to-gray-50 relative">
+    {# Background pattern - matching the prototype #}
+    <div class="fixed inset-0 z-0 opacity-[0.02]">
+        <div class="w-full h-full" style="background-image: linear-gradient(rgba(111, 0, 255, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(111, 0, 255, 0.1) 1px, transparent 1px); background-size: 20px 20px;"></div>
+    </div>
+    
+    {# Navigation for auth pages #}
+    <nav class="relative z-10 glass border-b border-gray-200 bg-opacity-85 backdrop-blur-sm" role="navigation" aria-label="Authentication navigation">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                {# Brand/Logo #}
+                <a href="{{ path('homepage') }}" class="flex items-center gap-3 group" aria-label="PrettiOps Home">
+                    <div class="w-8 h-8 bg-gradient-to-br from-purple-600 to-purple-700 rounded-md flex items-center justify-center group-hover:shadow-lg transition-shadow duration-200">
+                        <span class="text-white font-bold text-sm font-display" aria-hidden="true">P</span>
+                    </div>
+                    <span class="text-xl font-bold text-gray-900 font-display">PrettiOps</span>
+                </a>
+                
+                {# Auth Navigation Links #}
+                <div class="hidden sm:flex items-center gap-6">
+                    <a href="{{ path('features') }}" class="text-gray-600 hover:text-gray-900 text-sm font-medium transition-colors duration-200">
+                        Features
+                    </a>
+                    <a href="{{ path('pricing') }}" class="text-gray-600 hover:text-gray-900 text-sm font-medium transition-colors duration-200">
+                        Pricing
+                    </a>
+                    <a href="{{ path('documentation') }}" class="text-gray-600 hover:text-gray-900 text-sm font-medium transition-colors duration-200">
+                        Docs
+                    </a>
+                    
+                    {# Theme Toggle #}
+                    <button 
+                        class="p-2 text-gray-600 hover:text-gray-900 rounded-md hover:bg-gray-100 transition-colors duration-200"
+                        data-controller="theme"
+                        data-action="click->theme#toggle"
+                        data-theme-target="toggle"
+                        aria-label="Toggle theme"
+                    >
+                        <svg class="w-5 h-5" data-theme-target="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                        </svg>
+                    </button>
+                </div>
+                
+                {# Mobile menu button #}
+                <button 
+                    class="sm:hidden p-2 text-gray-600 hover:text-gray-900"
+                    data-controller="mobile-menu"
+                    data-action="click->mobile-menu#toggle"
+                    aria-label="Toggle mobile menu"
+                >
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+    
+    {# Main Content Area #}
+    <main class="flex-1 flex items-center justify-center px-4 py-8 relative z-10" role="main">
+        <div class="w-full max-w-md">
+            {% block auth_content %}{% endblock %}
+        </div>
+    </main>
+    
+    {# Footer for auth pages (simplified) #}
+    <footer class="relative z-10 border-t border-gray-100 bg-white bg-opacity-50 backdrop-blur-sm" role="contentinfo">
+        <div class="max-w-7xl mx-auto px-6 py-6">
+            <div class="flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
+                <p>&copy; {{ 'now'|date('Y') }} PrettiOps. All rights reserved.</p>
+                <div class="flex gap-6 mt-4 md:mt-0">
+                    <a href="{{ path('privacy') }}" class="hover:text-gray-700 transition-colors duration-200">
+                        Privacy
+                    </a>
+                    <a href="{{ path('terms') }}" class="hover:text-gray-700 transition-colors duration-200">
+                        Terms
+                    </a>
+                    <a href="{{ path('support') }}" class="hover:text-gray-700 transition-colors duration-200">
+                        Support
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+{% endblock %}
+
+{# Auth-specific styles #}
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        /* Auth container styles matching the prototype */
+        .auth-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 1.5rem;
+            padding: 3rem;
+            box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .auth-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #6f00ff, #7c3aed, #6f00ff);
+            border-radius: 1.5rem 1.5rem 0 0;
+        }
+        
+        .auth-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+        
+        .auth-title {
+            font-family: var(--font-display);
+            font-size: 1.875rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 0.5rem;
+            line-height: 1.25;
+        }
+        
+        .auth-subtitle {
+            color: var(--gray-500);
+            font-size: 1rem;
+            line-height: 1.625;
+        }
+        
+        .auth-footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--gray-100);
+        }
+        
+        .auth-footer-text {
+            font-size: 0.875rem;
+            color: var(--gray-500);
+        }
+        
+        .auth-footer-link {
+            color: var(--purple-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 200ms ease;
+        }
+        
+        .auth-footer-link:hover {
+            color: var(--purple-hover);
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 640px) {
+            .auth-container {
+                padding: 2rem 1.5rem;
+                margin: 1rem;
+            }
+            
+            .auth-title {
+                font-size: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .auth-container {
+                padding: 1.5rem 1.25rem;
+            }
+        }
+        
+        /* Dark mode adjustments */
+        @media (prefers-color-scheme: dark) {
+            .auth-container {
+                background: rgba(30, 41, 59, 0.95);
+                border-color: rgba(51, 65, 85, 0.3);
+            }
+        }
+        
+        .dark .auth-container {
+            background: rgba(30, 41, 59, 0.95);
+            border-color: rgba(51, 65, 85, 0.3);
+        }
+    </style>
+{% endblock %}

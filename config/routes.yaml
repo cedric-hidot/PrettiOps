@@ -1,0 +1,224 @@
+# PrettiOps Route Configuration
+# This file documents the main routes available in the application
+
+# Static/Public Routes
+app_home:
+    path: /
+    controller: App\Controller\Web\HomeController::index
+
+app_dashboard:
+    path: /dashboard
+    controller: App\Controller\Web\HomeController::dashboard
+
+app_editor:
+    path: /editor
+    controller: App\Controller\Web\HomeController::editor
+
+app_editor_edit:
+    path: /editor/{id}
+    controller: App\Controller\Web\HomeController::editor
+
+app_snippets:
+    path: /snippets
+    controller: App\Controller\Web\HomeController::snippets
+
+app_snippet_view:
+    path: /snippet/{id}
+    controller: App\Controller\Web\HomeController::viewSnippet
+
+app_settings:
+    path: /settings
+    controller: App\Controller\Web\HomeController::settings
+
+app_profile:
+    path: /profile
+    controller: App\Controller\Web\HomeController::profile
+
+app_help:
+    path: /help
+    controller: App\Controller\Web\HomeController::help
+
+app_privacy:
+    path: /privacy
+    controller: App\Controller\Web\HomeController::privacy
+
+app_terms:
+    path: /terms
+    controller: App\Controller\Web\HomeController::terms
+
+app_docs:
+    path: /docs
+    controller: App\Controller\Web\HomeController::docs
+
+# Authentication Routes (Web)
+app_login:
+    path: /auth/login
+    controller: App\Controller\Web\AuthController::login
+
+app_register:
+    path: /auth/register
+    controller: App\Controller\Web\AuthController::register
+
+app_forgot_password:
+    path: /auth/forgot-password
+    controller: App\Controller\Web\AuthController::forgotPassword
+
+app_reset_password:
+    path: /auth/reset-password
+    controller: App\Controller\Web\AuthController::resetPassword
+
+app_logout:
+    path: /auth/logout
+    controller: App\Controller\Web\AuthController::logout
+
+app_verify_email:
+    path: /auth/verify-email
+    controller: App\Controller\Web\AuthController::verifyEmail
+
+# User Management Routes (Web)
+app_user_profile_update:
+    path: /user/profile/update
+    controller: App\Controller\Web\UserController::updateProfile
+
+app_user_account_update:
+    path: /user/account/update
+    controller: App\Controller\Web\UserController::updateAccount
+
+app_user_password_update:
+    path: /user/password/update
+    controller: App\Controller\Web\UserController::updatePassword
+
+app_user_avatar_upload:
+    path: /user/avatar/upload
+    controller: App\Controller\Web\UserController::uploadAvatar
+
+app_user_account_delete:
+    path: /user/account/delete
+    controller: App\Controller\Web\UserController::deleteAccount
+
+# Share Routes (Public Access)
+app_share_view:
+    path: /share/{token}
+    controller: App\Controller\Web\ShareViewController::view
+
+app_share_download:
+    path: /share/{token}/download
+    controller: App\Controller\Web\ShareViewController::download
+
+app_share_raw:
+    path: /share/{token}/raw
+    controller: App\Controller\Web\ShareViewController::raw
+
+# API Authentication Routes
+api_auth_register:
+    path: /api/auth/register
+    controller: App\Controller\Api\AuthController::register
+
+api_auth_login:
+    path: /api/auth/login
+    controller: App\Controller\Api\AuthController::login
+
+api_auth_refresh:
+    path: /api/auth/refresh
+    controller: App\Controller\Api\AuthController::refresh
+
+api_auth_logout:
+    path: /api/auth/logout
+    controller: App\Controller\Api\AuthController::logout
+
+api_auth_me:
+    path: /api/auth/me
+    controller: App\Controller\Api\AuthController::me
+
+api_auth_forgot_password:
+    path: /api/auth/forgot-password
+    controller: App\Controller\Api\AuthController::forgotPassword
+
+api_auth_reset_password:
+    path: /api/auth/reset-password
+    controller: App\Controller\Api\AuthController::resetPassword
+
+api_auth_verify_email:
+    path: /api/auth/verify-email
+    controller: App\Controller\Api\AuthController::verifyEmail
+
+api_auth_resend_verification:
+    path: /api/auth/resend-verification
+    controller: App\Controller\Api\AuthController::resendVerification
+
+# API Snippet Routes
+api_snippets_list:
+    path: /api/snippets
+    controller: App\Controller\Api\SnippetController::list
+
+api_snippets_create:
+    path: /api/snippets
+    controller: App\Controller\Api\SnippetController::create
+
+api_snippets_show:
+    path: /api/snippets/{id}
+    controller: App\Controller\Api\SnippetController::show
+
+api_snippets_update:
+    path: /api/snippets/{id}
+    controller: App\Controller\Api\SnippetController::update
+
+api_snippets_delete:
+    path: /api/snippets/{id}
+    controller: App\Controller\Api\SnippetController::delete
+
+api_snippets_fork:
+    path: /api/snippets/{id}/fork
+    controller: App\Controller\Api\SnippetController::fork
+
+api_snippets_versions:
+    path: /api/snippets/{id}/versions
+    controller: App\Controller\Api\SnippetController::versions
+
+api_snippets_search:
+    path: /api/snippets/search
+    controller: App\Controller\Api\SnippetController::search
+
+api_snippets_stats:
+    path: /api/snippets/stats
+    controller: App\Controller\Api\SnippetController::stats
+
+# API Share Routes
+api_shares_create:
+    path: /api/shares
+    controller: App\Controller\Api\ShareController::create
+
+api_shares_list:
+    path: /api/shares
+    controller: App\Controller\Api\ShareController::list
+
+api_shares_show:
+    path: /api/shares/{id}
+    controller: App\Controller\Api\ShareController::show
+
+api_shares_update:
+    path: /api/shares/{id}
+    controller: App\Controller\Api\ShareController::update
+
+api_shares_revoke:
+    path: /api/shares/{id}/revoke
+    controller: App\Controller\Api\ShareController::revoke
+
+api_shares_delete:
+    path: /api/shares/{id}
+    controller: App\Controller\Api\ShareController::delete
+
+# API Platform routes are automatically generated for User, File, and other controllers
+
+# Health/Utility Routes
+app_health:
+    path: /health
+    controller: App\Controller\Web\HomeController::health
+
+app_robots:
+    path: /robots.txt
+    controller: App\Controller\Web\HomeController::robots
+
+app_sitemap:
+    path: /sitemap.xml
+    controller: App\Controller\Web\HomeController::sitemap

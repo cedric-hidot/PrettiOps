@@ -1,0 +1,104 @@
+{#
+    Toolbar Component
+    
+    Action toolbar with edit, copy, export, compare, comment, pin buttons.
+    Used in snippet cards and editor interfaces.
+    
+    Parameters:
+    - snippet_id: ID of the snippet for actions (optional)
+    - show_actions: Array of actions to show (default: all)
+    - size: Size variant 'sm' or 'md' (default: 'md')
+    - layout: Layout variant 'horizontal' or 'vertical' (default: 'horizontal')
+    
+    Usage:
+    {% include 'components/_toolbar.html.twig' with {
+        'snippet_id': snippet.id,
+        'show_actions': ['edit', 'copy', 'export', 'pin'],
+        'size': 'sm'
+    } %}
+#}
+
+{% set snippet_id = snippet_id|default(null) %}
+{% set show_actions = show_actions|default(['edit', 'copy', 'export', 'compare', 'comment', 'pin']) %}
+{% set size = size|default('md') %}
+{% set layout = layout|default('horizontal') %}
+
+<div 
+    class="snippet-toolbar snippet-toolbar--{{ layout }} snippet-toolbar--{{ size }}"
+    data-controller="toolbar"
+    {% if snippet_id %}data-toolbar-snippet-id-value="{{ snippet_id }}"{% endif %}
+>
+    <div class="snippet-tools">
+        {% if 'edit' in show_actions %}
+            <button 
+                class="snippet-tool" 
+                title="Edit snippet"
+                data-action="click->toolbar#edit"
+                data-toolbar-target="editBtn"
+                aria-label="Edit this snippet"
+            >
+                <span aria-hidden="true">✏️</span>
+            </button>
+        {% endif %}
+        
+        {% if 'copy' in show_actions %}
+            <button 
+                class="snippet-tool" 
+                title="Copy to clipboard"
+                data-action="click->toolbar#copy"
+                data-toolbar-target="copyBtn"
+                aria-label="Copy snippet to clipboard"
+            >
+                <span aria-hidden="true">📋</span>
+            </button>
+        {% endif %}
+        
+        {% if 'export' in show_actions %}
+            <button 
+                class="snippet-tool" 
+                title="Export snippet"
+                data-action="click->toolbar#export"
+                data-toolbar-target="exportBtn"
+                aria-label="Export snippet as file"
+            >
+                <span aria-hidden="true">⬇️</span>
+            </button>
+        {% endif %}
+        
+        {% if 'compare' in show_actions %}
+            <button 
+                class="snippet-tool" 
+                title="Compare versions"
+                data-action="click->toolbar#compare"
+                data-toolbar-target="compareBtn"
+                aria-label="Compare snippet versions"
+            >
+                <span aria-hidden="true">🔍</span>
+            </button>
+        {% endif %}
+        
+        {% if 'comment' in show_actions %}
+            <button 
+                class="snippet-tool" 
+                title="Add comment"
+                data-action="click->toolbar#comment"
+                data-toolbar-target="commentBtn"
+                aria-label="Add comment to snippet"
+            >
+                <span aria-hidden="true">💬</span>
+            </button>
+        {% endif %}
+        
+        {% if 'pin' in show_actions %}
+            <button 
+                class="snippet-tool" 
+                title="Pin snippet"
+                data-action="click->toolbar#pin"
+                data-toolbar-target="pinBtn"
+                aria-label="Pin this snippet"
+            >
+                <span aria-hidden="true">📌</span>
+            </button>
+        {% endif %}
+    </div>
+</div>

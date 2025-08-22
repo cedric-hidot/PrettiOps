@@ -1,0 +1,279 @@
+{#
+ # Code Showcase Component - Based on Tiptap's Interactive Demo System
+ # 
+ # Interactive code examples with tabbed previews and live demos
+#}
+
+<section class="code-showcase-section py-24 bg-gradient-to-br from-gray-50 to-white">
+    <div class="max-w-7xl mx-auto px-6">
+        
+        {# Section Header #}
+        <div class="text-center mb-16">
+            <h2 class="text-4xl font-bold text-gray-900 mb-6">
+                See PrettiOps in Action
+            </h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                Experience how PrettiOps transforms your code snippets into professional, 
+                shareable content with advanced syntax highlighting and secure sharing.
+            </p>
+        </div>
+        
+        {# Interactive Code Examples #}
+        <div 
+            class="po-code-examples large max-w-6xl mx-auto"
+            data-controller="code-showcase"
+            data-code-showcase-transition-duration-value="300"
+        >
+            
+            {# Tab Navigation #}
+            <div 
+                class="po-code-tabs"
+                data-code-showcase-target="tabContainer"
+            >
+                <div class="po-tab-menu dark bg-gray-900 rounded-t-2xl flex overflow-x-auto">
+                    <button 
+                        class="po-tab-btn dark px-6 py-4 text-sm font-medium text-gray-300 hover:text-white border-b-2 border-transparent focus:outline-none focus:border-purple-500 transition-all duration-200 whitespace-nowrap"
+                        data-code-showcase-target="tabButton"
+                        data-tab="gmail-integration"
+                        data-action="click->code-showcase#switchTab"
+                    >
+                        Gmail Integration
+                    </button>
+                    <button 
+                        class="po-tab-btn dark px-6 py-4 text-sm font-medium text-gray-300 hover:text-white border-b-2 border-transparent focus:outline-none focus:border-purple-500 transition-all duration-200 whitespace-nowrap"
+                        data-code-showcase-target="tabButton"
+                        data-tab="snippet-editor"
+                        data-action="click->code-showcase#switchTab"
+                    >
+                        Snippet Editor
+                    </button>
+                    <button 
+                        class="po-tab-btn dark px-6 py-4 text-sm font-medium text-gray-300 hover:text-white border-b-2 border-transparent focus:outline-none focus:border-purple-500 transition-all duration-200 whitespace-nowrap"
+                        data-code-showcase-target="tabButton"
+                        data-tab="secure-sharing"
+                        data-action="click->code-showcase#switchTab"
+                    >
+                        Secure Sharing
+                    </button>
+                    <button 
+                        class="po-tab-btn dark px-6 py-4 text-sm font-medium text-gray-300 hover:text-white border-b-2 border-transparent focus:outline-none focus:border-purple-500 transition-all duration-200 whitespace-nowrap active"
+                        data-code-showcase-target="tabButton"
+                        data-tab="ide-export"
+                        data-action="click->code-showcase#switchTab"
+                    >
+                        IDE Export
+                    </button>
+                </div>
+                
+                {# Tab Content #}
+                <div class="po-code-tabs-content large bg-white border border-t-0 border-gray-200 rounded-b-2xl">
+                    
+                    {# Gmail Integration Demo #}
+                    <div 
+                        class="po-tab-pane hidden" 
+                        data-code-showcase-target="tabPane"
+                        data-tab="gmail-integration"
+                    >
+                        <div class="po-code-example large">
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 p-8">
+                                <div class="demo-content">
+                                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Gmail Integration</h3>
+                                    <p class="text-gray-600 mb-6">
+                                        Compose emails with beautiful code snippets directly in Gmail. 
+                                        No more ugly plain text or broken formatting.
+                                    </p>
+                                    <ul class="space-y-3">
+                                        <li class="flex items-center gap-3">
+                                            <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                            </svg>
+                                            Native Gmail extension
+                                        </li>
+                                        <li class="flex items-center gap-3">
+                                            <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                            </svg>
+                                            Real-time syntax highlighting
+                                        </li>
+                                        <li class="flex items-center gap-3">
+                                            <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                            </svg>
+                                            One-click insertion
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="demo-visual bg-gray-100 rounded-xl p-4">
+                                    <div class="bg-white rounded-lg shadow-sm">
+                                        <img src="https://via.placeholder.com/500x300/6f00ff/ffffff?text=Gmail+Demo" alt="Gmail Integration Demo" class="w-full h-auto rounded-lg">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    {# Snippet Editor Demo #}
+                    <div 
+                        class="po-tab-pane hidden" 
+                        data-code-showcase-target="tabPane"
+                        data-tab="snippet-editor"
+                    >
+                        <div class="po-code-example large">
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 p-8">
+                                <div class="demo-content">
+                                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Advanced Snippet Editor</h3>
+                                    <p class="text-gray-600 mb-6">
+                                        Professional code editor with 150+ languages, themes, 
+                                        and automatic secret masking for security.
+                                    </p>
+                                    <div class="code-block bg-gray-900 text-green-400 p-4 rounded-lg text-sm font-mono mb-4">
+                                        <div class="flex items-center gap-2 mb-2">
+                                            <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                                            <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                                            <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                                            <span class="text-gray-400 ml-2">api-example.js</span>
+                                        </div>
+                                        <pre><code>const apiKey = '<span class="text-yellow-400">***SECRET_MASKED***</span>';
+const response = await fetch('/api/users', {
+  headers: { 'Authorization': `Bearer ${apiKey}` }
+});
+console.log('✨ Beautiful code!');</code></pre>
+                                    </div>
+                                </div>
+                                <div class="demo-visual bg-gray-100 rounded-xl p-4">
+                                    <div class="bg-white rounded-lg shadow-sm">
+                                        <img src="https://via.placeholder.com/500x300/6f00ff/ffffff?text=Editor+Demo" alt="Editor Demo" class="w-full h-auto rounded-lg">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    {# Secure Sharing Demo #}
+                    <div 
+                        class="po-tab-pane hidden" 
+                        data-code-showcase-target="tabPane"
+                        data-tab="secure-sharing"
+                    >
+                        <div class="po-code-example large">
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 p-8">
+                                <div class="demo-content">
+                                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Secure Sharing</h3>
+                                    <p class="text-gray-600 mb-6">
+                                        Share code snippets with expiration dates, password protection, 
+                                        and viewer analytics for complete control.
+                                    </p>
+                                    <div class="security-features space-y-4">
+                                        <div class="flex items-center gap-3 p-3 bg-green-50 rounded-lg">
+                                            <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                                            </svg>
+                                            <div>
+                                                <div class="font-semibold text-green-800">Password Protected</div>
+                                                <div class="text-sm text-green-600">Optional access control</div>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center gap-3 p-3 bg-blue-50 rounded-lg">
+                                            <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                            </svg>
+                                            <div>
+                                                <div class="font-semibold text-blue-800">Auto Expiration</div>
+                                                <div class="text-sm text-blue-600">Links expire automatically</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="demo-visual bg-gray-100 rounded-xl p-4">
+                                    <div class="bg-white rounded-lg shadow-sm">
+                                        <img src="https://via.placeholder.com/500x300/6f00ff/ffffff?text=Sharing+Demo" alt="Secure Sharing Demo" class="w-full h-auto rounded-lg">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    {# IDE Export Demo - Default Active #}
+                    <div 
+                        class="po-tab-pane" 
+                        data-code-showcase-target="tabPane"
+                        data-tab="ide-export"
+                    >
+                        <div class="po-code-example large">
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 p-8">
+                                <div class="demo-content">
+                                    <h3 class="text-2xl font-bold text-gray-900 mb-4">IDE Export & Integrations</h3>
+                                    <p class="text-gray-600 mb-6">
+                                        Export snippets directly to your favorite IDEs and integrate 
+                                        with your existing development workflow.
+                                    </p>
+                                    <div class="integration-grid grid grid-cols-2 gap-4">
+                                        <div class="integration-item flex items-center gap-2 p-3 bg-gray-50 rounded-lg">
+                                            <img src="https://via.placeholder.com/24x24/007ACC/ffffff?text=VS" alt="VS Code" class="w-6 h-6">
+                                            <span class="text-sm font-medium">VS Code</span>
+                                        </div>
+                                        <div class="integration-item flex items-center gap-2 p-3 bg-gray-50 rounded-lg">
+                                            <img src="https://via.placeholder.com/24x24/000000/ffffff?text=IJ" alt="IntelliJ" class="w-6 h-6">
+                                            <span class="text-sm font-medium">IntelliJ</span>
+                                        </div>
+                                        <div class="integration-item flex items-center gap-2 p-3 bg-gray-50 rounded-lg">
+                                            <img src="https://via.placeholder.com/24x24/FF6900/ffffff?text=PM" alt="Postman" class="w-6 h-6">
+                                            <span class="text-sm font-medium">Postman</span>
+                                        </div>
+                                        <div class="integration-item flex items-center gap-2 p-3 bg-gray-50 rounded-lg">
+                                            <img src="https://via.placeholder.com/24x24/181717/ffffff?text=GH" alt="GitHub" class="w-6 h-6">
+                                            <span class="text-sm font-medium">GitHub</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="demo-visual bg-gray-100 rounded-xl p-4">
+                                    <div class="bg-white rounded-lg shadow-sm">
+                                        <img src="https://via.placeholder.com/500x300/6f00ff/ffffff?text=IDE+Export+Demo" alt="IDE Export Demo" class="w-full h-auto rounded-lg">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        {# Quick Start Section #}
+        <div class="po-feature-quickstart mt-16 max-w-4xl mx-auto">
+            <div class="bg-gray-900 rounded-2xl p-8 text-white">
+                <h3 class="heading-quickstart text-2xl font-bold mb-6">
+                    # <span class="uppercase text-purple-400">Quick Start</span>
+                </h3>
+                <ol class="quickstart-list space-y-4 mb-8" role="list">
+                    <li class="flex items-start gap-4">
+                        <span class="flex items-center justify-center w-8 h-8 bg-purple-600 text-white rounded-full text-sm font-bold">1</span>
+                        <div>
+                            <div class="font-semibold">Create your PrettiOps account</div>
+                            <div class="text-gray-300 text-sm">Sign up in less than 30 seconds</div>
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-4">
+                        <span class="flex items-center justify-center w-8 h-8 bg-purple-600 text-white rounded-full text-sm font-bold">2</span>
+                        <div>
+                            <div class="font-semibold">Install the Gmail extension</div>
+                            <div class="text-gray-300 text-sm">Available for Chrome and Firefox</div>
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-4">
+                        <span class="flex items-center justify-center w-8 h-8 bg-purple-600 text-white rounded-full text-sm font-bold">3</span>
+                        <div>
+                            <div class="font-semibold">Start creating beautiful snippets</div>
+                            <div class="text-gray-300 text-sm">Paste your code and watch the magic happen</div>
+                        </div>
+                    </li>
+                </ol>
+                <p class="text-gray-300">
+                    💡 <code class="bg-gray-800 px-2 py-1 rounded text-purple-400">[Read docs]</code>
+                    <a class="quickstart-link text-purple-400 hover:text-purple-300 underline ml-2" href="{{ path('documentation') }}">
+                        https://docs.prettiops.dev/getting-started
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,14 @@
+# Platform.sh routes configuration
+
+"https://{default}/":
+    type: upstream
+    upstream: "app:http"
+    cache:
+        enabled: true
+        # Cache static assets
+        headers: ["Accept", "Accept-Language"]
+        default_ttl: 3600
+
+"https://www.{default}/":
+    type: redirect
+    to: "https://{default}/"

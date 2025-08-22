@@ -1,0 +1,54 @@
+# Platform.sh application configuration
+name: app
+type: php:8.2
+
+runtime:
+    extensions:
+        - redis
+        - pdo_pgsql
+
+variables:
+    env:
+        APP_ENV: 'prod'
+        APP_DEBUG: false
+
+build:
+    flavor: composer
+
+dependencies:
+    nodejs: 18
+
+hooks:
+    build: |
+        set -e
+        # Install Node.js dependencies
+        cd frontend
+        npm install
+        npm run build
+        cd ..
+        
+    deploy: |
+        set -e
+        php bin/console cache:clear
+        php bin/console doctrine:migrations:migrate --no-interaction
+
+web:
+    locations:
+        "/":
+            root: "public"
+            passthru: "/index.php"
+            allow: false
+            rules:
+                \.(css|js|gif|jpe?g|png|svg|ico|woff2?|ttf|eot)$:
+                    allow: true
+                    expires: 1w
+                ^/robots\.txt$:
+                    allow: true
+                ^/sitemap\.xml$:
+                    allow: true
+
+disk: 2048
+
+mounts:
+    'var': { source: local, source_path: var }
+    'public/uploads': { source: local, source_path: uploads }

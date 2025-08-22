@@ -1,0 +1,126 @@
+{#
+    Snippet Card Component
+    
+    Reusable component for displaying code snippets with header, toolbar, body, and footer.
+    Based on the design prototypes with consistent structure.
+    
+    Parameters:
+    - snippet: Snippet entity with properties (id, title, description, language, tags, etc.)
+    - show_preview: Whether to show code preview (default: true)
+    - show_toolbar: Whether to show action toolbar (default: true)
+    - show_stats: Whether to show footer stats (default: true)
+    - card_size: Size variant 'sm', 'md', 'lg' (default: 'md')
+    - clickable: Whether card is clickable (default: true)
+    
+    Usage:
+    {% include 'components/_snippet_card.html.twig' with {
+        'snippet': snippet,
+        'show_preview': true,
+        'show_toolbar': true
+    } %}
+#}
+
+{% set show_preview = show_preview|default(true) %}
+{% set show_toolbar = show_toolbar|default(true) %}
+{% set show_stats = show_stats|default(true) %}
+{% set card_size = card_size|default('md') %}
+{% set clickable = clickable|default(true) %}
+
+<div 
+    class="snippet-card snippet-card--{{ card_size }}{% if clickable %} snippet-card--clickable{% endif %}"
+    data-controller="snippet-card"
+    data-snippet-card-id-value="{{ snippet.id }}"
+    data-language="{{ snippet.language|lower }}"
+    data-status="{{ snippet.status }}"
+    {% if clickable %}
+        data-action="click->snippet-card#navigate"
+        tabindex="0"
+        role="button"
+        aria-label="Open snippet: {{ snippet.title }}"
+    {% endif %}
+>
+    <!-- Snippet Header -->
+    <div class="snippet-header">
+        <h3 class="snippet-title">{{ snippet.title }}</h3>
+        
+        <div class="snippet-meta">
+            <span class="snippet-language">{{ snippet.language|title }}</span>
+            <span class="snippet-lines">{{ snippet.lineCount ?? 0 }} lines</span>
+            <time class="snippet-date" datetime="{{ snippet.createdAt|date('c') }}">
+                Created {{ snippet.createdAt|date('relative') }}
+            </time>
+        </div>
+        
+        {% if show_toolbar %}
+            <div class="snippet-toolbar-container">
+                {% include 'components/_toolbar.html.twig' with {
+                    'snippet_id': snippet.id,
+                    'size': 'sm',
+                    'show_actions': ['edit', 'copy', 'export', 'compare', 'comment', 'pin']
+                } %}
+                
+                <div class="snippet-status">
+                    {% set status_class = snippet.status == 'active' ? 'active' : (snippet.status == 'expiring' ? 'expiring' : 'expired') %}
+                    <div class="status-dot status-dot--{{ status_class }}" aria-hidden="true"></div>
+                    <span class="status-text">
+                        {% if snippet.status == 'active' %}
+                            Active
+                        {% elseif snippet.status == 'expiring' %}
+                            Expires in {{ snippet.expiresAt|date_diff|format('%d days') }}
+                        {% else %}
+                            Expired
+                        {% endif %}
+                    </span>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+    
+    <!-- Snippet Body -->
+    <div class="snippet-body">
+        {% if snippet.description %}
+            <p class="snippet-description">{{ snippet.description }}</p>
+        {% endif %}
+        
+        {% if snippet.tags|length > 0 %}
+            <div class="snippet-tags">
+                {% for tag in snippet.tags %}
+                    <span class="snippet-tag">{{ tag }}</span>
+                {% endfor %}
+            </div>
+        {% endif %}
+        
+        {% if show_preview and snippet.content %}
+            <div class="snippet-preview">
+                <pre class="snippet-code" data-language="{{ snippet.language|lower }}"><code>{{ snippet.content|slice(0, 300) }}{% if snippet.content|length > 300 %}...{% endif %}</code></pre>
+            </div>
+        {% endif %}
+    </div>
+    
+    {% if show_stats %}
+        <!-- Snippet Footer -->
+        <div class="snippet-footer">
+            <div class="snippet-stats">
+                <span class="stat-item" title="Views">
+                    <span aria-hidden="true">👁️</span>
+                    <span class="sr-only">Views: </span>
+                    {{ snippet.viewCount ?? 0 }}
+                </span>
+                <span class="stat-item" title="Email sends">
+                    <span aria-hidden="true">📧</span>
+                    <span class="sr-only">Email sends: </span>
+                    {{ snippet.emailSends ?? 0 }}
+                </span>
+                <span class="stat-item" title="Comments">
+                    <span aria-hidden="true">💬</span>
+                    <span class="sr-only">Comments: </span>
+                    {{ snippet.commentCount ?? 0 }}
+                </span>
+            </div>
+            
+            <time class="snippet-date" datetime="{{ snippet.updatedAt|date('c') }}">
+                {{ snippet.updatedAt|date_diff }}
+            </time>
+        </div>
+    {% endif %}
+</div>

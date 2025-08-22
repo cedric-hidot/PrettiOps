@@ -1,0 +1,37 @@
+{#
+    Hidden Token Component
+    
+    A security component that displays masked sensitive data with 2FA requirement.
+    Uses the purple accent color from the design system with lock icon.
+    
+    Parameters:
+    - token_text: The masked/hidden text to display (default: "Hidden — 2FA required")
+    - token_url: URL for 2FA verification (optional)
+    - token_id: Unique identifier for the token (optional)
+    
+    Usage:
+    {% include 'components/_hidden_token.html.twig' with {
+        'token_text': 'Hidden — 2FA required',
+        'token_url': path('verify_token', {id: token.id}),
+        'token_id': token.id
+    } %}
+#}
+
+{% set token_text = token_text|default('Hidden — 2FA required') %}
+{% set token_url = token_url|default('#') %}
+{% set token_id = token_id|default(null) %}
+
+<a 
+    href="{{ token_url }}" 
+    class="hidden-token"
+    {% if token_id %}data-token-id="{{ token_id }}"{% endif %}
+    data-controller="hidden-token"
+    data-action="click->hidden-token#reveal"
+    data-hidden-token-url-value="{{ token_url }}"
+    title="Click to verify and reveal sensitive data"
+    role="button"
+    aria-label="Hidden sensitive data - click to verify with 2FA"
+>
+    <span class="hidden-icon" aria-hidden="true">🔒</span>
+    <span class="hidden-text">{{ token_text }}</span>
+</a>

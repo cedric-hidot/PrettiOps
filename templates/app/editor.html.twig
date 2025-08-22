@@ -1,0 +1,328 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ snippet.title|default('New Snippet') }} - Code Editor - PrettiOps{% endblock %}
+{% block description %}Create and edit beautiful code snippets with syntax highlighting and real-time email preview{% endblock %}
+
+{% block body_class %}editor-page{% endblock %}
+{% block body_controllers %}editor snippet toolbar theme{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('editor') }}
+{% endblock %}
+
+{% block navbar_center %}
+    <div class="navbar-center">
+        <input 
+            type="text" 
+            class="snippet-title-input" 
+            placeholder="Untitled Snippet"
+            value="{{ snippet.title|default('Untitled Snippet') }}"
+            data-controller="auto-save"
+            data-action="input->auto-save#save"
+            data-auto-save-field-value="title"
+            data-auto-save-snippet-id-value="{{ snippet.id|default('') }}"
+            aria-label="Snippet title"
+        >
+    </div>
+{% endblock %}
+
+{% block navbar_actions %}
+    <div class="navbar-nav">
+        <button 
+            class="btn btn-ghost btn-sm" 
+            data-controller="save-indicator"
+            data-action="click->editor#save"
+            data-save-indicator-target="button"
+        >
+            <span data-save-indicator-target="icon">💾</span>
+            <span>Save</span>
+        </button>
+        
+        <button 
+            class="btn btn-secondary btn-sm" 
+            data-action="click->editor#share"
+            data-editor-target="shareBtn"
+        >
+            <span aria-hidden="true">🔗</span>
+            Share
+        </button>
+        
+        <button 
+            class="btn btn-primary btn-sm" 
+            data-action="click->editor#send"
+            data-editor-target="sendBtn"
+        >
+            <span aria-hidden="true">📧</span>
+            Send
+        </button>
+        
+        <div class="user-avatar" title="{{ app.user.fullName }}">
+            {{ app.user.initials }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+<div class="main-layout" data-controller="editor" data-editor-snippet-id-value="{{ snippet.id|default('') }}">
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <!-- Language Selection -->
+        <div class="sidebar-section">
+            <h3 class="sidebar-title">Language</h3>
+            <div class="form-group">
+                <select 
+                    class="form-select" 
+                    data-controller="language-selector"
+                    data-action="change->language-selector#change change->editor#updateLanguage"
+                    data-language-selector-target="select"
+                    data-editor-target="languageSelect"
+                    aria-label="Programming language"
+                >
+                    {% for language in languages %}
+                        <option 
+                            value="{{ language.value }}" 
+                            {% if snippet.language|default('javascript') == language.value %}selected{% endif %}
+                        >
+                            {{ language.label }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <!-- Theme Selection -->
+        <div class="sidebar-section">
+            <h3 class="sidebar-title">Editor Theme</h3>
+            <div class="theme-grid">
+                {% for theme in editor_themes %}
+                    <label class="theme-option">
+                        <input 
+                            type="radio" 
+                            name="theme" 
+                            value="{{ theme.value }}" 
+                            class="theme-radio"
+                            data-controller="theme-selector"
+                            data-action="change->theme-selector#change change->editor#updateTheme"
+                            {% if theme.value == 'dark' %}checked{% endif %}
+                        >
+                        <div class="theme-preview theme-preview--{{ theme.value }}" aria-hidden="true"></div>
+                        <span class="theme-label">{{ theme.label }}</span>
+                    </label>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Security Settings -->
+        <div class="sidebar-section">
+            <h3 class="sidebar-title">Security</h3>
+            <div class="security-toggle">
+                <div class="security-icon" aria-hidden="true">🔐</div>
+                <div class="security-text">
+                    <div class="security-title">Hide Sensitive Data</div>
+                    <div class="security-desc">Auto-detect and protect tokens, API keys, and secrets</div>
+                </div>
+                <label class="toggle-switch">
+                    <input 
+                        type="checkbox" 
+                        class="toggle-input" 
+                        data-controller="security-toggle"
+                        data-action="change->security-toggle#toggle change->editor#updateSecurity"
+                        data-editor-target="securityToggle"
+                        {% if snippet.securityEnabled|default(true) %}checked{% endif %}
+                        aria-label="Enable security mode"
+                    >
+                    <span class="toggle-slider" aria-hidden="true"></span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Snippet Metadata -->
+        <div class="sidebar-section">
+            <h3 class="sidebar-title">Metadata</h3>
+            
+            <div class="form-group">
+                <label class="form-label" for="snippet-tags">Tags</label>
+                <input 
+                    type="text" 
+                    class="form-input" 
+                    id="snippet-tags" 
+                    placeholder="auth, jwt, security"
+                    value="{{ snippet.tags|join(', ')|default('') }}"
+                    data-controller="tag-input auto-save"
+                    data-action="input->auto-save#save"
+                    data-auto-save-field-value="tags"
+                    data-auto-save-snippet-id-value="{{ snippet.id|default('') }}"
+                >
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label" for="snippet-description">Description</label>
+                <textarea 
+                    class="form-input" 
+                    id="snippet-description" 
+                    placeholder="Brief description..."
+                    rows="3"
+                    data-controller="auto-save"
+                    data-action="input->auto-save#save"
+                    data-auto-save-field-value="description"
+                    data-auto-save-snippet-id-value="{{ snippet.id|default('') }}"
+                >{{ snippet.description|default('') }}</textarea>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label" for="expiration-time">Link Expiration</label>
+                <select 
+                    class="form-select" 
+                    id="expiration-time"
+                    data-controller="auto-save"
+                    data-action="change->auto-save#save"
+                    data-auto-save-field-value="expirationTime"
+                    data-auto-save-snippet-id-value="{{ snippet.id|default('') }}"
+                >
+                    <option value="1h" {% if snippet.expirationTime|default('24h') == '1h' %}selected{% endif %}>1 Hour</option>
+                    <option value="24h" {% if snippet.expirationTime|default('24h') == '24h' %}selected{% endif %}>24 Hours</option>
+                    <option value="7d" {% if snippet.expirationTime|default('24h') == '7d' %}selected{% endif %}>7 Days</option>
+                    <option value="30d" {% if snippet.expirationTime|default('24h') == '30d' %}selected{% endif %}>30 Days</option>
+                    <option value="never" {% if snippet.expirationTime|default('24h') == 'never' %}selected{% endif %}>Never</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- Editor Area -->
+    <div class="editor-area">
+        <div class="editor-toolbar">
+            <div class="toolbar-left">
+                <span 
+                    class="snippet-language" 
+                    data-editor-target="languageDisplay"
+                >
+                    {{ snippet.language|default('JavaScript')|title }}
+                </span>
+                <span class="editor-stat" data-editor-target="lineCount">
+                    Lines: {{ snippet.lineCount|default(0) }}
+                </span>
+                <span class="editor-stat" data-editor-target="charCount">
+                    Characters: {{ snippet.content|length|default(0) }}
+                </span>
+            </div>
+            
+            <div class="toolbar-right">
+                <button 
+                    class="btn btn-ghost btn-sm" 
+                    title="Format Code"
+                    data-action="click->editor#format"
+                >
+                    <span aria-hidden="true">🎨</span>
+                    Format
+                </button>
+                <button 
+                    class="btn btn-ghost btn-sm" 
+                    title="Validate Syntax"
+                    data-action="click->editor#validate"
+                >
+                    <span aria-hidden="true">✅</span>
+                    Validate
+                </button>
+                <button 
+                    class="btn btn-ghost btn-sm" 
+                    title="Expand Editor"
+                    data-action="click->editor#toggleExpand"
+                    data-editor-target="expandBtn"
+                >
+                    <span aria-hidden="true">⛶</span>
+                    Expand
+                </button>
+            </div>
+        </div>
+        
+        <div class="editor-container" data-editor-target="container">
+            <!-- Monaco Editor will be initialized here -->
+            <div 
+                class="monaco-editor-placeholder" 
+                data-editor-target="editor"
+                data-editor-language-value="{{ snippet.language|default('javascript') }}"
+                data-editor-theme-value="dark"
+                data-editor-content-value="{{ snippet.content|default('// Start coding here...') }}"
+            ></div>
+        </div>
+    </div>
+
+    <!-- Preview Pane -->
+    <div class="preview-pane" data-editor-target="previewPane">
+        <div class="preview-header">
+            <h2 class="preview-title">Preview</h2>
+            <div class="preview-tabs">
+                <button 
+                    class="preview-tab active" 
+                    data-tab="email"
+                    data-action="click->editor#switchPreviewTab"
+                    data-editor-target="previewTab"
+                >
+                    Email
+                </button>
+                <button 
+                    class="preview-tab" 
+                    data-tab="web"
+                    data-action="click->editor#switchPreviewTab"
+                    data-editor-target="previewTab"
+                >
+                    Web
+                </button>
+                <button 
+                    class="preview-tab" 
+                    data-tab="raw"
+                    data-action="click->editor#switchPreviewTab"
+                    data-editor-target="previewTab"
+                >
+                    Raw
+                </button>
+            </div>
+        </div>
+        
+        <div class="preview-content" data-editor-target="previewContent">
+            <!-- Email Preview -->
+            <div class="email-preview" data-preview-type="email">
+                <div class="email-header">
+                    <strong>From:</strong> {{ app.user.email }}<br>
+                    <strong>To:</strong> <span data-editor-target="emailTo">team@company.com</span><br>
+                    <strong>Subject:</strong> <span data-editor-target="emailSubject">{{ snippet.title|default('Code Snippet') }}</span>
+                </div>
+                <div class="email-body">
+                    <div class="email-text">
+                        Hi team,<br><br>
+                        I've created a code snippet that I think could be useful. Take a look and let me know your thoughts:
+                    </div>
+                    
+                    <div data-editor-target="emailSnippetPreview">
+                        <!-- Snippet preview will be rendered here -->
+                    </div>
+                    
+                    <div class="email-text">
+                        Looking forward to your feedback!<br><br>
+                        Best,<br>
+                        {{ app.user.fullName }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('editor') }}
+    
+    <script>
+        // Initialize editor data
+        window.editorConfig = {
+            snippetId: {{ snippet.id|default('null') }},
+            language: '{{ snippet.language|default('javascript') }}',
+            theme: 'dark',
+            autoSave: true,
+            securityEnabled: {{ snippet.securityEnabled|default(true) ? 'true' : 'false' }}
+        };
+    </script>
+{% endblock %}

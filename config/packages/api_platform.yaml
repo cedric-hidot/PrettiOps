@@ -1,0 +1,98 @@
+api_platform:
+    title: 'PrettiOps API'
+    version: '1.0.0'
+    description: |
+        Modern API for technical email communication with styled code snippets.
+        
+        ## Features
+        - Code snippet management with syntax highlighting
+        - Secure file attachments with encryption
+        - Temporary sharing with access control
+        - OAuth2 authentication with Google and GitHub
+        - Rate limiting and security features
+        - RGPD-compliant data handling
+
+    # Global API configuration
+    defaults:
+        stateless: true
+        cache_headers:
+            vary: ['Content-Type', 'Authorization', 'Origin']
+            max_age: 0
+            shared_max_age: 3600
+            public: false
+
+    # API Documentation
+    swagger:
+        versions: [3]
+        api_keys:
+            JWT:
+                name: Authorization
+                type: header
+
+    # Collection and item operations
+    collection:
+        pagination:
+            enabled: true
+            client_enabled: true
+            client_items_per_page: true
+            items_per_page: 30
+            maximum_items_per_page: 100
+            page_parameter_name: 'page'
+            enabled_parameter_name: 'pagination'
+            items_per_page_parameter_name: 'itemsPerPage'
+
+    # Error handling
+    exception_to_status:
+        Symfony\Component\Serializer\Exception\ExceptionInterface: 400
+        ApiPlatform\Exception\InvalidArgumentException: 400
+        Doctrine\ORM\OptimisticLockException: 409
+        App\Exception\RateLimitExceededException: 429
+        App\Exception\SecurityViolationException: 403
+        App\Exception\RgpdComplianceException: 451
+
+    # Serialization groups
+    defaults:
+        normalization_context:
+            groups: ['read']
+            enable_max_depth: true
+        denormalization_context:
+            groups: ['write']
+
+    # Validation
+    validator:
+        serialize_payload_fields: [violations]
+
+    # Formats
+    formats:
+        jsonld: ['application/ld+json']
+        json: ['application/json']
+        html: ['text/html']
+        jsonapi: ['application/vnd.api+json']
+        multipart: ['multipart/form-data']
+
+    # Patch format for partial updates
+    patch_formats:
+        json: ['application/merge-patch+json']
+
+    # Asset configuration for file uploads
+    asset:
+        package: 'default'
+
+    # HTTP cache
+    http_cache:
+        invalidation:
+            enabled: true
+            varnish_urls: ['%env(VARNISH_URL)%']
+        max_age: 0
+        shared_max_age: 3600
+        vary: ['Content-Type', 'Authorization']
+        public: false
+
+when@prod:
+    api_platform:
+        # Enable aggressive caching in production
+        defaults:
+            cache_headers:
+                max_age: 3600
+                shared_max_age: 86400
+                public: true

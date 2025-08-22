@@ -1,0 +1,191 @@
+{% extends 'auth/base.html.twig' %}
+
+{% set hide_navigation = true %}
+{% set hide_footer = true %}
+
+{% block title %}Sign In - PrettiOps{% endblock %}
+{% block description %}Sign in to your PrettiOps account to create beautiful code emails{% endblock %}
+
+{% block body_controllers %}{{ parent() }} form{% endblock %}
+
+{% block auth_content %}
+<div class="auth-container">
+    <div class="auth-header">
+        <h1 class="auth-title">Welcome back</h1>
+        <p class="auth-subtitle">Sign in to your account to continue coding with style</p>
+    </div>
+
+    {# Login Form #}
+    <form 
+        method="post" 
+        class="space-y-6"
+        data-controller="form"
+        data-action="submit->form#submit"
+        data-form-validate-on-input-value="true"
+        data-form-show-success-value="true"
+        novalidate
+    >
+        {# CSRF Token #}
+        <input type="hidden" name="_token" value="{{ csrf_token('authenticate') }}">
+        
+        {# Error/Success Messages #}
+        <div class="alert alert-error hidden" data-form-target="error" role="alert" aria-live="polite">
+        </div>
+        
+        <div class="alert alert-success hidden" data-form-target="success" role="alert" aria-live="polite">
+        </div>
+
+        {# Email Field #}
+        <div class="form-group">
+            <label for="email" class="form-label">
+                Email address
+                <span class="text-red-500" aria-hidden="true">*</span>
+            </label>
+            <input 
+                type="email" 
+                id="email" 
+                name="email" 
+                class="form-input" 
+                placeholder="you@example.com"
+                required
+                autocomplete="email"
+                aria-describedby="email-help"
+                data-form-target="field"
+                value="{{ last_username }}"
+            >
+            <div id="email-help" class="form-help">We'll never share your email with anyone else.</div>
+        </div>
+
+        {# Password Field #}
+        <div class="form-group">
+            <label for="password" class="form-label">
+                Password
+                <span class="text-red-500" aria-hidden="true">*</span>
+            </label>
+            <div class="relative">
+                <input 
+                    type="password" 
+                    id="password" 
+                    name="password" 
+                    class="form-input pr-12" 
+                    placeholder="Enter your password"
+                    required
+                    autocomplete="current-password"
+                    minlength="8"
+                    aria-describedby="password-help"
+                    data-form-target="field"
+                    data-controller="password-toggle"
+                >
+                <button 
+                    type="button" 
+                    class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-600 focus:outline-none focus:text-gray-600"
+                    data-action="click->password-toggle#toggle"
+                    data-password-toggle-target="button"
+                    aria-label="Toggle password visibility"
+                >
+                    <svg class="w-5 h-5" data-password-toggle-target="showIcon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                    </svg>
+                    <svg class="w-5 h-5 hidden" data-password-toggle-target="hideIcon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L8.464 8.464M9.878 9.878l-.001-.001M14.12 14.12l1.414 1.414M14.12 14.12L12 16.242M14.12 14.12l.001-.001m-1.414 1.414l-2.122 2.122m7.071-7.071l-2.122-2.122M6.343 6.343L4.222 4.222" />
+                    </svg>
+                </button>
+            </div>
+            <div id="password-help" class="form-help">Must be at least 8 characters long.</div>
+        </div>
+
+        {# Remember Me & Forgot Password #}
+        <div class="flex items-center justify-between">
+            <div class="flex items-center">
+                <input 
+                    type="checkbox" 
+                    id="remember_me" 
+                    name="_remember_me" 
+                    class="w-4 h-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500"
+                >
+                <label for="remember_me" class="ml-2 text-sm text-gray-600">
+                    Remember me for 30 days
+                </label>
+            </div>
+            <a 
+                href="{{ path('forgot_password') }}" 
+                class="text-sm text-purple-600 hover:text-purple-700 transition-colors duration-200"
+            >
+                Forgot password?
+            </a>
+        </div>
+
+        {# Submit Button #}
+        <button 
+            type="submit" 
+            class="btn btn-primary w-full"
+            data-form-target="submit"
+        >
+            <span data-form-target="loading" class="loading-spinner hidden"></span>
+            <span>Sign in</span>
+        </button>
+
+        {# OAuth Divider #}
+        <div class="relative my-6">
+            <div class="absolute inset-0 flex items-center">
+                <div class="w-full border-t border-gray-200"></div>
+            </div>
+            <div class="relative flex justify-center text-sm">
+                <span class="px-2 bg-white text-gray-500 uppercase tracking-wider text-xs font-medium">
+                    or
+                </span>
+            </div>
+        </div>
+
+        {# Google Sign In #}
+        <button 
+            type="button" 
+            class="btn btn-secondary w-full"
+            data-controller="oauth-login"
+            data-action="click->oauth-login#signInWithGoogle"
+            data-oauth-login-provider-value="google"
+        >
+            <svg class="w-5 h-5" viewBox="0 0 256 262" xmlns="http://www.w3.org/2000/svg">
+                <path d="M255.878 133.451c0-10.734-.871-18.567-2.756-26.69H130.55v48.448h71.947c-1.45 12.04-9.283 30.172-26.69 42.356l-.244 1.622 38.755 30.023 2.685.268c24.659-22.774 38.875-56.282 38.875-96.027" fill="#4285F4"/>
+                <path d="M130.55 261.1c35.248 0 64.839-11.605 86.453-31.622l-41.196-31.913c-11.024 7.688-25.82 13.055-45.257 13.055-34.523 0-63.824-22.773-74.269-54.25l-1.531.13-40.298 31.187-.527 1.465C35.393 231.798 79.49 261.1 130.55 261.1" fill="#34A853"/>
+                <path d="M56.281 156.37c-2.756-8.123-4.351-16.827-4.351-25.82 0-8.994 1.595-17.697 4.206-25.82l-.073-1.73L15.26 71.312l-1.335.635C5.077 89.644 0 109.517 0 130.55s5.077 40.905 13.925 58.602l42.356-32.782" fill="#FBBC05"/>
+                <path d="M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0 79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251" fill="#EB4335"/>
+            </svg>
+            <span>Continue with Google</span>
+        </button>
+    </form>
+
+    {# Footer Links #}
+    <div class="auth-footer">
+        <p class="auth-footer-text">
+            Don't have an account? 
+            <a href="{{ path('register') }}" class="auth-footer-link">
+                Sign up for free
+            </a>
+        </p>
+    </div>
+</div>
+{% endblock %}
+
+{# Additional JavaScript for this page #}
+{% block page_scripts %}
+    {{ encore_entry_script_tags('auth') }}
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Auto-focus on email field
+            const emailField = document.getElementById('email');
+            if (emailField && !emailField.value) {
+                emailField.focus();
+            }
+            
+            // Handle login errors from backend
+            {% if error %}
+                if (window.notificationManager) {
+                    window.notificationManager.error('{{ error.messageKey|trans(error.messageData, 'security') }}');
+                }
+            {% endif %}
+        });
+    </script>
+{% endblock %}

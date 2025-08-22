@@ -1,0 +1,66 @@
+# see https://symfony.com/doc/current/reference/configuration/framework.html
+framework:
+    secret: '%env(APP_SECRET)%'
+    #csrf_protection: true
+    http_method_override: false
+    handle_all_throwables: true
+
+    # Enables session support. Note that the session will ONLY be started if you read or write from it.
+    # Remove or comment this section to explicitly disable session support.
+    session:
+        handler_id: 'session.handler.redis'
+        cookie_secure: auto
+        cookie_samesite: lax
+        storage_factory_id: session.storage.factory.native
+
+    #esi: true
+    #fragments: true
+    php_errors:
+        log: true
+
+    cache:
+        # Unique name of your app: used to compute stable namespaces for cache keys.
+        app: cache.adapter.redis
+        default_redis_provider: '%env(REDIS_URL)%'
+        
+        pools:
+            cache.snippets:
+                adapter: cache.adapter.redis
+                default_lifetime: 3600
+            cache.users:
+                adapter: cache.adapter.redis
+                default_lifetime: 1800
+            cache.rate_limits:
+                adapter: cache.adapter.redis
+                default_lifetime: 3600
+
+    rate_limiter:
+        anonymous_api:
+            policy: 'sliding_window'
+            limit: '%env(int:RATE_LIMIT_ANONYMOUS)%'
+            interval: '1 hour'
+        authenticated_api:
+            policy: 'sliding_window'
+            limit: '%env(int:RATE_LIMIT_AUTHENTICATED)%'
+            interval: '1 hour'
+        api_key:
+            policy: 'sliding_window'
+            limit: '%env(int:RATE_LIMIT_API_KEY)%'
+            interval: '1 hour'
+
+    serializer:
+        enable_annotations: true
+        mapping:
+            paths: ['%kernel.project_dir%/config/serialization']
+
+    validator:
+        enable_annotations: true
+
+    uid:
+        default_uuid_version: 7
+
+when@test:
+    framework:
+        test: true
+        session:
+            storage_factory_id: session.storage.factory.mock_file

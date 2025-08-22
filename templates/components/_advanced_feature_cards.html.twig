@@ -1,0 +1,212 @@
+{#
+ # Advanced Feature Cards - Tiptap-inspired
+ # 
+ # Feature cards with animations, glassmorphism and interactive elements
+#}
+
+<div class="feature-cards-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 py-16">
+    
+    {# Primary Feature Card - Code Editor #}
+    <div 
+        class="feature-card group relative overflow-hidden rounded-2xl bg-gradient-to-br from-purple-600/10 via-purple-500/5 to-transparent border border-purple-200/50 hover:border-purple-300/80 transition-all duration-500"
+        data-controller="feature-card"
+        data-feature-card-animation-value="true"
+        data-feature-card-hover-lift-value="8"
+    >
+        {# Card Gradient Background #}
+        <div class="absolute inset-0 bg-gradient-to-br from-purple-600/5 via-transparent to-blue-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        
+        {# Card Content #}
+        <div class="relative z-10 p-8" data-feature-card-target="content">
+            {# Icon #}
+            <div class="feature-card-icon mb-6 p-4 bg-gradient-to-br from-purple-100 to-purple-50 rounded-xl w-fit group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+                <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                </svg>
+            </div>
+            
+            {# Title #}
+            <h3 class="text-xl font-bold text-gray-900 mb-4 group-hover:text-purple-700 transition-colors duration-300">
+                Advanced Code Editor
+            </h3>
+            
+            {# Description #}
+            <p class="text-gray-600 mb-6 leading-relaxed">
+                Professional syntax highlighting with 150+ languages, intelligent autocomplete, and real-time collaboration features.
+            </p>
+            
+            {# Features List #}
+            <ul class="space-y-2 mb-6">
+                <li class="flex items-center gap-3 text-sm text-gray-600">
+                    <div class="w-1.5 h-1.5 bg-purple-500 rounded-full"></div>
+                    Syntax highlighting for 150+ languages
+                </li>
+                <li class="flex items-center gap-3 text-sm text-gray-600">
+                    <div class="w-1.5 h-1.5 bg-purple-500 rounded-full"></div>
+                    Live preview and formatting
+                </li>
+                <li class="flex items-center gap-3 text-sm text-gray-600">
+                    <div class="w-1.5 h-1.5 bg-purple-500 rounded-full"></div>
+                    Collaborative editing
+                </li>
+            </ul>
+            
+            {# Action Button #}
+            <a href="#editor" class="inline-flex items-center gap-2 text-purple-600 hover:text-purple-700 font-medium text-sm group/btn">
+                Learn more
+                <svg class="w-4 h-4 group-hover/btn:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+            </a>
+        </div>
+        
+        {# Hover Glow Effect #}
+        <div class="absolute inset-0 bg-gradient-to-r from-purple-600/0 via-purple-600/5 to-purple-600/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+    </div>
+    
+    {# Security Feature Card #}
+    <div 
+        class="feature-card group relative overflow-hidden rounded-2xl bg-gradient-to-br from-green-600/10 via-green-500/5 to-transparent border border-green-200/50 hover:border-green-300/80 transition-all duration-500"
+        data-controller="feature-card"
+    >
+        <div class="absolute inset-0 bg-gradient-to-br from-green-600/5 via-transparent to-emerald-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        
+        <div class="relative z-10 p-8">
+            <div class="feature-card-icon mb-6 p-4 bg-gradient-to-br from-green-100 to-green-50 rounded-xl w-fit group-hover:scale-110 group-hover:-rotate-3 transition-all duration-300">
+                <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                </svg>
+            </div>
+            
+            <h3 class="text-xl font-bold text-gray-900 mb-4 group-hover:text-green-700 transition-colors duration-300">
+                Enterprise Security
+            </h3>
+            
+            <p class="text-gray-600 mb-6 leading-relaxed">
+                Bank-grade encryption, automatic secret masking, and GDPR compliance to keep your sensitive data protected.
+            </p>
+            
+            <ul class="space-y-2 mb-6">
+                <li class="flex items-center gap-3 text-sm text-gray-600">
+                    <div class="w-1.5 h-1.5 bg-green-500 rounded-full"></div>
+                    AES-256 encryption
+                </li>
+                <li class="flex items-center gap-3 text-sm text-gray-600">
+                    <div class="w-1.5 h-1.5 bg-green-500 rounded-full"></div>
+                    Automatic secret detection
+                </li>
+                <li class="flex items-center gap-3 text-sm text-gray-600">
+                    <div class="w-1.5 h-1.5 bg-green-500 rounded-full"></div>
+                    SOC2 & GDPR compliant
+                </li>
+            </ul>
+            
+            <a href="#security" class="inline-flex items-center gap-2 text-green-600 hover:text-green-700 font-medium text-sm group/btn">
+                Learn more
+                <svg class="w-4 h-4 group-hover/btn:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+            </a>
+        </div>
+    </div>
+    
+    {# Collaboration Feature Card #}
+    <div 
+        class="feature-card group relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-600/10 via-blue-500/5 to-transparent border border-blue-200/50 hover:border-blue-300/80 transition-all duration-500"
+        data-controller="feature-card"
+    >
+        <div class="absolute inset-0 bg-gradient-to-br from-blue-600/5 via-transparent to-indigo-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        
+        <div class="relative z-10 p-8">
+            <div class="feature-card-icon mb-6 p-4 bg-gradient-to-br from-blue-100 to-blue-50 rounded-xl w-fit group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+                <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                </svg>
+            </div>
+            
+            <h3 class="text-xl font-bold text-gray-900 mb-4 group-hover:text-blue-700 transition-colors duration-300">
+                Team Collaboration
+            </h3>
+            
+            <p class="text-gray-600 mb-6 leading-relaxed">
+                Real-time collaboration, code reviews, version control, and team workspaces for seamless development workflows.
+            </p>
+            
+            <ul class="space-y-2 mb-6">
+                <li class="flex items-center gap-3 text-sm text-gray-600">
+                    <div class="w-1.5 h-1.5 bg-blue-500 rounded-full"></div>
+                    Real-time collaborative editing
+                </li>
+                <li class="flex items-center gap-3 text-sm text-gray-600">
+                    <div class="w-1.5 h-1.5 bg-blue-500 rounded-full"></div>
+                    Code review workflows
+                </li>
+                <li class="flex items-center gap-3 text-sm text-gray-600">
+                    <div class="w-1.5 h-1.5 bg-blue-500 rounded-full"></div>
+                    Version history & rollback
+                </li>
+            </ul>
+            
+            <a href="#collaboration" class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium text-sm group/btn">
+                Learn more
+                <svg class="w-4 h-4 group-hover/btn:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+.feature-card {
+    backdrop-filter: blur(8px);
+    transform-style: preserve-3d;
+}
+
+.feature-card:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+
+.feature-card-icon {
+    transform-origin: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.feature-card:hover .feature-card-icon {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+/* Glassmorphism enhancement */
+.feature-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.feature-card:hover::before {
+    opacity: 1;
+}
+
+/* Animation delays for staggered effect */
+.feature-card:nth-child(1) { animation-delay: 0ms; }
+.feature-card:nth-child(2) { animation-delay: 100ms; }
+.feature-card:nth-child(3) { animation-delay: 200ms; }
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    .feature-card,
+    .feature-card-icon {
+        transition: none;
+    }
+    
+    .feature-card:hover {
+        transform: none;
+    }
+}
+</style>

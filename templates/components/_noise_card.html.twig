@@ -1,0 +1,120 @@
+{#
+ # NoiseCard Component - Tiptap-inspired Glassmorphism
+ # 
+ # Advanced glassmorphism card with gradient backgrounds and noise texture
+ # Usage: {% include 'components/_noise_card.html.twig' with { variant: 'primary', content: 'card content' } %}
+#}
+
+{% set variant = variant|default('primary') %}
+{% set size = size|default('medium') %}
+{% set className = className|default('') %}
+
+<div class="NoiseCard {{ variant == 'primary' ? 'NoiseCard--primary' : '' }} {{ size == 'large' ? 'NoiseCard--large' : '' }} {{ className }}" 
+     data-controller="noise-card"
+     data-noise-card-variant-value="{{ variant }}"
+     data-noise-card-parallax-value="true">
+     
+    {# Gradient Background Layer #}
+    {% if variant == 'login' %}
+        <img src="/images/gradients/gradient_login.png" class="NoiseCard__Gradient" alt="" aria-hidden="true" />
+    {% elseif variant == 'hero' %}
+        <img src="/images/gradients/gradient_hero.png" class="NoiseCard__Gradient" alt="" aria-hidden="true" />
+    {% else %}
+        <div class="NoiseCard__Gradient NoiseCard__Gradient--css bg-gradient-to-br from-purple-600/20 via-purple-500/15 to-purple-400/10"></div>
+    {% endif %}
+    
+    {# Noise Texture Overlay #}
+    <div class="NoiseCard__Noise" aria-hidden="true"></div>
+    
+    {# Glass Layer #}
+    <div class="NoiseCard__Glass backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl shadow-2xl">
+        {# Content Area #}
+        <div class="NoiseCard__Content p-8">
+            {% block noise_card_content %}
+                {{ content|raw }}
+            {% endblock %}
+        </div>
+        
+        {# Optional Actions #}
+        {% if actions is defined %}
+            <div class="NoiseCard__Actions p-6 pt-0">
+                {{ actions|raw }}
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<style>
+.NoiseCard {
+    @apply relative overflow-hidden;
+    min-height: 200px;
+}
+
+.NoiseCard--large {
+    min-height: 400px;
+}
+
+.NoiseCard__Gradient {
+    @apply absolute inset-0 w-full h-full object-cover opacity-80;
+    z-index: 1;
+}
+
+.NoiseCard__Gradient--css {
+    @apply absolute inset-0 w-full h-full;
+    z-index: 1;
+}
+
+.NoiseCard__Noise {
+    @apply absolute inset-0 w-full h-full opacity-30;
+    z-index: 2;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    mix-blend-mode: overlay;
+}
+
+.NoiseCard__Glass {
+    @apply relative z-10 h-full;
+    backdrop-filter: blur(16px);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.NoiseCard--primary .NoiseCard__Glass {
+    background: rgba(111, 0, 255, 0.1);
+    border-color: rgba(111, 0, 255, 0.2);
+}
+
+/* Hover Effects */
+.NoiseCard:hover .NoiseCard__Glass {
+    @apply transform scale-[1.02];
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(20px);
+}
+
+.NoiseCard:hover .NoiseCard__Gradient {
+    @apply opacity-90;
+    transition: opacity 0.3s ease;
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+    .NoiseCard__Glass {
+        background: rgba(0, 0, 0, 0.2);
+        border-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    .NoiseCard--primary .NoiseCard__Glass {
+        background: rgba(111, 0, 255, 0.2);
+        border-color: rgba(111, 0, 255, 0.3);
+    }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    .NoiseCard:hover .NoiseCard__Glass {
+        transform: none;
+    }
+}
+</style>

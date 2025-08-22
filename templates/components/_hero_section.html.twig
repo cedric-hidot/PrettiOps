@@ -1,0 +1,202 @@
+{#
+ # Hero Section Component - Tiptap-inspired
+ # 
+ # Animated gradient background hero section with glassmorphism effects,
+ # typography animations, and interactive elements
+ #}
+
+{% set hero_config = {
+  animation_type: 'gradient-shift',
+  scroll_offset: 100,
+  enable_parallax: true,
+  gradient_speed: 6
+} %}
+
+<header 
+  class="tt-hero gradient-top-right relative min-h-screen flex items-center justify-center overflow-hidden"
+  data-controller="hero"
+  data-hero-animation-type-value="{{ hero_config.animation_type }}"
+  data-hero-scroll-offset-value="{{ hero_config.scroll_offset }}"
+  data-hero-enable-parallax-value="{{ hero_config.enable_parallax }}"
+  data-hero-gradient-speed-value="{{ hero_config.gradient_speed }}"
+>
+  <!-- Animated Gradient Background -->
+  <div 
+    class="tt-gradient-container absolute inset-0 pointer-events-none"
+    data-hero-target="gradientContainer"
+  >
+    <div 
+      class="tt-gradient-panel relative w-full h-full"
+      data-hero-target="gradientPanel"
+    >
+      <!-- Optional: Canvas for Rive animation or other effects -->
+      <canvas 
+        class="tt-gradient-rive w-full h-full object-cover opacity-30"
+        data-hero-target="gradientCanvas"
+        data-src="{{ asset('images/gradients/hero-animation.riv') }}"
+        data-animation="hero-timeline"
+      ></canvas>
+    </div>
+  </div>
+
+  <!-- Noise Texture Overlay -->
+  <div class="absolute inset-0 bg-noise-dark opacity-20 pointer-events-none"></div>
+
+  <!-- Hero Content -->
+  <div class="tt-hero-intro relative z-10 text-center max-w-6xl px-8">
+    <div class="tt-heading-content center mb-12">
+      
+      <!-- Label Tags -->
+      <div 
+        class="tt-label-tag-group flex items-center justify-center gap-4 mb-8 flex-wrap"
+        data-hero-target="heroText"
+      >
+        <div class="label-large bg-white/20 backdrop-blur-lg px-4 py-2 rounded-full text-sm font-medium border border-white/30">
+          {{ label_primary|default('Code Snippet Platform') }}
+        </div>
+        {% if label_secondary %}
+          <div class="tt-batch-group flex items-center gap-2">
+            <div class="tt-batch batch-secondary text-xs px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-sm border border-white/20">
+              {{ label_secondary }}
+            </div>
+          </div>
+        {% endif %}
+      </div>
+
+      <!-- Main Heading with Typography Effects -->
+      <h1 
+        class="heading-xxlarge text-4xl md:text-6xl lg:text-7xl font-bold leading-tight mb-8"
+        data-hero-target="heroText"
+      >
+        Build <em class="bold-italic-framed relative font-bold italic">beautiful</em> code snippets
+        <span class="block mt-2">
+          <em class="slim-italic font-light italic">faster</em> 🚀 
+        </span>
+        <span class="block mt-2">
+          with <span class="underline relative"><em class="italic">PrettiOps</em></span>
+        </span>
+      </h1>
+
+      <!-- Subtitle -->
+      <div 
+        class="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto mb-12 leading-relaxed"
+        data-hero-target="heroText"
+      >
+        Transform your technical emails with syntax-highlighted code snippets, 
+        <span data-animate="typing" class="text-gradient-primary font-semibold">secure sharing</span>, 
+        and professional presentation.
+      </div>
+
+      <!-- Button Group -->
+      <div 
+        class="tt-button-group flex items-center justify-center gap-4 flex-wrap"
+        data-hero-target="heroText"
+      >
+        <a 
+          href="{{ path('app_register') }}" 
+          class="tt-button btn-primary px-8 py-4 text-lg font-semibold rounded-xl"
+          data-hero-target="button"
+        >
+          <div class="btn-content">Start Free Trial</div>
+          <div class="btn-primary-arrow transition-transform duration-300">→</div>
+        </a>
+        
+        <a 
+          href="{{ path('app_demo') }}" 
+          class="tt-button btn-secondary px-8 py-4 text-lg font-semibold rounded-xl"
+          data-hero-target="button"
+        >
+          <div class="btn-content">Watch Demo</div>
+        </a>
+      </div>
+
+      <!-- Trust Indicators -->
+      <div 
+        class="mt-16 text-white/70 text-sm"
+        data-hero-target="heroText"
+      >
+        <div class="flex items-center justify-center gap-8 flex-wrap">
+          <div class="flex items-center gap-2">
+            <svg class="w-4 h-4 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+            </svg>
+            <span>Free 14-day trial</span>
+          </div>
+          
+          <div class="flex items-center gap-2">
+            <svg class="w-4 h-4 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+            </svg>
+            <span>No credit card required</span>
+          </div>
+          
+          <div class="flex items-center gap-2">
+            <svg class="w-4 h-4 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+            </svg>
+            <span>GDPR Compliant</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll Indicator -->
+  <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+    <div class="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center">
+      <div class="w-1 h-3 bg-white/60 rounded-full mt-2 animate-pulse"></div>
+    </div>
+  </div>
+</header>
+
+<!-- Additional Styles for Hero Effects -->
+<style>
+.bold-italic-framed::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
+  border-radius: 8px;
+  z-index: -1;
+  opacity: 0.3;
+}
+
+.underline::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(135deg, #ffffff, rgba(255, 255, 255, 0.8));
+  border-radius: 2px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .heading-xxlarge {
+    font-size: 2.5rem !important;
+    line-height: 1.2;
+  }
+  
+  .tt-button-group {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .tt-button {
+    width: 100%;
+    max-width: 320px;
+  }
+}
+
+@media (max-width: 640px) {
+  .heading-xxlarge {
+    font-size: 2rem !important;
+  }
+  
+  .tt-hero-intro {
+    padding: 0 1rem;
+  }
+}
+</style>

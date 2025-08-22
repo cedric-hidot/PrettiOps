@@ -1,0 +1,403 @@
+{#
+ # API Documentation Page
+ # 
+ # Developer documentation and API reference
+#}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}API Documentation - PrettiOps{% endblock %}
+{% block body_class %}docs-page{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-50">
+    
+    {# Hero Section #}
+    <section class="bg-gradient-to-br from-gray-900 to-gray-800 text-white py-16">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-12">
+                <h1 class="text-4xl md:text-5xl font-bold mb-6">
+                    API Documentation
+                </h1>
+                <p class="text-xl text-gray-300 max-w-2xl mx-auto">
+                    Integrate PrettiOps into your applications with our powerful REST API
+                </p>
+            </div>
+            
+            <div class="flex flex-col md:flex-row gap-4 justify-center">
+                <a 
+                    href="#quick-start"
+                    class="po-button btn-primary inline-flex items-center gap-2 px-6 py-3 bg-purple-600 text-white rounded-xl font-semibold hover:bg-purple-700 transition-all"
+                >
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                    </svg>
+                    Quick Start
+                </a>
+                <a 
+                    href="#api-reference"
+                    class="po-button btn-secondary inline-flex items-center gap-2 px-6 py-3 bg-white text-gray-900 rounded-xl font-semibold hover:bg-gray-100 transition-all"
+                >
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C20.168 18.477 18.582 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                    </svg>
+                    API Reference
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <div class="max-w-6xl mx-auto px-6 py-16">
+        
+        {# Quick Start Section #}
+        <section id="quick-start" class="mb-16">
+            <h2 class="text-3xl font-bold text-gray-900 mb-8">Quick Start</h2>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="space-y-6">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-4">1. Get Your API Key</h3>
+                        <p class="text-gray-600 mb-4">
+                            First, you'll need to generate an API key from your account settings.
+                        </p>
+                        <a 
+                            href="{{ path('app_settings') }}"
+                            class="inline-flex items-center gap-2 text-purple-600 hover:text-purple-700 font-medium"
+                        >
+                            Generate API Key
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                            </svg>
+                        </a>
+                    </div>
+                    
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-4">2. Authentication</h3>
+                        <p class="text-gray-600 mb-4">
+                            Include your API key in the Authorization header:
+                        </p>
+                        <div class="bg-gray-900 rounded-lg p-4 text-sm font-mono text-green-400">
+                            <pre>Authorization: Bearer YOUR_API_KEY</pre>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">3. Create Your First Snippet</h3>
+                    <p class="text-gray-600 mb-4">Here's a simple example using cURL:</p>
+                    
+                    <div class="bg-gray-900 rounded-lg p-4 text-sm font-mono text-green-400 overflow-x-auto">
+                        <pre><code>curl -X POST https://api.prettiops.com/v1/snippets \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "title": "Hello World",
+    "content": "console.log(\"Hello, World!\");",
+    "language": "javascript",
+    "visibility": "private"
+  }'</code></pre>
+                    </div>
+                    
+                    <div class="mt-4 p-4 bg-green-50 rounded-lg">
+                        <h4 class="font-semibold text-green-900 mb-2">Response</h4>
+                        <div class="bg-white rounded border p-3 text-sm font-mono">
+                            <pre><code>{
+  "id": "snippet_123",
+  "title": "Hello World",
+  "url": "https://prettiops.com/s/snippet_123",
+  "created_at": "2025-01-01T12:00:00Z"
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        {# API Reference Section #}
+        <section id="api-reference" class="mb-16">
+            <h2 class="text-3xl font-bold text-gray-900 mb-8">API Reference</h2>
+            
+            <div class="space-y-8">
+                
+                {# Snippets Endpoint #}
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
+                    <h3 class="text-2xl font-semibold text-gray-900 mb-6">Snippets</h3>
+                    
+                    <div class="space-y-8">
+                        {# Create Snippet #}
+                        <div class="border-l-4 border-green-500 pl-6">
+                            <div class="flex items-center gap-3 mb-4">
+                                <span class="px-3 py-1 bg-green-100 text-green-800 text-sm font-medium rounded-full">POST</span>
+                                <code class="text-lg font-mono">/v1/snippets</code>
+                            </div>
+                            <p class="text-gray-600 mb-4">Create a new code snippet</p>
+                            
+                            <h4 class="font-semibold text-gray-900 mb-2">Request Body</h4>
+                            <div class="bg-gray-50 rounded-lg p-4 text-sm font-mono overflow-x-auto">
+                                <pre><code>{
+  "title": "string (required)",
+  "content": "string (required)",
+                                "language": "string (required)",
+  "description": "string (optional)",
+  "visibility": "private|shared|public (default: private)"
+}</code></pre>
+                            </div>
+                        </div>
+                        
+                        {# Get Snippet #}
+                        <div class="border-l-4 border-blue-500 pl-6">
+                            <div class="flex items-center gap-3 mb-4">
+                                <span class="px-3 py-1 bg-blue-100 text-blue-800 text-sm font-medium rounded-full">GET</span>
+                                <code class="text-lg font-mono">/v1/snippets/{id}</code>
+                            </div>
+                            <p class="text-gray-600 mb-4">Retrieve a specific snippet</p>
+                            
+                            <h4 class="font-semibold text-gray-900 mb-2">Response</h4>
+                            <div class="bg-gray-50 rounded-lg p-4 text-sm font-mono overflow-x-auto">
+                                <pre><code>{
+  "id": "string",
+  "title": "string",
+  "content": "string",
+  "language": "string",
+  "description": "string",
+  "visibility": "string",
+  "url": "string",
+  "view_count": "number",
+  "created_at": "string",
+  "updated_at": "string"
+}</code></pre>
+                            </div>
+                        </div>
+                        
+                        {# List Snippets #}
+                        <div class="border-l-4 border-blue-500 pl-6">
+                            <div class="flex items-center gap-3 mb-4">
+                                <span class="px-3 py-1 bg-blue-100 text-blue-800 text-sm font-medium rounded-full">GET</span>
+                                <code class="text-lg font-mono">/v1/snippets</code>
+                            </div>
+                            <p class="text-gray-600 mb-4">List your snippets with pagination</p>
+                            
+                            <h4 class="font-semibold text-gray-900 mb-2">Query Parameters</h4>
+                            <div class="bg-gray-50 rounded-lg p-4 text-sm">
+                                <ul class="space-y-2">
+                                    <li><code class="font-mono">page</code> - Page number (default: 1)</li>
+                                    <li><code class="font-mono">limit</code> - Items per page (default: 20, max: 100)</li>
+                                    <li><code class="font-mono">language</code> - Filter by programming language</li>
+                                    <li><code class="font-mono">visibility</code> - Filter by visibility</li>
+                                    <li><code class="font-mono">search</code> - Search in title and description</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        {# Update Snippet #}
+                        <div class="border-l-4 border-yellow-500 pl-6">
+                            <div class="flex items-center gap-3 mb-4">
+                                <span class="px-3 py-1 bg-yellow-100 text-yellow-800 text-sm font-medium rounded-full">PUT</span>
+                                <code class="text-lg font-mono">/v1/snippets/{id}</code>
+                            </div>
+                            <p class="text-gray-600">Update an existing snippet</p>
+                        </div>
+                        
+                        {# Delete Snippet #}
+                        <div class="border-l-4 border-red-500 pl-6">
+                            <div class="flex items-center gap-3 mb-4">
+                                <span class="px-3 py-1 bg-red-100 text-red-800 text-sm font-medium rounded-full">DELETE</span>
+                                <code class="text-lg font-mono">/v1/snippets/{id}</code>
+                            </div>
+                            <p class="text-gray-600">Delete a snippet</p>
+                        </div>
+                    </div>
+                </div>
+                
+                {# Share Endpoint #}
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
+                    <h3 class="text-2xl font-semibold text-gray-900 mb-6">Sharing</h3>
+                    
+                    <div class="border-l-4 border-purple-500 pl-6">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="px-3 py-1 bg-purple-100 text-purple-800 text-sm font-medium rounded-full">POST</span>
+                            <code class="text-lg font-mono">/v1/snippets/{id}/share</code>
+                        </div>
+                        <p class="text-gray-600 mb-4">Generate a secure sharing link</p>
+                        
+                        <h4 class="font-semibold text-gray-900 mb-2">Request Body</h4>
+                        <div class="bg-gray-50 rounded-lg p-4 text-sm font-mono overflow-x-auto">
+                            <pre><code>{
+  "expires_at": "2025-12-31T23:59:59Z (optional)",
+  "password": "string (optional)",
+  "allow_download": "boolean (default: true)"
+}</code></pre>
+                        </div>
+                        
+                        <h4 class="font-semibold text-gray-900 mb-2 mt-4">Response</h4>
+                        <div class="bg-gray-50 rounded-lg p-4 text-sm font-mono overflow-x-auto">
+                            <pre><code>{
+  "share_url": "string",
+  "expires_at": "string",
+  "password_protected": "boolean"
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        {# Error Codes Section #}
+        <section class="mb-16">
+            <h2 class="text-3xl font-bold text-gray-900 mb-8">Error Codes</h2>
+            
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
+                <div class="space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="flex items-center gap-3">
+                            <code class="px-3 py-1 bg-green-100 text-green-800 font-mono rounded">200</code>
+                            <span>Success</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <code class="px-3 py-1 bg-blue-100 text-blue-800 font-mono rounded">201</code>
+                            <span>Created</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <code class="px-3 py-1 bg-red-100 text-red-800 font-mono rounded">400</code>
+                            <span>Bad Request</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <code class="px-3 py-1 bg-red-100 text-red-800 font-mono rounded">401</code>
+                            <span>Unauthorized</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <code class="px-3 py-1 bg-red-100 text-red-800 font-mono rounded">403</code>
+                            <span>Forbidden</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <code class="px-3 py-1 bg-red-100 text-red-800 font-mono rounded">404</code>
+                            <span>Not Found</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <code class="px-3 py-1 bg-red-100 text-red-800 font-mono rounded">429</code>
+                            <span>Rate Limited</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <code class="px-3 py-1 bg-red-100 text-red-800 font-mono rounded">500</code>
+                            <span>Server Error</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        {# SDKs Section #}
+        <section class="mb-16">
+            <h2 class="text-3xl font-bold text-gray-900 mb-8">SDKs & Libraries</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 bg-yellow-100 rounded-lg flex items-center justify-center">
+                            <span class="font-bold text-yellow-800">JS</span>
+                        </div>
+                        <h3 class="text-lg font-semibold">JavaScript/Node.js</h3>
+                    </div>
+                    <p class="text-gray-600 mb-4">Official JavaScript SDK for browser and Node.js</p>
+                    <div class="bg-gray-900 rounded-lg p-3 text-sm font-mono text-green-400 mb-4">
+                        <pre>npm install @prettiops/js-sdk</pre>
+                    </div>
+                    <a href="#" class="text-purple-600 hover:text-purple-700 font-medium text-sm">
+                        View Documentation →
+                    </a>
+                </div>
+                
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                            <span class="font-bold text-blue-800">PY</span>
+                        </div>
+                        <h3 class="text-lg font-semibold">Python</h3>
+                    </div>
+                    <p class="text-gray-600 mb-4">Python client library with async support</p>
+                    <div class="bg-gray-900 rounded-lg p-3 text-sm font-mono text-green-400 mb-4">
+                        <pre>pip install prettiops</pre>
+                    </div>
+                    <a href="#" class="text-purple-600 hover:text-purple-700 font-medium text-sm">
+                        View Documentation →
+                    </a>
+                </div>
+                
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+                            <span class="font-bold text-purple-800">PHP</span>
+                        </div>
+                        <h3 class="text-lg font-semibold">PHP</h3>
+                    </div>
+                    <p class="text-gray-600 mb-4">Composer package for PHP applications</p>
+                    <div class="bg-gray-900 rounded-lg p-3 text-sm font-mono text-green-400 mb-4">
+                        <pre>composer require prettiops/php-sdk</pre>
+                    </div>
+                    <a href="#" class="text-purple-600 hover:text-purple-700 font-medium text-sm">
+                        View Documentation →
+                    </a>
+                </div>
+            </div>
+        </section>
+        
+        {# Support Section #}
+        <section class="text-center">
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-12">
+                <div class="w-16 h-16 bg-purple-100 rounded-2xl mx-auto mb-6 flex items-center justify-center">
+                    <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                    </svg>
+                </div>
+                
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Need Help?</h2>
+                <p class="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+                    Our developer support team is here to help you integrate PrettiOps into your applications.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a 
+                        href="mailto:developers@prettiops.com"
+                        class="po-button btn-primary inline-flex items-center gap-2 px-6 py-3 bg-purple-600 text-white rounded-xl font-semibold hover:bg-purple-700 transition-all"
+                    >
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                        </svg>
+                        Contact Developers
+                    </a>
+                    
+                    <a 
+                        href="{{ path('app_help') }}"
+                        class="po-button btn-secondary inline-flex items-center gap-2 px-6 py-3 bg-white text-gray-700 border border-gray-300 rounded-xl font-semibold hover:bg-gray-50 transition-all"
+                    >
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        General Help
+                    </a>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+{% endblock %}
+
+{% block page_scripts %}
+<script>
+// Smooth scroll for internal links
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,165 @@
+/*
+ * PrettiOps Design System CSS Variables
+ * Import the design system tokens and extend with additional utilities
+ */
+
+/* Import the core design tokens */
+@import url('../../design/design-system/tokens.css');
+
+/* Additional component-specific variables */
+:root {
+    /* Component-specific sizing */
+    --navbar-height: 72px;
+    --sidebar-width: 280px;
+    --sidebar-collapsed-width: 64px;
+    --footer-height: 80px;
+    
+    /* Editor-specific variables */
+    --editor-min-height: 400px;
+    --editor-max-height: 600px;
+    --editor-toolbar-height: 48px;
+    
+    /* Card component variations */
+    --card-padding: var(--space-6);
+    --card-header-height: 56px;
+    
+    /* Form component variations */
+    --form-element-height: 44px;
+    --form-element-min-touch-target: 44px;
+    
+    /* Modal dimensions */
+    --modal-max-width: 512px;
+    --modal-backdrop: rgba(0, 0, 0, 0.5);
+    
+    /* Code highlighting */
+    --code-bg: var(--gray-900);
+    --code-text: var(--gray-100);
+    --code-comment: var(--gray-400);
+    --code-keyword: #ff79c6;
+    --code-string: #50fa7b;
+    --code-number: #bd93f9;
+    --code-function: #8be9fd;
+    --code-operator: #ff79c6;
+    
+    /* Syntax highlighting themes */
+    --syntax-bg-light: #fafafa;
+    --syntax-text-light: #383a42;
+    --syntax-bg-dark: #282c34;
+    --syntax-text-dark: #abb2bf;
+}
+
+/* Extended glassmorphism utilities */
+.glass-light {
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+}
+
+.glass-dark {
+    background: var(--glass-bg-dark);
+    backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border-dark);
+}
+
+/* Enhanced focus rings */
+.focus-ring-purple {
+    outline: 2px solid var(--purple-primary);
+    outline-offset: 2px;
+}
+
+.focus-ring-success {
+    outline: 2px solid var(--success);
+    outline-offset: 2px;
+}
+
+.focus-ring-error {
+    outline: 2px solid var(--error);
+    outline-offset: 2px;
+}
+
+/* Gradient utilities */
+.gradient-purple {
+    background: linear-gradient(135deg, var(--purple-primary), #7c3aed);
+}
+
+.gradient-purple-hover {
+    background: linear-gradient(135deg, var(--purple-hover), #6d28d9);
+}
+
+.gradient-text-purple {
+    background: linear-gradient(135deg, var(--purple-primary), #7c3aed);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Animation utilities */
+.animate-fade-in {
+    animation: fadeIn var(--duration-base) var(--ease-out);
+}
+
+.animate-slide-in-up {
+    animation: slideInUp var(--duration-base) var(--ease-out);
+}
+
+.animate-slide-in-down {
+    animation: slideInDown var(--duration-base) var(--ease-out);
+}
+
+.animate-bounce-gentle {
+    animation: bounceGentle 2s infinite;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes bounceGentle {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+/* Responsive utilities extension */
+@media (max-width: 640px) {
+    :root {
+        --space-container: var(--space-4);
+        --text-scale: 0.9;
+    }
+}
+
+@media (min-width: 1536px) {
+    :root {
+        --space-container: var(--space-8);
+        --text-scale: 1.1;
+    }
+}

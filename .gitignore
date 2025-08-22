@@ -1,0 +1,89 @@
+# Production .gitignore for PrettiOps
+
+###> symfony/framework-bundle ###
+/.env.local
+/.env.local.php
+/.env.*.local
+/config/secrets/prod/prod.decrypt.private.php
+/public/bundles/
+/var/
+/vendor/
+###< symfony/framework-bundle ###
+
+###> phpunit/phpunit ###
+/phpunit.xml
+.phpunit.result.cache
+###< phpunit/phpunit ###
+
+###> symfony/phpunit-bridge ###
+.phpunit.result.cache
+/phpunit.xml
+###< symfony/phpunit-bridge ###
+
+###> Node.js ###
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+###> Build artifacts ###
+/public/build/
+/frontend/build/
+*.map
+
+###> Development files ###
+# Local documentation and notes
+/docs/
+/design/
+/titap-website/
+/titap.dev/
+*.md
+!README.md
+!CHANGELOG.md
+
+# Work logs and development notes
+**/WORK_LOG.md
+**/IMPLEMENTATION_GUIDE.md
+**/DESIGN_LOG.md
+**/TIPTAP_*.md
+**/COMPREHENSIVE_*.md
+Claude.md
+PROJECT_STATUS.md
+MVP-implementation-guide.md
+BACKEND_INTEGRATION_SUMMARY.md
+
+# Development prototypes
+/frontend/preview.html
+/frontend/tiptap-inspired-index.html
+
+# Database development files
+/database/README.md
+/database/production-deployment-checklist.md
+/database/optimization-queries.sql
+/database/performance-indexes.sql
+
+###> IDE ###
+.vscode/
+.idea/
+*.swp
+*.swo
+
+###> OS ###
+.DS_Store
+Thumbs.db
+
+###> Logs ###
+*.log
+/var/log/
+
+###> Cache ###
+.cache/
+.temp/
+/tmp/
+
+###> Platform.sh ###
+.platform/local/
+
+###> JWT ###
+/config/jwt/*.pem

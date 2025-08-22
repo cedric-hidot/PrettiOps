@@ -1,0 +1,283 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard - PrettiOps{% endblock %}
+{% block description %}Manage your code snippets and track engagement with beautiful analytics{% endblock %}
+
+{% block body_class %}dashboard-page{% endblock %}
+{% block body_controllers %}dashboard snippet-card toolbar{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('dashboard') }}
+{% endblock %}
+
+{% block navbar_center %}
+    <div class="search-container">
+        <input 
+            type="text" 
+            class="search-input" 
+            placeholder="Search snippets..."
+            data-controller="search"
+            data-action="input->search#filter"
+            data-search-target="input"
+            aria-label="Search snippets"
+        >
+        <span class="search-icon" aria-hidden="true">🔍</span>
+    </div>
+{% endblock %}
+
+{% block navbar_actions %}
+    <div class="navbar-nav">
+        <a href="{{ path('dashboard') }}" class="navbar-link active">Dashboard</a>
+        <a href="{{ path('editor') }}" class="navbar-link">Editor</a>
+        <a href="{{ path('analytics') }}" class="navbar-link">Analytics</a>
+        <a href="{{ path('settings') }}" class="navbar-link">Settings</a>
+        <div class="user-avatar" title="{{ app.user.fullName }}">
+            {{ app.user.initials }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+<main class="main-content" data-controller="dashboard">
+    <!-- Dashboard Header -->
+    <div class="dashboard-header">
+        <div>
+            <h1 class="dashboard-title">Dashboard</h1>
+            <p class="dashboard-subtitle">Manage your code snippets and track engagement</p>
+        </div>
+        <div class="dashboard-actions">
+            <a href="{{ path('analytics') }}" class="btn btn-secondary">
+                <span aria-hidden="true">📊</span>
+                Analytics
+            </a>
+            <a href="{{ path('editor') }}" class="btn btn-primary">
+                <span aria-hidden="true">➕</span>
+                New Snippet
+            </a>
+        </div>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-value" data-dashboard-target="totalSnippets">{{ stats.totalSnippets ?? 0 }}</div>
+            <div class="stat-label">Total Snippets</div>
+            <div class="stat-change {% if stats.snippetsChange >= 0 %}positive{% else %}negative{% endif %}">
+                <span aria-hidden="true">{% if stats.snippetsChange >= 0 %}↗️{% else %}↘️{% endif %}</span>
+                {% if stats.snippetsChange >= 0 %}+{% endif %}{{ stats.snippetsChange ?? 0 }} this week
+            </div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-value" data-dashboard-target="totalViews">{{ stats.totalViews ?? 0 }}</div>
+            <div class="stat-label">Total Views</div>
+            <div class="stat-change {% if stats.viewsChange >= 0 %}positive{% else %}negative{% endif %}">
+                <span aria-hidden="true">{% if stats.viewsChange >= 0 %}↗️{% else %}↘️{% endif %}</span>
+                {% if stats.viewsChange >= 0 %}+{% endif %}{{ stats.viewsChangePercent ?? 0 }}% this month
+            </div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-value" data-dashboard-target="emailSends">{{ stats.emailSends ?? 0 }}</div>
+            <div class="stat-label">Email Sends</div>
+            <div class="stat-change {% if stats.emailSendsChange >= 0 %}positive{% else %}negative{% endif %}">
+                <span aria-hidden="true">{% if stats.emailSendsChange >= 0 %}↗️{% else %}↘️{% endif %}</span>
+                {% if stats.emailSendsChange >= 0 %}+{% endif %}{{ stats.emailSendsChange ?? 0 }} this week
+            </div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-value" data-dashboard-target="activeLinks">{{ stats.activeLinks ?? 0 }}</div>
+            <div class="stat-label">Active Links</div>
+            <div class="stat-change {% if stats.activeLinksChange >= 0 %}positive{% else %}negative{% endif %}">
+                <span aria-hidden="true">{% if stats.activeLinksChange >= 0 %}↗️{% else %}↘️{% endif %}</span>
+                {% if stats.activeLinksChange >= 0 %}+{% endif %}{{ stats.activeLinksChange ?? 0 }} expired
+            </div>
+        </div>
+    </div>
+
+    <!-- Content Header with Filters -->
+    <div class="content-header">
+        <h2 class="content-title">Recent Snippets</h2>
+        <div class="filters">
+            <select 
+                class="filter-select" 
+                data-controller="filter"
+                data-action="change->filter#apply change->dashboard#filterSnippets"
+                data-filter-type-value="language"
+                data-dashboard-target="languageFilter"
+                aria-label="Filter by language"
+            >
+                <option value="">All Languages</option>
+                {% for language in languages %}
+                    <option value="{{ language.value }}">{{ language.label }}</option>
+                {% endfor %}
+            </select>
+            
+            <select 
+                class="filter-select" 
+                data-controller="filter"
+                data-action="change->filter#apply change->dashboard#filterSnippets"
+                data-filter-type-value="status"
+                data-dashboard-target="statusFilter"
+                aria-label="Filter by status"
+            >
+                <option value="">All Status</option>
+                <option value="active">Active</option>
+                <option value="expiring">Expiring Soon</option>
+                <option value="expired">Expired</option>
+            </select>
+            
+            <select 
+                class="filter-select" 
+                data-controller="sort"
+                data-action="change->sort#apply change->dashboard#sortSnippets"
+                data-dashboard-target="sortFilter"
+                aria-label="Sort snippets"
+            >
+                <option value="recent">Most Recent</option>
+                <option value="popular">Most Popular</option>
+                <option value="name">Name A-Z</option>
+                <option value="views">Most Viewed</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Snippet Grid -->
+    <div 
+        class="snippet-grid" 
+        data-dashboard-target="snippetGrid"
+        data-search-target="container"
+    >
+        {% if snippets|length > 0 %}
+            {% for snippet in snippets %}
+                {% include 'components/_snippet_card.html.twig' with {
+                    'snippet': snippet,
+                    'show_preview': true,
+                    'show_toolbar': true,
+                    'show_stats': true,
+                    'clickable': true
+                } %}
+            {% endfor %}
+        {% else %}
+            <!-- Empty State -->
+            <div class="empty-state" data-dashboard-target="emptyState">
+                <div class="empty-icon" aria-hidden="true">📝</div>
+                <h3 class="empty-title">No snippets yet</h3>
+                <p class="empty-description">
+                    Create your first code snippet to get started with beautiful email sharing.
+                </p>
+                <a href="{{ path('editor') }}" class="btn btn-primary">
+                    <span aria-hidden="true">➕</span>
+                    Create Your First Snippet
+                </a>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Loading State (Hidden by default) -->
+    <div class="loading-state hidden" data-dashboard-target="loadingState">
+        <div class="loading-spinner"></div>
+        <p>Loading snippets...</p>
+    </div>
+
+    <!-- No Results State (Hidden by default) -->
+    <div class="no-results-state hidden" data-dashboard-target="noResultsState">
+        <div class="empty-icon" aria-hidden="true">🔍</div>
+        <h3 class="empty-title">No snippets found</h3>
+        <p class="empty-description">
+            Try adjusting your search or filters, or create a new snippet to get started.
+        </p>
+        <div class="empty-actions">
+            <button 
+                class="btn btn-secondary"
+                data-action="click->dashboard#clearFilters"
+            >
+                Clear Filters
+            </button>
+            <a href="{{ path('editor') }}" class="btn btn-primary">
+                <span aria-hidden="true">➕</span>
+                Create New Snippet
+            </a>
+        </div>
+    </div>
+</main>
+
+<!-- Modals and Overlays -->
+<div 
+    class="modal-overlay hidden" 
+    data-dashboard-target="modalOverlay"
+    data-action="click->dashboard#closeModal"
+>
+    <!-- Delete Confirmation Modal -->
+    <div 
+        class="modal modal-sm" 
+        data-dashboard-target="deleteModal"
+        data-action="click->dashboard#stopPropagation"
+        role="dialog"
+        aria-labelledby="delete-modal-title"
+        aria-describedby="delete-modal-description"
+    >
+        <div class="modal-header">
+            <h3 id="delete-modal-title" class="modal-title">Delete Snippet</h3>
+            <button 
+                class="modal-close"
+                data-action="click->dashboard#closeModal"
+                aria-label="Close modal"
+            >
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <p id="delete-modal-description">
+                Are you sure you want to delete "<span data-dashboard-target="deleteSnippetTitle"></span>"? 
+                This action cannot be undone.
+            </p>
+        </div>
+        <div class="modal-footer">
+            <button 
+                class="btn btn-secondary"
+                data-action="click->dashboard#closeModal"
+            >
+                Cancel
+            </button>
+            <button 
+                class="btn btn-danger"
+                data-action="click->dashboard#confirmDelete"
+                data-dashboard-target="confirmDeleteBtn"
+            >
+                Delete Snippet
+            </button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('dashboard') }}
+    
+    <script>
+        // Initialize dashboard data
+        window.dashboardConfig = {
+            userId: {{ app.user.id }},
+            refreshInterval: 30000, // 30 seconds
+            autoRefreshStats: true,
+            filters: {
+                language: '',
+                status: '',
+                sort: 'recent'
+            }
+        };
+        
+        // Auto-refresh stats every 30 seconds
+        document.addEventListener('DOMContentLoaded', function() {
+            setInterval(function() {
+                if (window.dashboardController) {
+                    window.dashboardController.refreshStats();
+                }
+            }, window.dashboardConfig.refreshInterval);
+        });
+    </script>
+{% endblock %}

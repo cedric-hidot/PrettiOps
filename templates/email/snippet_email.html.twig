@@ -1,0 +1,539 @@
+{#
+    Production-ready email template for PrettiOps code snippets
+    Based on design/prototypes/email-template.html
+    
+    Optimized for all major email clients including:
+    - Gmail, Outlook, Apple Mail, Yahoo Mail
+    - Desktop and mobile versions
+    - Dark mode support where available
+    
+    Parameters:
+    - snippet: Snippet entity
+    - sender: User who is sending the email
+    - recipient: Email recipient info
+    - message: Optional custom message
+    - email_settings: Email configuration
+#}
+
+{% set snippet_title = snippet.title|default('Code Snippet') %}
+{% set sender_name = sender.fullName|default('PrettiOps User') %}
+{% set sender_email = sender.email %}
+{% set snippet_url = url('snippet_view', {id: snippet.id}) %}
+{% set verify_url = url('snippet_verify', {id: snippet.id}) %}
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="x-apple-disable-message-reformatting">
+    <meta name="format-detection" content="telephone=no,address=no,email=no,date=no,url=no">
+    <title>{{ snippet_title }} - PrettiOps</title>
+    
+    <!--[if mso]>
+    <noscript>
+        <xml>
+            <o:OfficeDocumentSettings>
+                <o:PixelsPerInch>96</o:PixelsPerInch>
+            </o:OfficeDocumentSettings>
+        </xml>
+    </noscript>
+    <![endif]-->
+    
+    <style>
+        /* Reset and base styles for email clients */
+        html, body {
+            margin: 0 !important;
+            padding: 0 !important;
+            height: 100% !important;
+            width: 100% !important;
+            background-color: #fafafa;
+        }
+        
+        * {
+            -ms-text-size-adjust: 100%;
+            -webkit-text-size-adjust: 100%;
+        }
+        
+        div[style*="margin: 16px 0"] {
+            margin: 16px 0 !important;
+        }
+        
+        table, td {
+            mso-table-lspace: 0pt !important;
+            mso-table-rspace: 0pt !important;
+        }
+        
+        table {
+            border-spacing: 0 !important;
+            border-collapse: collapse !important;
+            table-layout: fixed !important;
+            margin: 0 auto !important;
+        }
+        
+        img {
+            -ms-interpolation-mode: bicubic;
+            max-width: 100%;
+            border: 0;
+        }
+        
+        a {
+            text-decoration: none;
+        }
+        
+        /* Email client fixes */
+        *[x-apple-data-detectors], .unstyle-auto-detected-links *,
+        .aBn {
+            border-bottom: 0 !important;
+            cursor: default !important;
+            color: inherit !important;
+            text-decoration: none !important;
+            font-size: inherit !important;
+            font-family: inherit !important;
+            font-weight: inherit !important;
+            line-height: inherit !important;
+        }
+        
+        .a6S {
+            display: none !important;
+            opacity: 0.01 !important;
+        }
+        
+        .im {
+            color: inherit !important;
+        }
+        
+        img.g-img + div {
+            display: none !important;
+        }
+        
+        /* Mobile responsive fixes */
+        @media only screen and (min-device-width: 320px) and (max-device-width: 374px) {
+            u ~ div .email-container {
+                min-width: 320px !important;
+            }
+        }
+        
+        @media only screen and (min-device-width: 375px) and (max-device-width: 413px) {
+            u ~ div .email-container {
+                min-width: 375px !important;
+            }
+        }
+        
+        @media only screen and (min-device-width: 414px) {
+            u ~ div .email-container {
+                min-width: 414px !important;
+            }
+        }
+        
+        /* Email layout styles */
+        .email-container {
+            max-width: 640px;
+            margin: 0 auto;
+            background-color: #ffffff;
+        }
+        
+        .content-padding {
+            padding-left: 24px;
+            padding-right: 24px;
+        }
+        
+        /* Typography optimized for email clients */
+        .email-text {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-size: 16px;
+            line-height: 24px;
+            color: #44403c;
+            margin: 0;
+        }
+        
+        .email-heading {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-size: 24px;
+            line-height: 32px;
+            color: #1c1917;
+            font-weight: 600;
+            margin: 0;
+        }
+        
+        /* PrettiOps Snippet Container */
+        .snippet-container {
+            background-color: #fafafa;
+            border: 1px solid #e7e5e4;
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 24px 0;
+        }
+        
+        .snippet-header {
+            background-color: #ffffff;
+            padding: 16px 20px;
+            border-bottom: 1px solid #f5f4f4;
+        }
+        
+        .snippet-meta {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-size: 12px;
+            color: #78716c;
+            margin-bottom: 12px;
+        }
+        
+        .snippet-language {
+            background-color: #f3ebff;
+            color: #4a0099;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
+        }
+        
+        .snippet-title {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-size: 18px;
+            line-height: 24px;
+            color: #1c1917;
+            font-weight: 600;
+            margin: 0;
+        }
+        
+        .snippet-toolbar {
+            margin-top: 12px;
+        }
+        
+        .snippet-action {
+            display: inline-block;
+            padding: 8px 12px;
+            margin-right: 8px;
+            margin-bottom: 8px;
+            background-color: #f5f4f4;
+            border: 1px solid #e7e5e4;
+            border-radius: 6px;
+            color: #57534e;
+            font-size: 12px;
+            font-weight: 500;
+            text-decoration: none;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+        
+        .snippet-action:hover {
+            background-color: #e7e5e4;
+            color: #44403c;
+        }
+        
+        .snippet-action-primary {
+            background-color: #6f00ff;
+            border-color: #6f00ff;
+            color: #ffffff;
+        }
+        
+        .snippet-action-primary:hover {
+            background-color: #5c00d9;
+            border-color: #5c00d9;
+        }
+        
+        /* Code Block optimized for email */
+        .snippet-code {
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            font-family: 'Monaco', 'Consolas', 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 20px;
+            overflow-x: auto;
+            white-space: pre;
+        }
+        
+        /* Syntax highlighting that works in email clients */
+        .code-comment { color: #6a9955; }
+        .code-keyword { color: #c586c0; }
+        .code-string { color: #ce9178; }
+        .code-function { color: #dcdcaa; }
+        .code-number { color: #b5cea8; }
+        .code-class { color: #4ec9b0; }
+        .code-property { color: #9cdcfe; }
+        .code-operator { color: #d4d4d4; }
+        
+        /* Hidden Token for email */
+        .hidden-token {
+            display: inline-block;
+            background-color: #f3ebff;
+            color: #4a0099;
+            border: 1px solid rgba(111, 0, 255, 0.2);
+            border-radius: 4px;
+            padding: 2px 8px;
+            font-size: 11px;
+            font-weight: 600;
+            text-decoration: none;
+            font-family: 'Monaco', 'Consolas', 'Courier New', monospace;
+        }
+        
+        .hidden-token:hover {
+            background-color: #6f00ff;
+            color: #ffffff;
+            border-color: #6f00ff;
+        }
+        
+        /* PrettiOps Branding */
+        .snippet-branding {
+            background-color: #f5f4f4;
+            padding: 12px 20px;
+            border-top: 1px solid #f5f4f4;
+        }
+        
+        .branding-content {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-size: 11px;
+            color: #78716c;
+        }
+        
+        .prettiops-logo {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            background-color: #6f00ff;
+            color: #ffffff;
+            text-align: center;
+            line-height: 16px;
+            font-size: 10px;
+            font-weight: 700;
+            border-radius: 3px;
+            vertical-align: middle;
+            margin-right: 6px;
+        }
+        
+        .branding-link {
+            color: #6f00ff;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .branding-link:hover {
+            text-decoration: underline;
+        }
+        
+        /* Security Notice */
+        .security-notice {
+            background-color: #eff6ff;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 20px 0;
+        }
+        
+        .security-title {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            color: #1e40af;
+            margin-bottom: 6px;
+        }
+        
+        .security-text {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-size: 13px;
+            color: #1e40af;
+            line-height: 18px;
+            margin: 0;
+        }
+        
+        /* Mobile responsive */
+        @media only screen and (max-width: 640px) {
+            .email-container {
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+            
+            .content-padding {
+                padding-left: 16px !important;
+                padding-right: 16px !important;
+            }
+            
+            .snippet-header {
+                padding: 12px 16px !important;
+            }
+            
+            .snippet-code {
+                padding: 16px !important;
+                font-size: 12px !important;
+            }
+            
+            .snippet-branding {
+                padding: 10px 16px !important;
+            }
+            
+            .email-heading {
+                font-size: 20px !important;
+                line-height: 28px !important;
+            }
+            
+            .security-notice {
+                padding: 12px !important;
+                margin: 16px 0 !important;
+            }
+            
+            .snippet-action {
+                display: block !important;
+                margin-bottom: 8px !important;
+                text-align: center !important;
+            }
+        }
+        
+        /* Dark mode support (limited in email clients) */
+        @media (prefers-color-scheme: dark) {
+            .snippet-container {
+                background-color: #2a2a2a !important;
+                border-color: #404040 !important;
+            }
+            
+            .snippet-header {
+                background-color: #2a2a2a !important;
+                border-color: #404040 !important;
+            }
+            
+            .snippet-branding {
+                background-color: #404040 !important;
+            }
+            
+            .email-text {
+                color: #e5e5e5 !important;
+            }
+            
+            .email-heading {
+                color: #ffffff !important;
+            }
+        }
+        
+        /* Outlook specific fixes */
+        <!--[if gte mso 9]>
+        .snippet-code {
+            font-family: 'Courier New' !important;
+        }
+        <![endif]-->
+    </style>
+</head>
+
+<body width="100%" style="margin: 0; padding: 0 !important; mso-line-height-rule: exactly; background-color: #fafafa;">
+    <center role="article" aria-roledescription="email" lang="en" style="width: 100%; background-color: #fafafa;">
+        
+        <!-- Visually hidden preheader text for better inbox preview -->
+        <div style="max-height: 0; overflow: hidden; mso-hide: all;" aria-hidden="true">
+            Code snippet: {{ snippet_title }} - {{ snippet.description|default('Shared via PrettiOps')|striptags|slice(0, 100) }}
+        </div>
+
+        <!-- Email Container -->
+        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: auto;">
+            <tr>
+                <td style="padding: 20px 0;">
+                    <div class="email-container">
+                        
+                        <!-- Email Content -->
+                        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                            <tr>
+                                <td class="content-padding" style="padding-top: 24px; padding-bottom: 24px;">
+                                    
+                                    <!-- Custom Message (if provided) -->
+                                    {% if message %}
+                                        <p class="email-text">{{ message|nl2br }}</p>
+                                        <p class="email-text" style="margin-top: 20px;">
+                                            I've shared a code snippet with you:
+                                        </p>
+                                    {% else %}
+                                        <!-- Default Message -->
+                                        <p class="email-text">
+                                            Hi,
+                                        </p>
+                                        
+                                        <p class="email-text" style="margin-top: 16px;">
+                                            {{ sender_name }} has shared a code snippet with you that might be useful. 
+                                            {% if snippet.description %}{{ snippet.description }}{% endif %}
+                                        </p>
+                                    {% endif %}
+                                    
+                                    <!-- Security Notice (if snippet has hidden tokens) -->
+                                    {% if snippet.hasHiddenTokens %}
+                                        <div class="security-notice">
+                                            <div class="security-title">🔒 Secure Content Protected</div>
+                                            <p class="security-text">
+                                                This email contains code with sensitive data that has been automatically secured by PrettiOps. 
+                                                Click on protected tokens to verify with 2FA.
+                                            </p>
+                                        </div>
+                                    {% endif %}
+                                    
+                                </td>
+                            </tr>
+                        </table>
+                        
+                        <!-- PrettiOps Snippet -->
+                        <div class="snippet-container">
+                            <!-- Snippet Header -->
+                            <div class="snippet-header">
+                                <div class="snippet-meta">
+                                    <span class="snippet-language">{{ snippet.language|title }}</span> • 
+                                    {{ snippet.lineCount|default(0) }} lines
+                                    {% if snippet.tags|length > 0 %} • {{ snippet.tags|join(', ') }}{% endif %}
+                                </div>
+                                <h3 class="snippet-title">{{ snippet_title }}</h3>
+                                <div class="snippet-toolbar">
+                                    <a href="{{ snippet_url }}?action=copy" class="snippet-action">📋 Copy</a>
+                                    <a href="{{ snippet_url }}?action=download" class="snippet-action">⬇️ Download</a>
+                                    <a href="{{ snippet_url }}?action=ide" class="snippet-action">🔧 Open in IDE</a>
+                                    <a href="{{ snippet_url }}" class="snippet-action snippet-action-primary">👁️ View Full</a>
+                                </div>
+                            </div>
+                            
+                            <!-- Code Block -->
+                            <div class="snippet-code">{{ snippet.formattedContent|raw }}</div>
+                            
+                            <!-- PrettiOps Branding -->
+                            <div class="snippet-branding">
+                                <div class="branding-content">
+                                    <span class="prettiops-logo">P</span>
+                                    Styled with <a href="https://prettiops.dev" class="branding-link">PrettiOps</a>
+                                    {% if snippet.expiresAt %} • Expires {{ snippet.expiresAt|date_diff }}{% endif %}
+                                    • <a href="{{ snippet_url }}/settings" class="branding-link">Manage</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Email Footer Content -->
+                        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                            <tr>
+                                <td class="content-padding" style="padding-top: 0; padding-bottom: 24px;">
+                                    
+                                    {% if snippet.description %}
+                                        <p class="email-text" style="margin-top: 20px;">
+                                            {{ snippet.description }}
+                                        </p>
+                                    {% endif %}
+                                    
+                                    <p class="email-text" style="margin-top: 20px;">
+                                        Best regards,<br>
+                                        <strong>{{ sender_name }}</strong>
+                                        {% if sender.jobTitle %}<br>{{ sender.jobTitle }}{% endif %}
+                                        {% if sender.company %}<br>{{ sender.company }}{% endif %}
+                                        <br><a href="mailto:{{ sender_email }}" style="color: #6f00ff;">{{ sender_email }}</a>
+                                    </p>
+                                    
+                                    <!-- Footer Links -->
+                                    <p style="margin-top: 32px; font-size: 12px; color: #78716c; text-align: center;">
+                                        <a href="{{ url('unsubscribe', {token: unsubscribe_token}) }}" style="color: #78716c;">Unsubscribe</a> • 
+                                        <a href="https://prettiops.dev/privacy" style="color: #78716c;">Privacy Policy</a> • 
+                                        <a href="https://prettiops.dev" style="color: #78716c;">PrettiOps</a>
+                                    </p>
+                                    
+                                </td>
+                            </tr>
+                        </table>
+                        
+                    </div>
+                </td>
+            </tr>
+        </table>
+        
+    </center>
+</body>
+</html>

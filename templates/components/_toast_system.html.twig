@@ -1,0 +1,319 @@
+{#
+ # Advanced Toast Notification System - Tiptap-inspired
+ # 
+ # Complete toast system with Alpine.js functionality
+#}
+
+{# Toast Container - Position fixed #}
+<div 
+    x-data="toastSystem()" 
+    x-show="toasts.length > 0"
+    x-transition
+    class="fixed inset-0 z-50 pointer-events-none"
+    aria-live="assertive"
+    aria-atomic="true"
+>
+    {# Toast Positions - Top Center #}
+    <div class="fixed top-6 left-1/2 transform -translate-x-1/2 w-full max-w-md pointer-events-auto">
+        <template x-for="toast in toasts.filter(t => t.position === 'top-center')" :key="toast.id">
+            <div 
+                x-show="toast.show"
+                x-transition:enter="transition ease-out duration-300 transform"
+                x-transition:enter-start="opacity-0 scale-95 -translate-y-2"
+                x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+                x-transition:leave="transition ease-in duration-200 transform"
+                x-transition:leave-start="opacity-100 scale-100 translate-y-0"
+                x-transition:leave-end="opacity-0 scale-95 -translate-y-2"
+                class="mb-4 mx-4"
+            >
+                <div 
+                    :class="getToastClasses(toast.type)"
+                    class="relative overflow-hidden rounded-xl shadow-2xl backdrop-blur-xl border"
+                    role="alert"
+                    :aria-labelledby="'toast-title-' + toast.id"
+                    :aria-describedby="toast.description ? 'toast-desc-' + toast.id : null"
+                >
+                    {# Progress Bar #}
+                    <div 
+                        x-show="toast.duration > 0"
+                        class="absolute top-0 left-0 h-1 bg-current opacity-30 transition-all ease-linear"
+                        :style="'width: ' + toast.progress + '%; transition-duration: ' + toast.duration + 'ms'"
+                    ></div>
+                    
+                    <div class="p-4 flex items-start gap-3">
+                        {# Icon #}
+                        <div class="flex-shrink-0 mt-0.5" x-html="getToastIcon(toast.type)"></div>
+                        
+                        {# Content #}
+                        <div class="flex-1 min-w-0">
+                            <div 
+                                :id="'toast-title-' + toast.id"
+                                class="font-semibold text-sm leading-5"
+                                x-text="toast.message"
+                            ></div>
+                            
+                            <div 
+                                x-show="toast.description"
+                                :id="'toast-desc-' + toast.id"
+                                class="mt-1 text-xs opacity-90"
+                                x-text="toast.description"
+                            ></div>
+                            
+                            {# HTML Content #}
+                            <div 
+                                x-show="toast.html"
+                                x-html="toast.html"
+                                class="mt-2"
+                            ></div>
+                            
+                            {# Actions #}
+                            <div 
+                                x-show="toast.actions && toast.actions.length > 0"
+                                class="mt-3 flex gap-2"
+                            >
+                                <template x-for="action in toast.actions" :key="action.label">
+                                    <button
+                                        @click="action.handler(); removeToast(toast.id)"
+                                        class="px-3 py-1.5 text-xs font-medium rounded-lg bg-white/20 hover:bg-white/30 transition-colors"
+                                        x-text="action.label"
+                                    ></button>
+                                </template>
+                            </div>
+                        </div>
+                        
+                        {# Close Button #}
+                        <button
+                            @click="removeToast(toast.id)"
+                            class="flex-shrink-0 opacity-70 hover:opacity-100 transition-opacity p-1 rounded-md hover:bg-white/20"
+                            :aria-label="'Close ' + toast.message"
+                        >
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </div>
+    
+    {# Toast Positions - Top Right #}
+    <div class="fixed top-6 right-6 w-full max-w-sm pointer-events-auto">
+        <template x-for="toast in toasts.filter(t => t.position === 'top-right')" :key="toast.id">
+            <div 
+                x-show="toast.show"
+                x-transition:enter="transition ease-out duration-300 transform"
+                x-transition:enter-start="opacity-0 scale-95 translate-x-8"
+                x-transition:enter-end="opacity-100 scale-100 translate-x-0"
+                x-transition:leave="transition ease-in duration-200 transform"
+                x-transition:leave-start="opacity-100 scale-100 translate-x-0"
+                x-transition:leave-end="opacity-0 scale-95 translate-x-8"
+                class="mb-4"
+            >
+                <div 
+                    :class="getToastClasses(toast.type)"
+                    class="relative overflow-hidden rounded-xl shadow-2xl backdrop-blur-xl border"
+                    role="alert"
+                >
+                    <div class="p-4 flex items-start gap-3">
+                        <div class="flex-shrink-0 mt-0.5" x-html="getToastIcon(toast.type)"></div>
+                        <div class="flex-1 min-w-0">
+                            <div class="font-semibold text-sm" x-text="toast.message"></div>
+                            <div x-show="toast.description" class="mt-1 text-xs opacity-90" x-text="toast.description"></div>
+                        </div>
+                        <button @click="removeToast(toast.id)" class="flex-shrink-0 opacity-70 hover:opacity-100">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </div>
+    
+    {# Toast Positions - Bottom Right #}
+    <div class="fixed bottom-6 right-6 w-full max-w-sm pointer-events-auto">
+        <template x-for="toast in toasts.filter(t => t.position === 'bottom-right')" :key="toast.id">
+            <div 
+                x-show="toast.show"
+                x-transition:enter="transition ease-out duration-300 transform"
+                x-transition:enter-start="opacity-0 scale-95 translate-y-8"
+                x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+                x-transition:leave="transition ease-in duration-200 transform"
+                x-transition:leave-start="opacity-100 scale-100 translate-y-0"
+                x-transition:leave-end="opacity-0 scale-95 translate-y-8"
+                class="mb-4"
+            >
+                <div 
+                    :class="getToastClasses(toast.type)"
+                    class="relative overflow-hidden rounded-xl shadow-2xl backdrop-blur-xl border"
+                    role="alert"
+                >
+                    <div class="p-4 flex items-start gap-3">
+                        <div class="flex-shrink-0 mt-0.5" x-html="getToastIcon(toast.type)"></div>
+                        <div class="flex-1 min-w-0">
+                            <div class="font-semibold text-sm" x-text="toast.message"></div>
+                            <div x-show="toast.description" class="mt-1 text-xs opacity-90" x-text="toast.description"></div>
+                        </div>
+                        <button @click="removeToast(toast.id)" class="flex-shrink-0 opacity-70 hover:opacity-100">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </div>
+</div>
+
+<script>
+/**
+ * Toast System - Alpine.js Component
+ * Based on Tiptap's toast implementation
+ */
+function toastSystem() {
+    return {
+        toasts: [],
+        nextId: 1,
+        
+        init() {
+            // Listen for toast events
+            window.addEventListener('toast-show', (event) => {
+                this.addToast(event.detail)
+            })
+            
+            // Global toast function
+            window.toast = (message, options = {}) => {
+                this.addToast({ message, ...options })
+            }
+        },
+        
+        addToast(config) {
+            const toast = {
+                id: this.nextId++,
+                message: config.message || 'Notification',
+                description: config.description || '',
+                type: config.type || 'default',
+                position: config.position || 'top-center',
+                duration: config.duration !== undefined ? config.duration : 5000,
+                html: config.html || '',
+                actions: config.actions || [],
+                show: false,
+                progress: 100
+            }
+            
+            this.toasts.push(toast)
+            
+            // Show toast after a brief delay for animation
+            this.$nextTick(() => {
+                toast.show = true
+                
+                // Start progress countdown
+                if (toast.duration > 0) {
+                    this.startProgress(toast)
+                    
+                    // Auto remove after duration
+                    setTimeout(() => {
+                        this.removeToast(toast.id)
+                    }, toast.duration)
+                }
+            })
+        },
+        
+        removeToast(id) {
+            const toastIndex = this.toasts.findIndex(t => t.id === id)
+            if (toastIndex > -1) {
+                this.toasts[toastIndex].show = false
+                
+                // Remove from array after animation
+                setTimeout(() => {
+                    this.toasts = this.toasts.filter(t => t.id !== id)
+                }, 300)
+            }
+        },
+        
+        startProgress(toast) {
+            const startTime = Date.now()
+            const updateProgress = () => {
+                const elapsed = Date.now() - startTime
+                const remaining = Math.max(0, toast.duration - elapsed)
+                toast.progress = (remaining / toast.duration) * 100
+                
+                if (remaining > 0) {
+                    requestAnimationFrame(updateProgress)
+                }
+            }
+            requestAnimationFrame(updateProgress)
+        },
+        
+        getToastClasses(type) {
+            const baseClasses = 'bg-white/95 border-white/20 text-gray-900'
+            
+            switch (type) {
+                case 'success':
+                    return baseClasses + ' bg-green-50/95 border-green-200/50 text-green-900'
+                case 'error':
+                    return baseClasses + ' bg-red-50/95 border-red-200/50 text-red-900'
+                case 'warning':
+                    return baseClasses + ' bg-amber-50/95 border-amber-200/50 text-amber-900'
+                case 'info':
+                    return baseClasses + ' bg-blue-50/95 border-blue-200/50 text-blue-900'
+                case 'purple':
+                    return baseClasses + ' bg-purple-50/95 border-purple-200/50 text-purple-900'
+                default:
+                    return baseClasses
+            }
+        },
+        
+        getToastIcon(type) {
+            const iconClasses = 'w-5 h-5'
+            
+            switch (type) {
+                case 'success':
+                    return `<svg class="${iconClasses} text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>`
+                case 'error':
+                    return `<svg class="${iconClasses} text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>`
+                case 'warning':
+                    return `<svg class="${iconClasses} text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                    </svg>`
+                case 'info':
+                    return `<svg class="${iconClasses} text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>`
+                case 'purple':
+                    return `<svg class="${iconClasses} text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                    </svg>`
+                default:
+                    return `<svg class="${iconClasses} text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5V9H7l5-5v8z"></path>
+                    </svg>`
+            }
+        }
+    }
+}
+
+// Example usage functions
+window.showSuccessToast = (message, description) => {
+    window.toast(message, { type: 'success', description })
+}
+
+window.showErrorToast = (message, description) => {
+    window.toast(message, { type: 'error', description })
+}
+
+window.showInfoToast = (message, description) => {
+    window.toast(message, { type: 'info', description })
+}
+
+window.showWarningToast = (message, description) => {
+    window.toast(message, { type: 'warning', description })
+}
+</script>

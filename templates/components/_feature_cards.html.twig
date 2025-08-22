@@ -1,0 +1,271 @@
+{#
+ # Feature Cards Component - Tiptap-inspired
+ # 
+ # Interactive feature cards with hover animations, glassmorphism effects,
+ # and scroll-based reveal animations
+ #}
+
+{% set features = features|default([
+  {
+    icon: 'code',
+    title: 'Syntax Highlighting',
+    description: 'Beautiful code snippets with support for 150+ programming languages',
+    badge: 'Core Feature',
+    number: '01'
+  },
+  {
+    icon: 'shield',
+    title: 'Security First',
+    description: 'End-to-end encryption and automatic token masking for sensitive data',
+    badge: 'Enterprise',
+    number: '02'
+  },
+  {
+    icon: 'share',
+    title: 'Easy Sharing',
+    description: 'One-click sharing with customizable expiration and access controls',
+    badge: 'Popular',
+    number: '03'
+  },
+  {
+    icon: 'palette',
+    title: 'Custom Themes',
+    description: 'Choose from 20+ professionally designed themes or create your own',
+    badge: 'Pro',
+    number: '04'
+  },
+  {
+    icon: 'email',
+    title: 'Gmail Integration',
+    description: 'Native Gmail plugin for seamless email integration',
+    badge: 'Coming Soon',
+    number: '05'
+  },
+  {
+    icon: 'analytics',
+    title: 'Analytics Dashboard',
+    description: 'Track snippet views, engagement, and sharing analytics',
+    badge: 'Pro',
+    number: '06'
+  }
+]) %}
+
+<section class="py-20 bg-gradient-to-br from-gray-50 to-white relative overflow-hidden">
+  <!-- Background Elements -->
+  <div class="absolute inset-0 bg-noise-light opacity-30 pointer-events-none"></div>
+  
+  <div class="max-w-7xl mx-auto px-6">
+    <!-- Section Header -->
+    <div class="text-center mb-16">
+      <div class="tt-label-tag-group mb-6">
+        <div class="label-large bg-purple-100 text-purple-700 px-4 py-2 rounded-full text-sm font-medium border border-purple-200">
+          Platform Features
+        </div>
+      </div>
+      
+      <h2 class="heading-large text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+        Everything you need for
+        <span class="text-gradient-primary">professional code sharing</span>
+      </h2>
+      
+      <p class="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+        PrettiOps combines powerful features with beautiful design to transform 
+        how you share and present code in your technical communications.
+      </p>
+    </div>
+
+    <!-- Feature Cards Grid -->
+    <div 
+      class="tt-feature-list grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+      data-controller="feature-card"
+      data-feature-card-reveal-on-scroll-value="true"
+      data-feature-card-animation-delay-value="150"
+    >
+      {% for feature in features %}
+        <div 
+          class="tt-feature-card group cursor-pointer"
+          data-feature-card-target="card"
+          data-index="{{ loop.index0 }}"
+          tabindex="0"
+          role="article"
+          aria-labelledby="feature-{{ loop.index }}-title"
+        >
+          <!-- Feature Number Badge -->
+          {% if feature.number %}
+            <div 
+              class="feature-count absolute -top-3 left-6 w-10 h-10 bg-gradient-to-r from-purple-600 to-purple-700 text-white rounded-full flex items-center justify-center font-bold text-sm shadow-lg"
+              data-feature-card-target="number"
+            >
+              {{ feature.number }}
+            </div>
+          {% endif %}
+
+          <!-- Feature Icon -->
+          <div 
+            class="tt-feature-icon w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg transform transition-transform duration-300 group-hover:scale-110"
+            data-feature-card-target="icon"
+          >
+            {% if feature.icon == 'code' %}
+              <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+              </svg>
+            {% elseif feature.icon == 'shield' %}
+              <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.031 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+              </svg>
+            {% elseif feature.icon == 'share' %}
+              <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"></path>
+              </svg>
+            {% elseif feature.icon == 'palette' %}
+              <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM7 3H5a2 2 0 00-2 2v12a4 4 0 004 4h2a2 2 0 002-2V5a2 2 0 00-2-2z"></path>
+              </svg>
+            {% elseif feature.icon == 'email' %}
+              <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+              </svg>
+            {% elseif feature.icon == 'analytics' %}
+              <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+              </svg>
+            {% else %}
+              <div class="w-8 h-8 bg-white/20 rounded-lg"></div>
+            {% endif %}
+          </div>
+
+          <!-- Feature Content -->
+          <div class="tt-feature-content" data-feature-card-target="content">
+            <h3 
+              id="feature-{{ loop.index }}-title"
+              class="heading-small text-xl font-semibold text-gray-900 mb-4 group-hover:text-purple-700 transition-colors duration-300"
+            >
+              {{ feature.title }}
+            </h3>
+            
+            <p class="text-gray-600 leading-relaxed mb-6">
+              {{ feature.description }}
+            </p>
+
+            <!-- Feature Badge -->
+            {% if feature.badge %}
+              <div 
+                class="inline-flex items-center"
+                data-feature-card-target="badge"
+                style="opacity: 0; transform: translateX(-10px); transition: all 0.3s ease;"
+              >
+                {% set badge_classes = {
+                  'Core Feature': 'tt-batch batch-primary',
+                  'Enterprise': 'batch-outline nav bg-amber-50 text-amber-700 border-amber-200',
+                  'Popular': 'batch-outline nav bg-green-50 text-green-700 border-green-200',
+                  'Pro': 'batch-outline nav bg-purple-50 text-purple-700 border-purple-200',
+                  'Coming Soon': 'batch-outline nav bg-blue-50 text-blue-700 border-blue-200'
+                } %}
+                
+                <span class="{{ badge_classes[feature.badge]|default('tt-batch batch-secondary') }} text-xs px-3 py-1.5 rounded-full font-medium">
+                  {{ feature.badge }}
+                </span>
+              </div>
+            {% endif %}
+          </div>
+
+          <!-- Hover Effect Overlay -->
+          <div class="absolute inset-0 rounded-2xl bg-gradient-to-br from-purple-500/0 to-purple-600/0 group-hover:from-purple-500/5 group-hover:to-purple-600/10 transition-all duration-300 pointer-events-none"></div>
+        </div>
+      {% endfor %}
+    </div>
+
+    <!-- Call-to-Action -->
+    <div class="text-center mt-16">
+      <div class="inline-flex items-center gap-4">
+        <a 
+          href="{{ path('app_register') }}" 
+          class="tt-button btn-primary px-8 py-3 rounded-xl font-semibold transition-all duration-300 hover:shadow-glow-purple"
+        >
+          <div class="btn-content">Get Started Free</div>
+          <div class="btn-primary-arrow">→</div>
+        </a>
+        
+        <a 
+          href="{{ path('features') }}" 
+          class="tt-button btn-secondary px-8 py-3 rounded-xl font-semibold bg-white border border-gray-200 text-gray-700 hover:border-purple-200 hover:text-purple-700 transition-all duration-300"
+        >
+          View All Features
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Additional Styles for Feature Cards -->
+<style>
+.tt-feature-card {
+  position: relative;
+}
+
+.tt-feature-card::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  background: linear-gradient(135deg, transparent, rgba(111, 0, 255, 0.1), transparent);
+  border-radius: 1.5rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
+.tt-feature-card:hover::before {
+  opacity: 1;
+}
+
+/* Enhanced focus styles for accessibility */
+.tt-feature-card:focus {
+  outline: 2px solid #6f00ff;
+  outline-offset: 2px;
+}
+
+/* Custom animation for number badges */
+@keyframes numberPulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 4px 12px rgba(111, 0, 255, 0.3);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(111, 0, 255, 0.4);
+  }
+}
+
+.feature-count:hover {
+  animation: numberPulse 2s ease-in-out infinite;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .tt-feature-list {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  .tt-feature-card {
+    max-width: 400px;
+    margin: 0 auto;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .tt-feature-card {
+    background: rgba(15, 15, 35, 0.9);
+    border-color: rgba(111, 0, 255, 0.2);
+  }
+  
+  .tt-feature-content h3 {
+    color: #e2e8f0;
+  }
+  
+  .tt-feature-content p {
+    color: #94a3b8;
+  }
+}
+</style>

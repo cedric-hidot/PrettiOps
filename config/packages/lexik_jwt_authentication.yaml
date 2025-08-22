@@ -1,0 +1,43 @@
+lexik_jwt_authentication:
+    secret_key: '%env(resolve:JWT_SECRET_KEY)%'
+    public_key: '%env(resolve:JWT_PUBLIC_KEY)%'
+    pass_phrase: '%env(JWT_PASSPHRASE)%'
+    token_ttl: '%env(int:JWT_TTL)%'
+    
+    # JWT Token Configuration
+    token_extractors:
+        authorization_header:
+            enabled: true
+            prefix: Bearer
+            name: Authorization
+        cookie:
+            enabled: false
+        query_parameter:
+            enabled: false
+
+    # User identity field
+    user_identity_field: email
+
+    # Encoder configuration
+    encoder:
+        service: lexik_jwt_authentication.encoder.lcobucci
+        # Enable asymmetric algorithm (RS256)
+        signature_algorithm: RS256
+
+    # Token payload customization
+    set_cookies:
+        refresh_token:
+            enabled: true
+            same_site: lax
+            secure: auto
+            http_only: true
+            lifetime: 2592000 # 30 days
+
+when@prod:
+    lexik_jwt_authentication:
+        # Use stronger settings in production
+        encoder:
+            signature_algorithm: RS256
+        set_cookies:
+            refresh_token:
+                secure: true
