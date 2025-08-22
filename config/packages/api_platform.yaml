@@ -73,8 +73,7 @@ api_platform:
     # HTTP cache
     http_cache:
         invalidation:
-            enabled: true
-            varnish_urls: ['%env(VARNISH_URL)%']
+            enabled: false
         public: false
 
 when@prod:
@@ -86,3 +85,7 @@ when@prod:
                 shared_max_age: 86400
                 public: true
                 vary: ['Content-Type', 'Authorization']
+        http_cache:
+            invalidation:
+                enabled: true
+                varnish_urls: ['%env(VARNISH_URL)%']
