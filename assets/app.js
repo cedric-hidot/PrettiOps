@@ -15,7 +15,7 @@ import '../../design/design-system/tokens.css';
 import './bootstrap.js';
 
 // Import Turbo for SPA-like navigation
-import { Turbo } from '@hotwired/turbo';
+import * as Turbo from '@hotwired/turbo';
 
 // Configure Turbo
 Turbo.session.drive = true;
