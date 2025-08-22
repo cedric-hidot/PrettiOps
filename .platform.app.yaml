@@ -16,7 +16,8 @@ build:
     flavor: composer
 
 dependencies:
-    nodejs: "18"
+    nodejs:
+        npm: "latest"
 
 hooks:
     build: |
