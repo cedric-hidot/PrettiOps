@@ -20,6 +20,11 @@ api_platform:
             max_age: 0
             shared_max_age: 3600
             public: false
+        normalization_context:
+            groups: ['read']
+            enable_max_depth: true
+        denormalization_context:
+            groups: ['write']
 
     # API Documentation
     swagger:
@@ -49,14 +54,6 @@ api_platform:
         App\Exception\RateLimitExceededException: 429
         App\Exception\SecurityViolationException: 403
         App\Exception\RgpdComplianceException: 451
-
-    # Serialization groups
-    defaults:
-        normalization_context:
-            groups: ['read']
-            enable_max_depth: true
-        denormalization_context:
-            groups: ['write']
 
     # Validation
     validator:
@@ -96,3 +93,9 @@ when@prod:
                 max_age: 3600
                 shared_max_age: 86400
                 public: true
+                vary: ['Content-Type', 'Authorization']
+            normalization_context:
+                groups: ['read']
+                enable_max_depth: true
+            denormalization_context:
+                groups: ['write']
