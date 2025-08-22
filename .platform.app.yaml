@@ -17,7 +17,7 @@ build:
 
 dependencies:
     nodejs:
-        npm: "latest"
+        npm: "9"
 
 hooks:
     build: |
