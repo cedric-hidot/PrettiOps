@@ -68,8 +68,7 @@ api_platform:
         json: ['application/merge-patch+json']
 
     # Asset configuration for file uploads
-    asset:
-        package: 'default'
+    asset_package: 'default'
 
     # HTTP cache
     http_cache:
