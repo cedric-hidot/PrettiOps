@@ -53,7 +53,7 @@ framework:
         mapping:
             paths: ['%kernel.project_dir%/config/serialization']
 
-    validator:
+    validation:
         enable_attributes: true
 
     uid:
