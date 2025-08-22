@@ -49,12 +49,12 @@ framework:
             interval: '1 hour'
 
     serializer:
-        enable_annotations: true
+        enable_attributes: true
         mapping:
             paths: ['%kernel.project_dir%/config/serialization']
 
     validator:
-        enable_annotations: true
+        enable_attributes: true
 
     uid:
         default_uuid_version: 7

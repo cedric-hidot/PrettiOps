@@ -94,8 +94,3 @@ when@prod:
                 shared_max_age: 86400
                 public: true
                 vary: ['Content-Type', 'Authorization']
-            normalization_context:
-                groups: ['read']
-                enable_max_depth: true
-            denormalization_context:
-                groups: ['write']
