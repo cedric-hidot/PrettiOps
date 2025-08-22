@@ -11,8 +11,14 @@ import './styles/app.scss';
 // Import design system CSS variables
 import '../../design/design-system/tokens.css';
 
-// Import Stimulus controllers
-import './bootstrap.js';
+// Start the Stimulus application
+import { startStimulusApp } from '@symfony/stimulus-bridge';
+
+export const app = startStimulusApp(require.context(
+    '@symfony/stimulus-bridge/lazy-controller-loader!./controllers',
+    true,
+    /\.(j|t)sx?$/
+));
 
 // Import Turbo for SPA-like navigation
 import * as Turbo from '@hotwired/turbo';
