@@ -9,7 +9,7 @@
 import './styles/app.scss';
 
 // Import design system CSS variables
-import '../../design/design-system/tokens.css';
+// import '../../design/design-system/tokens.css'; // TODO: Add this file or remove import
 
 // Start the Stimulus application
 import { startStimulusApp } from '@symfony/stimulus-bridge';
