@@ -16,8 +16,7 @@ build:
     flavor: composer
 
 dependencies:
-    nodejs:
-        version: "18"
+    nodejs: "18"
 
 hooks:
     build: |
@@ -47,6 +46,10 @@ web:
                     allow: true
 
 disk: 2048
+
+relationships:
+    database: "database:postgresql"
+    redis: "redis:redis"
 
 mounts:
     'var': { source: local, source_path: var }
