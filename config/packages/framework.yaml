@@ -35,15 +35,15 @@ framework:
     rate_limiter:
         anonymous_api:
             policy: 'sliding_window'
-            limit: '%env(default:100:int:RATE_LIMIT_ANONYMOUS)%'
+            limit: 100
             interval: '1 hour'
         authenticated_api:
             policy: 'sliding_window'
-            limit: '%env(default:1000:int:RATE_LIMIT_AUTHENTICATED)%'
+            limit: 1000
             interval: '1 hour'
         api_key:
             policy: 'sliding_window'
-            limit: '%env(default:5000:int:RATE_LIMIT_API_KEY)%'
+            limit: 5000
             interval: '1 hour'
 
     serializer:
