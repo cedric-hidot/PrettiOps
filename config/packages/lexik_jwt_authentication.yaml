@@ -27,10 +27,9 @@ lexik_jwt_authentication:
     # Token payload customization
     set_cookies:
         refresh_token:
-            enabled: true
-            same_site: lax
+            samesite: lax
             secure: auto
-            http_only: true
+            httpOnly: true
             lifetime: 2592000 # 30 days
 
 when@prod:
