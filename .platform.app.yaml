@@ -6,6 +6,7 @@ runtime:
     extensions:
         - redis
         - pdo_pgsql
+        - sodium
 
 variables:
     env:

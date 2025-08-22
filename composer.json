@@ -12,6 +12,7 @@
         "ext-pdo": "*",
         "ext-pdo_pgsql": "*",
         "ext-redis": "*",
+        "ext-sodium": "*",
         "symfony/console": "7.1.*",
         "symfony/dotenv": "7.1.*",
         "symfony/flex": "^2",
