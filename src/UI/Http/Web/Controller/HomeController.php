@@ -2,9 +2,9 @@
 
 namespace App\UI\Http\Web\Controller;
 
-use App\Domain\User\Entity\User;
-use App\Infrastructure\Persistence\Doctrine\Repository\SnippetRepository;
-use App\Infrastructure\Persistence\Doctrine\Repository\UserRepository;
+use App\User\Domain\Entity\User;
+use App\Snippet\Infrastructure\Persistence\Doctrine\SnippetRepository;
+use App\User\Infrastructure\Persistence\Doctrine\UserRepository;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

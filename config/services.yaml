@@ -25,96 +25,116 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
-            - '../src/Domain/*/Entity/'
-            - '../src/Domain/*/ValueObject/'
-            - '../src/Domain/*/Event/'
+            - '../src/*/Domain/Entity/'
+            - '../src/*/Domain/ValueObject/'
+            - '../src/*/Domain/Event/'
+            - '../src/Domain/'
+            - '../src/Infrastructure/'
+            - '../src/Application/'
+            - '../src/UI/'
 
-    # Domain Services
-    App\Domain\:
-        resource: '../src/Domain/*/Service/'
+    # Bounded Context Services (DDD Structure)
+    App\Shared\:
+        resource: '../src/Shared/'
         
-    # Application Layer Services
-    App\Application\:
-        resource: '../src/Application/'
+    App\User\:
+        resource: '../src/User/'
         
-    # Infrastructure Services
-    App\Infrastructure\:
-        resource: '../src/Infrastructure/'
+    App\Snippet\:
+        resource: '../src/Snippet/'
         
-    # UI Controllers  
-    App\UI\:
-        resource: '../src/UI/'
+    App\Sharing\:
+        resource: '../src/Sharing/'
+        
+    App\Attachment\:
+        resource: '../src/Attachment/'
+        
+    App\Token\:
+        resource: '../src/Token/'
+        
+    App\Billing\:
+        resource: '../src/Billing/'
+        
+    App\Analytics\:
+        resource: '../src/Analytics/'
+        
+    # Integration and Collaboration BCs will be added when implemented
+    # App\Integration\:
+    #     resource: '../src/Integration/'
+    #     
+    # App\Collaboration\:
+    #     resource: '../src/Collaboration/'
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
-    # Encryption Service (now in Infrastructure)
-    App\Infrastructure\Security\EncryptionService:
+    # Encryption Service (now in Shared Infrastructure)
+    App\Shared\Infrastructure\Security\Encryption\EncryptionService:
         arguments:
             $encryptionKey: '%encryption_key%'
             $cipher: '%env(default:default_cipher:AES_CIPHER)%'
 
-    # Token Masking Service (now in Infrastructure)
-    App\Infrastructure\Security\TokenMaskingService: ~
+    # Token Masking Service (now in Shared Infrastructure)
+    App\Shared\Infrastructure\Security\TokenMaskingService: ~
 
-    # Security Services (now in Infrastructure)
-    App\Infrastructure\Security\SecurityService: ~
-    App\Infrastructure\Security\OAuth2\JwtTokenService: ~
+    # Security Services (now in User Infrastructure)
+    App\User\Infrastructure\Security\SecurityService: ~
+    App\User\Infrastructure\Security\OAuth2\JwtTokenService: ~
 
     # Rate Limiting
     App\EventListener\RateLimitListener:
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
 
-    # RGPD Services (now in Infrastructure)
-    App\Infrastructure\Security\RgpdComplianceService: ~
+    # RGPD Services (now in User Infrastructure)
+    App\User\Infrastructure\Security\RgpdComplianceService: ~
 
-    # File Upload Services (now in Infrastructure)
-    App\Infrastructure\Storage\FileUploadService:
+    # File Upload Services (now in Attachment Infrastructure)
+    App\Attachment\Infrastructure\Storage\FileUploadService:
         arguments:
             $uploadDirectory: '%upload_directory%'
             $maxFileSize: '%max_file_size%'
 
-    # Repository Interface Bindings
-    App\Domain\User\Repository\UserRepositoryInterface:
-        alias: App\Infrastructure\Persistence\Doctrine\Repository\UserRepository
+    # Repository Interface Bindings (DDD Structure)
+    App\User\Domain\Repository\UserRepositoryInterface:
+        alias: App\User\Infrastructure\Persistence\Doctrine\UserRepository
         
-    App\Domain\Snippet\Repository\SnippetRepositoryInterface:
-        alias: App\Infrastructure\Persistence\Doctrine\Repository\SnippetRepository
+    App\Snippet\Domain\Repository\SnippetRepositoryInterface:
+        alias: App\Snippet\Infrastructure\Persistence\Doctrine\SnippetRepository
         
-    App\Domain\Share\Repository\ShareRepositoryInterface:
-        alias: App\Infrastructure\Persistence\Doctrine\Repository\ShareRepository
+    App\Sharing\Domain\Repository\ShareRepositoryInterface:
+        alias: App\Sharing\Infrastructure\Persistence\Doctrine\ShareRepository
         
-    App\Domain\Snippet\Repository\AttachmentRepositoryInterface:
-        alias: App\Infrastructure\Persistence\Doctrine\Repository\AttachmentRepository
+    App\Attachment\Domain\Repository\AttachmentRepositoryInterface:
+        alias: App\Attachment\Infrastructure\Persistence\Doctrine\AttachmentRepository
         
-    App\Domain\Snippet\Repository\FavoriteRepositoryInterface:
-        alias: App\Infrastructure\Persistence\Doctrine\Repository\FavoriteRepository
+    App\Snippet\Domain\Repository\FavoriteRepositoryInterface:
+        alias: App\Snippet\Infrastructure\Persistence\Doctrine\FavoriteRepository
 
     # Legacy Repository Services (for backward compatibility)
     App\Repository\UserRepository:
-        alias: App\Infrastructure\Persistence\Doctrine\Repository\UserRepository
+        alias: App\User\Infrastructure\Persistence\Doctrine\UserRepository
     App\Repository\SnippetRepository:
-        alias: App\Infrastructure\Persistence\Doctrine\Repository\SnippetRepository
+        alias: App\Snippet\Infrastructure\Persistence\Doctrine\SnippetRepository
     App\Repository\ShareRepository:
-        alias: App\Infrastructure\Persistence\Doctrine\Repository\ShareRepository
+        alias: App\Sharing\Infrastructure\Persistence\Doctrine\ShareRepository
     App\Repository\AttachmentRepository:
-        alias: App\Infrastructure\Persistence\Doctrine\Repository\AttachmentRepository
+        alias: App\Attachment\Infrastructure\Persistence\Doctrine\AttachmentRepository
     App\Repository\FavoriteRepository:
-        alias: App\Infrastructure\Persistence\Doctrine\Repository\FavoriteRepository
+        alias: App\Snippet\Infrastructure\Persistence\Doctrine\FavoriteRepository
     
     # Service aliases for backward compatibility
     App\Service\EncryptionService:
-        alias: App\Infrastructure\Security\EncryptionService
+        alias: App\Shared\Infrastructure\Security\Encryption\EncryptionService
     App\Service\TokenMaskingService:
-        alias: App\Infrastructure\Security\TokenMaskingService
+        alias: App\Shared\Infrastructure\Security\TokenMaskingService
     App\Service\SecurityService:
-        alias: App\Infrastructure\Security\SecurityService
+        alias: App\User\Infrastructure\Security\SecurityService
     App\Service\RgpdComplianceService:
-        alias: App\Infrastructure\Security\RgpdComplianceService
+        alias: App\User\Infrastructure\Security\RgpdComplianceService
     App\Service\FileUploadService:
-        alias: App\Infrastructure\Storage\FileUploadService
+        alias: App\Attachment\Infrastructure\Storage\FileUploadService
     App\Security\JwtTokenService:
-        alias: App\Infrastructure\Security\OAuth2\JwtTokenService
+        alias: App\User\Infrastructure\Security\OAuth2\JwtTokenService
     App\Security\AppCustomAuthenticator:
-        alias: App\Infrastructure\Security\OAuth2\AppCustomAuthenticator
+        alias: App\User\Infrastructure\Security\OAuth2\AppCustomAuthenticator

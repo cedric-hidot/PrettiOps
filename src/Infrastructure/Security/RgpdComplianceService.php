@@ -2,12 +2,12 @@
 
 namespace App\Infrastructure\Security;
 
-use App\Domain\User\Entity\User;
-use App\Infrastructure\Persistence\Doctrine\Repository\UserRepository;
-use App\Infrastructure\Persistence\Doctrine\Repository\SnippetRepository;
-use App\Infrastructure\Persistence\Doctrine\Repository\AttachmentRepository;
-use App\Infrastructure\Persistence\Doctrine\Repository\ShareRepository;
-use App\Infrastructure\Storage\FileUploadService;
+use App\User\Domain\Entity\User;
+use App\User\Infrastructure\Persistence\Doctrine\UserRepository;
+use App\Snippet\Infrastructure\Persistence\Doctrine\SnippetRepository;
+use App\Attachment\Infrastructure\Persistence\Doctrine\AttachmentRepository;
+use App\Sharing\Infrastructure\Persistence\Doctrine\ShareRepository;
+use App\Attachment\Infrastructure\Storage\FileUploadService;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Mailer\MailerInterface;

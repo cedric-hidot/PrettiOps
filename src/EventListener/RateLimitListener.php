@@ -2,7 +2,7 @@
 
 namespace App\EventListener;
 
-use App\Service\SecurityService;
+use App\User\Infrastructure\Security\SecurityService;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\HttpFoundation\JsonResponse;

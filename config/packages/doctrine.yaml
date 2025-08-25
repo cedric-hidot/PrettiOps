@@ -16,27 +16,86 @@ doctrine:
         report_fields_where_declared: true
         validate_xml_mapping: true
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
-        auto_mapping: true
+        auto_mapping: false
         mappings:
-            # Domain Entity mappings for DDD structure
+            # User Bounded Context
             User:
                 type: attribute
                 is_bundle: false
-                dir: '%kernel.project_dir%/src/Domain/User/Entity'
-                prefix: 'App\Domain\User\Entity'
+                dir: '%kernel.project_dir%/src/User/Domain/Entity'
+                prefix: 'App\User\Domain\Entity'
                 alias: User
+            
+            # Snippet Bounded Context
             Snippet:
                 type: attribute
                 is_bundle: false
-                dir: '%kernel.project_dir%/src/Domain/Snippet/Entity'
-                prefix: 'App\Domain\Snippet\Entity'
+                dir: '%kernel.project_dir%/src/Snippet/Domain/Entity'
+                prefix: 'App\Snippet\Domain\Entity'
                 alias: Snippet
-            Share:
+            
+            # Attachment Bounded Context
+            Attachment:
+                type: attribute
+                is_bundle: false
+                dir: '%kernel.project_dir%/src/Attachment/Domain/Entity'
+                prefix: 'App\Attachment\Domain\Entity'
+                alias: Attachment
+            
+            # Sharing Bounded Context
+            Sharing:
+                type: attribute
+                is_bundle: false
+                dir: '%kernel.project_dir%/src/Sharing/Domain/Entity'
+                prefix: 'App\Sharing\Domain\Entity'
+                alias: Sharing
+            
+            # Integration and Collaboration BCs will be added when implemented
+            # Integration:
+            #     type: attribute
+            #     is_bundle: false
+            #     dir: '%kernel.project_dir%/src/Integration/Domain/Entity'
+            #     prefix: 'App\Integration\Domain\Entity'
+            #     alias: Integration
+            # 
+            # Collaboration:
+            #     type: attribute
+            #     is_bundle: false
+            #     dir: '%kernel.project_dir%/src/Collaboration/Domain/Entity'
+            #     prefix: 'App\Collaboration\Domain\Entity'
+            #     alias: Collaboration
+            
+            # Token Bounded Context
+            Token:
+                type: attribute
+                is_bundle: false
+                dir: '%kernel.project_dir%/src/Token/Domain/Entity'
+                prefix: 'App\Token\Domain\Entity'
+                alias: Token
+            
+            # Billing Bounded Context
+            Billing:
+                type: attribute
+                is_bundle: false
+                dir: '%kernel.project_dir%/src/Billing/Domain/Entity'
+                prefix: 'App\Billing\Domain\Entity'
+                alias: Billing
+            
+            # Analytics Bounded Context
+            Analytics:
+                type: attribute
+                is_bundle: false
+                dir: '%kernel.project_dir%/src/Analytics/Domain/Entity'
+                prefix: 'App\Analytics\Domain\Entity'
+                alias: Analytics
+            
+            # Legacy mapping for Share entity still in old location
+            ShareLegacy:
                 type: attribute
                 is_bundle: false
                 dir: '%kernel.project_dir%/src/Domain/Share/Entity'
                 prefix: 'App\Domain\Share\Entity'
-                alias: Share
+                alias: ShareLegacy
         dql:
             string_functions:
                 # Enable PostgreSQL-specific functions

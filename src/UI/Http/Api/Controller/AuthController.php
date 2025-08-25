@@ -2,11 +2,11 @@
 
 namespace App\UI\Http\Api\Controller;
 
-use App\Domain\User\Entity\User;
-use App\Infrastructure\Persistence\Doctrine\Repository\UserRepository;
+use App\User\Domain\Entity\User;
+use App\User\Infrastructure\Persistence\Doctrine\UserRepository;
 use App\Security\JwtTokenService;
-use App\Infrastructure\Security\SecurityService;
-use App\Infrastructure\Security\RgpdComplianceService;
+use App\User\Infrastructure\Security\SecurityService;
+use App\User\Infrastructure\Security\RgpdComplianceService;
 use Doctrine\ORM\EntityManagerInterface;
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;

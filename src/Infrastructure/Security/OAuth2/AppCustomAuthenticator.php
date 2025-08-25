@@ -3,8 +3,8 @@
 namespace App\Infrastructure\Security\OAuth2;
 
 use App\Entity\User;
-use App\Repository\UserRepository;
-use App\Service\SecurityService;
+use App\User\Infrastructure\Persistence\Doctrine\UserRepository;
+use App\User\Infrastructure\Security\SecurityService;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;

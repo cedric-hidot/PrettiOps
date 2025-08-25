@@ -1,12 +1,12 @@
 <?php
 
-namespace App\UI\Http\Api\Controller;
+namespace App\Shared\UI\Http\Api\Controller;
 
-use App\Domain\Share\Entity\Share;
-use App\Domain\Snippet\Entity\Snippet;
-use App\Domain\User\Entity\User;
-use App\Infrastructure\Persistence\Doctrine\Repository\ShareRepository;
-use App\Infrastructure\Persistence\Doctrine\Repository\SnippetRepository;
+use App\Sharing\Domain\Entity\Share;
+use App\Snippet\Domain\Entity\Snippet;
+use App\User\Domain\Entity\User;
+use App\Sharing\Infrastructure\Persistence\Doctrine\ShareRepository;
+use App\Snippet\Infrastructure\Persistence\Doctrine\SnippetRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

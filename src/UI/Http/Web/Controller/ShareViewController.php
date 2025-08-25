@@ -1,9 +1,9 @@
 <?php
 
-namespace App\UI\Http\Web\Controller;
+namespace App\Shared\UI\Http\Web\Controller;
 
-use App\Infrastructure\Persistence\Doctrine\Repository\ShareRepository;
-use App\Infrastructure\Security\SecurityService;
+use App\Sharing\Infrastructure\Persistence\Doctrine\ShareRepository;
+use App\User\Infrastructure\Security\SecurityService;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

@@ -2,10 +2,10 @@
 
 namespace App\UI\Http\Web\Controller;
 
-use App\Domain\User\Entity\User;
-use App\Infrastructure\Persistence\Doctrine\Repository\UserRepository;
-use App\Infrastructure\Security\SecurityService;
-use App\Infrastructure\Storage\FileUploadService;
+use App\User\Domain\Entity\User;
+use App\User\Infrastructure\Persistence\Doctrine\UserRepository;
+use App\User\Infrastructure\Security\SecurityService;
+use App\Attachment\Infrastructure\Storage\FileUploadService;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

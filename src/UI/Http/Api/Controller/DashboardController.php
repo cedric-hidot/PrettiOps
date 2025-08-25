@@ -2,7 +2,7 @@
 
 namespace App\UI\Http\Api\Controller;
 
-use App\Infrastructure\Persistence\Doctrine\Repository\SnippetRepository;
+use App\Snippet\Infrastructure\Persistence\Doctrine\SnippetRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
-use App\Domain\User\Entity\User;
+use App\User\Domain\Entity\User;
 
 /**
  * API Dashboard Controller
