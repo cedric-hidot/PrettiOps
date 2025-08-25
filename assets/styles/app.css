@@ -1,0 +1,225 @@
+/* Import Tailwind CSS */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Import custom styles */
+@import './notifications.scss';
+
+/* PrettiOps Design System */
+:root {
+    /* Colors */
+    --color-primary: #6f00ff;
+    --color-primary-dark: #5a00d6;
+    --color-neutral-white: #ffffff;
+    --color-neutral-light: #f5f4f4;
+    --color-neutral-dark: #0d0d0d;
+    
+    /* Typography */
+    --font-title: 'DM Sans', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --font-code: 'Fira Code', monospace;
+}
+
+/* Base styles */
+body {
+    font-family: var(--font-body);
+    background-color: var(--color-neutral-light);
+}
+
+/* Typography classes */
+.font-title {
+    font-family: var(--font-title);
+}
+
+.font-body {
+    font-family: var(--font-body);
+}
+
+.font-code {
+    font-family: var(--font-code);
+}
+
+/* Glass morphism utilities */
+.glass-morphism {
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.glass-morphism-dark {
+    backdrop-filter: blur(10px);
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Loading spinner */
+.loading-spinner {
+    @apply w-4 h-4 border-2 border-purple-600 border-t-transparent;
+    @apply rounded-full animate-spin;
+}
+
+/* Button loading state */
+.btn.loading {
+    @apply relative text-transparent pointer-events-none;
+    
+    &::after {
+        content: '';
+        @apply absolute inset-0 flex items-center justify-center;
+        @apply loading-spinner;
+    }
+}
+
+/* Skip to main content link */
+.skip-to-main {
+    @apply absolute -top-full left-4 z-50;
+    @apply bg-purple-600 text-white px-4 py-2 rounded-md;
+    @apply transition-all duration-200;
+    
+    &:focus {
+        @apply top-4;
+    }
+}
+
+/* Custom scrollbars */
+.custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(111, 0, 255, 0.3) transparent;
+    
+    &::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+    }
+    
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+        background-color: rgba(111, 0, 255, 0.3);
+        border-radius: 3px;
+        
+        &:hover {
+            background-color: rgba(111, 0, 255, 0.5);
+        }
+    }
+}
+
+/* Focus styles */
+.focus-ring {
+    @apply focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2;
+}
+
+/* Transition utilities */
+.transition-all {
+    transition: all 0.2s ease-in-out;
+}
+
+.transition-fast {
+    transition: all 0.1s ease-in-out;
+}
+
+.transition-slow {
+    transition: all 0.3s ease-in-out;
+}
+
+/* Animation utilities */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateX(-20px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.3s ease-out;
+}
+
+.animate-slide-in {
+    animation: slideIn 0.3s ease-out;
+}
+
+/* Monaco Editor specific styles */
+.monaco-editor-container {
+    @apply relative overflow-hidden;
+    
+    .monaco-editor {
+        @apply rounded-lg;
+    }
+}
+
+/* Snippet card hover effects */
+.snippet-card {
+    @apply transition-all duration-200;
+    
+    &:hover {
+        @apply shadow-md transform scale-[1.02];
+    }
+    
+    &--focused {
+        @apply ring-2 ring-purple-500 ring-offset-2;
+    }
+    
+    &--archived {
+        @apply opacity-60 grayscale;
+    }
+}
+
+/* Drag and drop styles */
+.drag-over {
+    @apply border-purple-400 bg-purple-50;
+}
+
+/* Error states */
+.error-state {
+    @apply border-red-300 bg-red-50 text-red-700;
+}
+
+.success-state {
+    @apply border-green-300 bg-green-50 text-green-700;
+}
+
+/* Print styles */
+@media print {
+    .no-print {
+        display: none !important;
+    }
+    
+    .print-only {
+        display: block !important;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    :root {
+        --color-primary: #4a00b8;
+        --color-neutral-white: #ffffff;
+        --color-neutral-light: #f0f0f0;
+        --color-neutral-dark: #000000;
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Dark mode support (for future implementation) */
+@media (prefers-color-scheme: dark) {
+    .dark-mode-auto {
+        @apply bg-gray-900 text-gray-100;
+        
+        .glass-morphism {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    }
+}

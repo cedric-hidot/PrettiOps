@@ -42,8 +42,8 @@ Encore
     .cleanupOutputBeforeBuild()
     .enableBuildNotifications()
     .enableSourceMaps(!Encore.isProduction())
-    // enables hashed filenames (e.g. app.abc123.css)
-    .enableVersioning(Encore.isProduction())
+    // enables hashed filenames (e.g. app.abc123.css) - enable for all environments for cache busting
+    .enableVersioning(true)
 
     .configureBabel((config) => {
         // Class properties are now enabled by default in @babel/preset-env
@@ -92,9 +92,8 @@ Encore
     // uncomment if you're having problems with a jQuery plugin
     // .autoProvidejQuery()
 
-    // Copy Monaco Editor workers and Service Worker
+    // Copy Service Worker only (Monaco Editor removed)
     .copyFiles([
-        {from: './node_modules/monaco-editor/min/vs', to: 'monaco/vs/[path][name].[ext]'},
         {from: './assets/js/service-worker.js', to: 'service-worker.js'},
     ])
 ;

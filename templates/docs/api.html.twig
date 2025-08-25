@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}API Documentation - PrettiOps{% endblock %}
+
+{% block body_class %}liquid-glass-page{% endblock %}
+
+{% block body %}
+<section class="glass-section">
+<div class="glass-container">
+    <h1 class="glass-title h1 mb-8">API Documentation</h1>
+    
+    <div class="glass-card">
+        <h2 class="glass-title h2 mb-6">RESTful API</h2>
+        <p class="glass-text lead mb-6">
+            PrettiOps provides a comprehensive REST API for managing code snippets, users, and integrations.
+        </p>
+        
+        <div class="space-y-6">
+            <div>
+                <h3 class="glass-title h3 mb-2">Authentication</h3>
+                <p class="glass-text">Use JWT tokens for API authentication.</p>
+                <div class="glass-card solid mt-2">
+                    <code class="glass-code">Authorization: Bearer YOUR_JWT_TOKEN</code>
+                </div>
+            </div>
+            
+            <div>
+                <h3 class="glass-title h3 mb-2">Endpoints</h3>
+                <ul class="space-y-2 glass-text">
+                    <li><strong>GET /api/snippets</strong> - List all snippets</li>
+                    <li><strong>POST /api/snippets</strong> - Create a new snippet</li>
+                    <li><strong>GET /api/snippets/{id}</strong> - Get a specific snippet</li>
+                    <li><strong>PUT /api/snippets/{id}</strong> - Update a snippet</li>
+                    <li><strong>DELETE /api/snippets/{id}</strong> - Delete a snippet</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+</section>
+{% endblock %}

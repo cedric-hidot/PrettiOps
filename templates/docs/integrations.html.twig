@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Integration Guide - PrettiOps{% endblock %}
+
+{% block body %}
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold text-gray-900 mb-8">Integration Guide</h1>
+    
+    <div class="bg-white border border-gray-200 rounded-xl shadow-sm p-8">
+        <h2 class="text-2xl font-semibold mb-6">Setting Up Integrations</h2>
+        
+        <div class="space-y-8">
+            <div>
+                <h3 class="text-lg font-semibold mb-4">GitHub Integration</h3>
+                <ol class="list-decimal list-inside space-y-2 text-gray-600">
+                    <li>Go to <a href="{{ path('app_integrations_github') }}" class="text-blue-600">GitHub Integration</a> page</li>
+                    <li>Click "Connect GitHub" button</li>
+                    <li>Authorize PrettiOps to access your GitHub account</li>
+                    <li>Select repositories you want to integrate with</li>
+                    <li>Start exporting snippets to your repositories</li>
+                </ol>
+            </div>
+            
+            <div>
+                <h3 class="text-lg font-semibold mb-4">Jira Integration</h3>
+                <ol class="list-decimal list-inside space-y-2 text-gray-600">
+                    <li>Go to <a href="{{ path('app_integrations_jira') }}" class="text-blue-600">Jira Integration</a> page</li>
+                    <li>Enter your Jira workspace URL</li>
+                    <li>Authenticate with your Jira credentials</li>
+                    <li>Select projects to integrate with</li>
+                    <li>Link snippets to Jira issues</li>
+                </ol>
+            </div>
+            
+            <div>
+                <h3 class="text-lg font-semibold mb-4">IDE Export</h3>
+                <p class="text-gray-600">
+                    Export your snippets to various IDEs and editors for seamless workflow integration.
+                    Visit the <a href="{{ path('app_integrations_ide') }}" class="text-blue-600">IDE Integration</a> page to get started.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

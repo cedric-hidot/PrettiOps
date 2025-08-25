@@ -1,0 +1,51 @@
+{#
+ * Simple Navbar - Basic version without complex routes
+#}
+
+<nav class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-lg border-b border-gray-200/50">
+    <div class="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
+        
+        <!-- Brand Logo -->
+        <a 
+            href="{{ path('app_home') }}" 
+            class="flex items-center gap-3 text-decoration-none"
+            aria-label="PrettiOps Home"
+        >
+            <div class="w-10 h-10 bg-gradient-to-br from-purple-600 to-purple-700 rounded-xl flex items-center justify-center text-white font-bold text-lg shadow-lg">
+                P
+            </div>
+            <span class="hidden md:block text-xl font-bold text-gray-900">PrettiOps</span>
+        </a>
+        
+        <!-- Simple Navigation -->
+        {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+            <div class="hidden md:flex items-center gap-6">
+                <span class="text-gray-600">Features</span>
+                <span class="text-gray-600">Pricing</span>
+                <span class="text-gray-600">Docs</span>
+                
+                <div class="flex items-center gap-3">
+                    <span class="text-gray-600 cursor-pointer">Sign In</span>
+                    <span class="bg-purple-600 text-white px-4 py-2 rounded-lg cursor-pointer hover:bg-purple-700 transition-colors">
+                        Get Started Free
+                    </span>
+                </div>
+            </div>
+        {% else %}
+            <div class="flex items-center gap-4">
+                <span class="text-gray-600">Dashboard</span>
+                <span class="text-gray-600">Editor</span>
+                <span class="text-gray-600">Snippets</span>
+            </div>
+        {% endif %}
+        
+        <!-- Mobile menu button -->
+        <div class="md:hidden">
+            <button class="text-gray-600 hover:text-gray-900">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+    </div>
+</nav>

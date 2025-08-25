@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Jira Integration - PrettiOps{% endblock %}
+
+{% block body %}
+<div class="container mx-auto px-4 py-8">
+    <div class="mb-8">
+        <h1 class="text-3xl font-bold text-gray-900 mb-2">Jira Integration</h1>
+        <p class="text-gray-600">Link code snippets to Jira issues and tickets for better project tracking.</p>
+    </div>
+    
+    <div class="bg-white border border-gray-200 rounded-xl shadow-sm p-8">
+        <div class="text-center">
+            <div class="w-20 h-20 bg-blue-600 rounded-lg flex items-center justify-center text-white text-3xl mx-auto mb-6">
+                📋
+            </div>
+            <h2 class="text-2xl font-semibold mb-4">Connect your Jira workspace</h2>
+            <p class="text-gray-600 mb-8 max-w-md mx-auto">
+                Connect to your Jira workspace to attach code snippets to issues and improve collaboration.
+            </p>
+            
+            <button class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium">
+                <span class="flex items-center justify-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                    Connect Jira
+                </span>
+            </button>
+        </div>
+    </div>
+</div>
+{% endblock %}

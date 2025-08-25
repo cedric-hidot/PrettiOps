@@ -79,10 +79,12 @@ class LoadingStatesManager {
         backdrop-filter: blur(2px);
         transition: opacity 0.2s ease-in-out;
         opacity: 0;
+        pointer-events: none;
       }
 
       .loading-overlay.show {
         opacity: 1;
+        pointer-events: auto;
       }
 
       .dark .loading-overlay {
@@ -110,6 +112,7 @@ class LoadingStatesManager {
         align-items: center;
         z-index: 1;
         opacity: 0;
+        pointer-events: none;
         animation: fadeIn 0.2s ease-in-out forwards;
       }
 
@@ -565,6 +568,7 @@ class LoadingStatesManager {
       background: rgba(255, 255, 255, 0.9);
       z-index: 10;
       opacity: 0;
+        pointer-events: none;
       transition: opacity ${config.transitionDuration}ms ease-in-out;
     `;
 

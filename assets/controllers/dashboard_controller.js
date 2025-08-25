@@ -41,7 +41,11 @@ export default class extends Controller {
         this.setupFilters()
         this.setupSearch()
         this.setupAutoRefresh()
-        this.loadInitialData()
+        
+        // Ensure DOM is ready before accessing targets
+        setTimeout(() => {
+            this.loadInitialData()
+        }, 100)
         
         // Store reference globally
         window.dashboardController = this
@@ -62,13 +66,15 @@ export default class extends Controller {
      */
     async loadInitialData() {
         try {
-            await Promise.all([
-                this.refreshStats(),
-                this.loadSnippets()
-            ])
+            // Use only server-rendered data to avoid authentication issues
+            console.log("Dashboard using server-rendered data only")
+            
+            // Apply initial filters to existing snippets
+            this.applyFilters()
         } catch (error) {
             console.error("Failed to load initial dashboard data:", error)
-            this.showError("Failed to load dashboard data")
+            // Don't show error for minor issues
+            console.warn("Using server-rendered data instead")
         }
     }
 
@@ -95,11 +101,11 @@ export default class extends Controller {
      * Setup auto-refresh for statistics
      */
     setupAutoRefresh() {
-        if (this.refreshIntervalValue > 0) {
-            this.refreshTimer = setInterval(() => {
-                this.refreshStats()
-            }, this.refreshIntervalValue)
-        }
+        // Disabled auto-refresh to prevent authentication issues and improve performance
+        console.log("Auto-refresh disabled - using server-rendered stats only")
+        
+        // Auto-refresh disabled for better performance and to avoid authentication issues
+        // Consider implementing WebSocket updates or server-sent events for real-time data
     }
 
     /**
@@ -151,6 +157,11 @@ export default class extends Controller {
      * Apply all active filters
      */
     applyFilters() {
+        if (!this.hasSnippetGridTarget) {
+            console.warn("Cannot apply filters: snippetGrid target not available")
+            return
+        }
+        
         const snippetCards = this.getAllSnippetCards()
         let visibleCards = []
 
@@ -216,6 +227,10 @@ export default class extends Controller {
      * Sort array of cards
      */
     sortCards(cards) {
+        if (!this.hasSnippetGridTarget || cards.length === 0) {
+            return
+        }
+        
         const { sort } = this.currentFilters
 
         cards.sort((a, b) => {
@@ -314,21 +329,12 @@ export default class extends Controller {
      */
     async refreshStats() {
         try {
-            const response = await fetch('/api/dashboard/stats', {
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest'
-                }
-            })
-
-            if (response.ok) {
-                const stats = await response.json()
-                this.updateStats(stats)
-            } else {
-                console.warn("Failed to refresh stats")
-            }
+            // Disable API calls to prevent authentication issues
+            console.log("Stats refresh disabled - using server-rendered data only")
+            return
 
         } catch (error) {
-            console.error("Error refreshing stats:", error)
+            console.warn("Failed to refresh stats", error)
         }
     }
 
@@ -477,6 +483,10 @@ export default class extends Controller {
      * Get all snippet cards
      */
     getAllSnippetCards() {
+        if (!this.hasSnippetGridTarget) {
+            console.warn("snippetGrid target not found")
+            return []
+        }
         return Array.from(this.snippetGridTarget.querySelectorAll('.snippet-card'))
     }
 

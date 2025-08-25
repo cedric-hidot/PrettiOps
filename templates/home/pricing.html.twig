@@ -1,0 +1,337 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pricing Plans - PrettiOps{% endblock %}
+{% block description %}Choose the perfect plan for your code sharing needs. From free to enterprise solutions.{% endblock %}
+
+{% block body_class %}liquid-glass-page{% endblock %}
+
+{% block content %}
+    {# Hero Section #}
+    <section class="glass-section hero relative">
+        <div class="glass-container text-center">
+            <h1 class="glass-title h1 mb-8">
+                Simple, transparent 
+                <span style="color: var(--glass-accent);">pricing</span>
+            </h1>
+            <p class="glass-text lead mb-8 max-w-3xl mx-auto">
+                Start free, upgrade when you need more. No hidden fees, cancel anytime.
+            </p>
+            
+            {# Billing Toggle #}
+            <div class="flex items-center justify-center gap-4 mb-12">
+                <span class="glass-text">Monthly</span>
+                <button 
+                    id="billing-toggle"
+                    class="relative w-16 h-8 bg-gray-200 rounded-full p-1 transition-all duration-200 hover:bg-gray-300"
+                    onclick="toggleBilling()"
+                >
+                    <div id="toggle-slider" class="w-6 h-6 bg-white rounded-full shadow-sm transition-transform duration-200"></div>
+                </button>
+                <span class="glass-text">
+                    Annual
+                    <span class="glass-badge success text-xs font-semibold ml-2">Save 20%</span>
+                </span>
+            </div>
+        </div>
+    </section>
+
+    {# Pricing Cards #}
+    <section class="glass-section">
+        <div class="glass-container">
+            <div class="glass-grid cols-4">
+                
+                {# Free Plan #}
+                <div class="glass-pricing-card">
+                    <div class="text-center mb-8">
+                        <h3 class="glass-title h3 mb-2">Free</h3>
+                        <div class="pricing-amount mb-4">
+                            <span class="glass-title h2">$0</span>
+                            <span class="glass-text">/month</span>
+                        </div>
+                        <p class="glass-text">Perfect for trying out PrettiOps</p>
+                    </div>
+                    
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center gap-3">
+                            <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="glass-text">10 snippets/month</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="glass-text">Basic syntax highlighting</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="glass-text">7-day link expiration</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="glass-text">Community support</span>
+                        </li>
+                    </ul>
+                    
+                    <a href="{{ path('register') }}" class="glass-btn w-full inline-flex items-center justify-center gap-2">
+                        Get Started Free
+                    </a>
+                </div>
+
+                {# Pro Plan #}
+                <div class="glass-pricing-card featured">
+                    {# Most Popular badge is handled by the featured class in CSS #}
+                    
+                    <div class="text-center mb-8">
+                        <h3 class="glass-title h3 mb-2">Pro</h3>
+                        <div class="pricing-amount mb-4">
+                            <span class="glass-title h2 monthly-price">$9</span>
+                            <span class="glass-title h2 yearly-price hidden">$7</span>
+                            <span class="glass-text">/month</span>
+                        </div>
+                        <p class="glass-text">For individual developers</p>
+                    </div>
+                    
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center gap-3">
+                            <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="glass-text">Unlimited snippets</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="glass-text">Advanced themes & styling</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="glass-text">Data masking & security</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="glass-text">IDE integrations</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="glass-text">Priority support</span>
+                        </li>
+                    </ul>
+                    
+                    <a href="{{ path('register') }}" class="glass-btn primary w-full inline-flex items-center justify-center gap-2">
+                        Start Pro Trial
+                    </a>
+                </div>
+
+                {# Team Plan #}
+                <div class="glass-pricing-card">
+                    <div class="text-center mb-8">
+                        <h3 class="glass-title h3 mb-2">Team</h3>
+                        <div class="pricing-amount mb-4">
+                            <span class="glass-title h2 monthly-price">$25</span>
+                            <span class="glass-title h2 yearly-price hidden">$20</span>
+                            <span class="glass-text">/user/month</span>
+                        </div>
+                        <p class="glass-text">For development teams</p>
+                    </div>
+                    
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center gap-3">
+                            <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="glass-text">Everything in Pro</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="glass-text">Team collaboration</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="glass-text">Code reviews</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="glass-text">SSO integration</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="glass-text">Admin dashboard</span>
+                        </li>
+                    </ul>
+                    
+                    <a href="{{ path('register') }}" class="glass-btn w-full inline-flex items-center justify-center gap-2">
+                        Start Team Trial
+                    </a>
+                </div>
+
+                {# Enterprise Plan #}
+                <div class="glass-pricing-card">
+                    <div class="text-center mb-8">
+                        <h3 class="glass-title h3 mb-2">Enterprise</h3>
+                        <div class="pricing-amount mb-4">
+                            <span class="glass-title h2">Custom</span>
+                        </div>
+                        <p class="glass-text">For large organizations</p>
+                    </div>
+                    
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center gap-3">
+                            <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="glass-text">Everything in Team</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="glass-text">On-premise deployment</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="glass-text">Custom integrations</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="glass-text">SLA & dedicated support</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="glass-text">Training & onboarding</span>
+                        </li>
+                    </ul>
+                    
+                    <a href="mailto:sales@prettiops.com" class="glass-btn w-full inline-flex items-center justify-center gap-2">
+                        Contact Sales
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {# FAQ Section #}
+    <section class="glass-section">
+        <div class="glass-container" style="max-width: 1000px;">
+            <div class="text-center mb-12">
+                <h2 class="glass-title h2 mb-4">Frequently asked questions</h2>
+                <p class="glass-text lead">Everything you need to know about our pricing</p>
+            </div>
+
+            <div class="space-y-6">
+                <details class="group glass-card">
+                    <summary class="flex items-center justify-between cursor-pointer">
+                        <h3 class="glass-title h3">Can I cancel anytime?</h3>
+                        <svg class="w-5 h-5 text-gray-500 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </summary>
+                    <div class="mt-4 glass-text">
+                        Yes, you can cancel your subscription at any time. You'll continue to have access to your paid features until the end of your current billing period.
+                    </div>
+                </details>
+
+                <details class="group glass-card">
+                    <summary class="flex items-center justify-between cursor-pointer">
+                        <h3 class="glass-title h3">Do you offer refunds?</h3>
+                        <svg class="w-5 h-5 text-gray-500 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </summary>
+                    <div class="mt-4 glass-text">
+                        We offer a 30-day money-back guarantee for all paid plans. If you're not satisfied, contact us for a full refund.
+                    </div>
+                </details>
+
+                <details class="group glass-card">
+                    <summary class="flex items-center justify-between cursor-pointer">
+                        <h3 class="glass-title h3">What payment methods do you accept?</h3>
+                        <svg class="w-5 h-5 text-gray-500 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </summary>
+                    <div class="mt-4 glass-text">
+                        We accept all major credit cards (Visa, MasterCard, American Express) and PayPal. Enterprise customers can also pay via bank transfer.
+                    </div>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    {# CTA Section #}
+    <section class="glass-section" style="background: var(--glass-accent);">
+        <div class="glass-container text-center" style="max-width: 1000px;">
+            <h2 class="glass-title h2 mb-4" style="color: white;">Ready to get started?</h2>
+            <p class="glass-text lead mb-8" style="color: rgba(255, 255, 255, 0.9);">Join thousands of developers who trust PrettiOps for their code sharing needs.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="{{ path('register') }}" class="glass-btn large primary inline-flex items-center justify-center gap-2" style="background: white; color: var(--glass-accent);">
+                    Start Free Trial
+                </a>
+                <a href="{{ path('demo') }}" class="glass-btn large inline-flex items-center justify-center gap-2" style="border: 2px solid white; color: white;">
+                    Watch Demo
+                </a>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block page_scripts %}
+<script>
+let isYearly = false;
+
+function toggleBilling() {
+    const toggle = document.getElementById('billing-toggle');
+    const slider = document.getElementById('toggle-slider');
+    const monthlyPrices = document.querySelectorAll('.monthly-price');
+    const yearlyPrices = document.querySelectorAll('.yearly-price');
+    
+    isYearly = !isYearly;
+    
+    if (isYearly) {
+        toggle.classList.add('bg-purple-600');
+        toggle.classList.remove('bg-gray-200');
+        slider.style.transform = 'translateX(32px)';
+        
+        monthlyPrices.forEach(price => price.classList.add('hidden'));
+        yearlyPrices.forEach(price => price.classList.remove('hidden'));
+    } else {
+        toggle.classList.remove('bg-purple-600');
+        toggle.classList.add('bg-gray-200');
+        slider.style.transform = 'translateX(0px)';
+        
+        monthlyPrices.forEach(price => price.classList.remove('hidden'));
+        yearlyPrices.forEach(price => price.classList.add('hidden'));
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('💰 Pricing page loaded');
+});
+</script>
+{% endblock %}

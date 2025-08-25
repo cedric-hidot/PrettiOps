@@ -1,0 +1,317 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}PrettiOps - Beautiful Code Emails for Developers{% endblock %}
+{% block description %}Transform your technical emails with professional code snippets, syntax highlighting, and secure sharing.{% endblock %}
+
+{% block body_class %}liquid-glass-page{% endblock %}
+
+{% block content %}
+    {# Hero Section with Liquid Glass Design #}
+    <section class="glass-section hero">
+        <div class="glass-container">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                
+                {# Left Column - Content #}
+                <div class="text-center lg:text-left">
+                    {# Main heading with liquid glass emphasis #}
+                    <h1 class="glass-title h1 mb-8">
+                        Make your 
+                        <span class="bg-gradient-to-r from-violet-600 to-purple-600 bg-clip-text text-transparent">code emails</span>
+                        <br>
+                        beautiful with PrettiOps
+                    </h1>
+                    
+                    {# Description #}
+                    <p class="glass-text lead mb-8">
+                        Transform your technical communication with professional code snippets, secure sharing, and seamless integrations that make developers smile.
+                    </p>
+                    
+                    {# Trust indicators with glass cards #}
+                    <div class="flex flex-wrap justify-center lg:justify-start items-center gap-4 mb-10">
+                        <div class="glass-card compact flex items-center gap-2">
+                            <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.031 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                            </svg>
+                            <div>
+                                <div class="font-semibold text-sm">GDPR Compliant</div>
+                            </div>
+                        </div>
+                        <div class="glass-card compact flex items-center gap-2">
+                            <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                            </svg>
+                            <div>
+                                <div class="font-semibold text-sm">AES-256 Encrypted</div>
+                            </div>
+                        </div>
+                        <div class="glass-card compact flex items-center gap-2">
+                            <svg class="w-5 h-5 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                            </svg>
+                            <div>
+                                <div class="font-semibold text-sm">150+ Languages</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    {# CTA Buttons with glass design #}
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-12">
+                        <a href="{{ path('register') }}" class="glass-btn primary large">
+                            <span>Start Free Trial</span>
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                            </svg>
+                        </a>
+                        <a href="{{ path('demo') }}" class="glass-btn large">
+                            <span>Watch Demo</span>
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </a>
+                    </div>
+                    
+                    {# Social proof stats with glass cards #}
+                    <div class="grid grid-cols-3 gap-4 text-center">
+                        <div class="glass-card compact">
+                            <div class="text-2xl font-bold text-purple-600">10k+</div>
+                            <div class="text-sm text-gray-600">Developers</div>
+                        </div>
+                        <div class="glass-card compact">
+                            <div class="text-2xl font-bold text-purple-600">50M+</div>
+                            <div class="text-sm text-gray-600">Snippets</div>
+                        </div>
+                        <div class="glass-card compact">
+                            <div class="text-2xl font-bold text-purple-600">99.9%</div>
+                            <div class="text-sm text-gray-600">Uptime</div>
+                        </div>
+                    </div>
+                </div>
+                
+                {# Right Column - Interactive Demo #}
+                <div class="relative">
+                    <div class="glass-card solid">
+                        {# Editor Preview #}
+                        <div class="border-b border-gray-200 pb-4 mb-4">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                                    <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                                    <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                                    <span class="ml-2 text-sm text-gray-600">editor.prettiops.com</span>
+                                </div>
+                                {# Live Preview Badge aligned in header #}
+                                <div class="glass-badge" style="padding: 0.25rem 0.75rem;">
+                                    <span class="text-xs font-semibold">LIVE PREVIEW</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        {# Code Example #}
+                        <pre class="language-javascript overflow-x-auto"><code class="text-sm">// Welcome to PrettiOps
+function sendBeautifulCode() {
+  const snippet = {
+    language: 'javascript',
+    theme: 'github-dark',
+    secure: true,
+    beautiful: true
+  };
+  
+  return PrettiOps.create(snippet)
+    .then(url => share(url))
+    .catch(err => console.error(err));
+}
+
+// Start sharing beautiful code today!
+sendBeautifulCode();</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    {# Features Section #}
+    <section class="glass-section">
+        <div class="glass-container">
+            <div class="text-center mb-12">
+                <h2 class="glass-title h2">Why Developers Choose PrettiOps</h2>
+                <p class="glass-text lead max-w-3xl mx-auto">
+                    Everything you need to make your technical communication professional, secure, and beautiful.
+                </p>
+            </div>
+            
+            {% include 'components/_advanced_feature_cards.html.twig' %}
+        </div>
+    </section>
+    
+    {# Customer Logos Section with Terminal Effect #}
+    <section class="glass-section">
+        <div class="glass-container">
+            <div class="text-center mb-8">
+                <p class="glass-text">Trusted by developers at</p>
+            </div>
+            <div class="flex flex-wrap justify-center items-center gap-6">
+                {# Company names with terminal/code effect #}
+                <div class="company-terminal-item">
+                    <span class="company-prefix">$</span>
+                    <span class="company-name" data-text="Google">Google</span>
+                    <span class="company-cursor">_</span>
+                </div>
+                <div class="company-terminal-item" style="animation-delay: 0.2s">
+                    <span class="company-prefix">&gt;</span>
+                    <span class="company-name" data-text="Microsoft">Microsoft</span>
+                    <span class="company-cursor">_</span>
+                </div>
+                <div class="company-terminal-item" style="animation-delay: 0.4s">
+                    <span class="company-prefix">#</span>
+                    <span class="company-name" data-text="GitHub">GitHub</span>
+                    <span class="company-cursor">_</span>
+                </div>
+                <div class="company-terminal-item" style="animation-delay: 0.6s">
+                    <span class="company-prefix">λ</span>
+                    <span class="company-name" data-text="Amazon">Amazon</span>
+                    <span class="company-cursor">_</span>
+                </div>
+                <div class="company-terminal-item" style="animation-delay: 0.8s">
+                    <span class="company-prefix">//</span>
+                    <span class="company-name" data-text="Meta">Meta</span>
+                    <span class="company-cursor">_</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <style>
+        /* Terminal-style company names effect */
+        .company-terminal-item {
+            font-family: 'Fira Code', 'SF Mono', monospace;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--glass-dark);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 0.5rem 1rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-md);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            animation: terminalFadeIn 0.8s ease-out forwards;
+            opacity: 0;
+        }
+        
+        .company-prefix {
+            color: var(--glass-accent);
+            font-weight: bold;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        .company-name {
+            position: relative;
+            background: linear-gradient(90deg, var(--glass-dark) 0%, var(--glass-accent) 50%, var(--glass-dark) 100%);
+            background-size: 200% 100%;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 3s ease-in-out infinite;
+        }
+        
+        .company-cursor {
+            opacity: 0;
+            animation: blink 1s infinite;
+            color: var(--glass-accent);
+            font-weight: 300;
+        }
+        
+        .company-terminal-item:hover .company-cursor {
+            opacity: 1;
+        }
+        
+        .company-terminal-item:hover .company-name {
+            animation-play-state: paused;
+            background: var(--glass-accent);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .company-terminal-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(111, 0, 255, 0.1), transparent);
+            animation: scanline 4s linear infinite;
+        }
+        
+        @keyframes terminalFadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes gradientShift {
+            0%, 100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+        
+        @keyframes blink {
+            0%, 50% {
+                opacity: 0;
+            }
+            51%, 100% {
+                opacity: 1;
+            }
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.6;
+            }
+        }
+        
+        @keyframes scanline {
+            0% {
+                left: -100%;
+            }
+            100% {
+                left: 200%;
+            }
+        }
+    </style>
+    
+    {# CTA Section #}
+    <section class="glass-section" style="background: linear-gradient(135deg, rgba(111, 0, 255, 0.05) 0%, rgba(139, 92, 246, 0.05) 100%);">
+        <div class="glass-container text-center">
+            <h2 class="glass-title h2 mb-6">Ready to Transform Your Code Emails?</h2>
+            <p class="glass-text lead mb-8">
+                Join thousands of developers who are already sharing beautiful code snippets.
+            </p>
+            <div class="flex gap-4 justify-center">
+                <a href="{{ path('register') }}" class="glass-btn primary large">
+                    Start Free Trial
+                </a>
+                <a href="{{ path('pricing') }}" class="glass-btn large">
+                    View Pricing
+                </a>
+            </div>
+            <p class="glass-text mt-4">No credit card required • 14-day free trial • Cancel anytime</p>
+        </div>
+    </section>
+{% endblock %}

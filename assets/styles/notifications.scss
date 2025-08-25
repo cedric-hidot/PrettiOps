@@ -1,0 +1,442 @@
+/* Notification System Styles */
+
+.notification-container {
+    pointer-events: none;
+    
+    &--top-right {
+        position: fixed;
+        top: 1rem;
+        right: 1rem;
+        z-index: 9999;
+    }
+    
+    &--top-left {
+        position: fixed;
+        top: 1rem;
+        left: 1rem;
+        z-index: 9999;
+    }
+    
+    &--bottom-right {
+        position: fixed;
+        bottom: 1rem;
+        right: 1rem;
+        z-index: 9999;
+    }
+    
+    &--bottom-left {
+        position: fixed;
+        bottom: 1rem;
+        left: 1rem;
+        z-index: 9999;
+    }
+}
+
+.notification {
+    @apply pointer-events-auto mb-4 max-w-sm w-full;
+    @apply bg-white shadow-lg rounded-lg border border-gray-200;
+    @apply transform translate-x-full transition-all duration-300 ease-in-out;
+    @apply opacity-0 scale-95;
+    
+    &--visible {
+        @apply transform translate-x-0 opacity-100 scale-100;
+    }
+    
+    &--hiding {
+        @apply transform translate-x-full opacity-0 scale-95;
+    }
+    
+    &--success {
+        @apply border-green-200 bg-green-50;
+        
+        .notification-icon {
+            @apply text-green-600;
+        }
+        
+        .notification-title {
+            @apply text-green-900;
+        }
+        
+        .notification-message {
+            @apply text-green-800;
+        }
+    }
+    
+    &--error {
+        @apply border-red-200 bg-red-50;
+        
+        .notification-icon {
+            @apply text-red-600;
+        }
+        
+        .notification-title {
+            @apply text-red-900;
+        }
+        
+        .notification-message {
+            @apply text-red-800;
+        }
+    }
+    
+    &--warning {
+        @apply border-amber-200 bg-amber-50;
+        
+        .notification-icon {
+            @apply text-amber-600;
+        }
+        
+        .notification-title {
+            @apply text-amber-900;
+        }
+        
+        .notification-message {
+            @apply text-amber-800;
+        }
+    }
+    
+    &--info {
+        @apply border-blue-200 bg-blue-50;
+        
+        .notification-icon {
+            @apply text-blue-600;
+        }
+        
+        .notification-title {
+            @apply text-blue-900;
+        }
+        
+        .notification-message {
+            @apply text-blue-800;
+        }
+    }
+    
+    &--loading {
+        @apply border-purple-200 bg-purple-50;
+        
+        .notification-icon {
+            @apply text-purple-600 animate-pulse;
+        }
+        
+        .notification-title {
+            @apply text-purple-900;
+        }
+        
+        .notification-message {
+            @apply text-purple-800;
+        }
+    }
+}
+
+.notification-content {
+    @apply p-4 flex items-start;
+}
+
+.notification-icon {
+    @apply flex-shrink-0 mr-3 text-lg;
+    font-size: 1.125rem;
+}
+
+.notification-body {
+    @apply flex-1 min-w-0;
+}
+
+.notification-title {
+    @apply text-sm font-medium mb-1;
+}
+
+.notification-message {
+    @apply text-sm leading-relaxed;
+}
+
+.notification-details {
+    @apply text-xs mt-2 opacity-75;
+}
+
+.notification-close {
+    @apply flex-shrink-0 ml-3 p-1 rounded-md;
+    @apply text-gray-400 hover:text-gray-600;
+    @apply focus:outline-none focus:ring-2 focus:ring-purple-500;
+    @apply transition-colors duration-200;
+    
+    &:hover {
+        background-color: rgba(255, 255, 255, 0.5);
+    }
+}
+
+.notification-actions {
+    @apply px-4 pb-4 pt-0 flex gap-2;
+}
+
+.notification-action {
+    @apply px-3 py-1 text-sm font-medium rounded-md;
+    @apply border transition-colors duration-200;
+    @apply focus:outline-none focus:ring-2 focus:ring-purple-500;
+    
+    &--primary {
+        @apply bg-purple-600 text-white border-purple-600;
+        @apply hover:bg-purple-700 hover:border-purple-700;
+    }
+    
+    &--secondary {
+        @apply bg-white text-gray-700 border-gray-300;
+        @apply hover:bg-gray-50 hover:border-gray-400;
+    }
+}
+
+/* Auto-save indicator */
+.auto-save-indicator {
+    @apply fixed top-20 right-4 z-50;
+    @apply bg-green-600 text-white text-sm;
+    @apply px-3 py-2 rounded-lg shadow-lg;
+    @apply transform translate-x-full opacity-0;
+    @apply transition-all duration-300 ease-in-out;
+    animation: slideInAndOut 2s ease-in-out forwards;
+}
+
+@keyframes slideInAndOut {
+    0%, 100% {
+        @apply transform translate-x-full opacity-0;
+    }
+    20%, 80% {
+        @apply transform translate-x-0 opacity-100;
+    }
+}
+
+/* File attachment styles */
+.attachment-item {
+    @apply border border-gray-200 rounded-lg p-3;
+    @apply bg-white hover:bg-gray-50 transition-colors;
+    
+    &--expired {
+        @apply border-red-200 bg-red-50;
+        
+        .attachment-expires {
+            @apply text-red-600 font-medium;
+            
+            &--expired {
+                @apply text-red-700 font-bold;
+            }
+        }
+    }
+}
+
+.attachment-content {
+    @apply flex items-center gap-3;
+}
+
+.attachment-icon {
+    @apply text-2xl flex-shrink-0;
+}
+
+.attachment-info {
+    @apply flex-1 min-w-0;
+}
+
+.attachment-name {
+    @apply font-medium text-gray-900 truncate;
+}
+
+.attachment-meta {
+    @apply flex items-center gap-2 text-sm text-gray-500 mt-1;
+}
+
+.attachment-separator {
+    @apply text-gray-300;
+}
+
+.attachment-actions {
+    @apply flex items-center gap-1;
+}
+
+.attachment-action {
+    @apply p-2 text-gray-400 hover:text-gray-600;
+    @apply rounded-md hover:bg-gray-100 transition-colors;
+    @apply focus:outline-none focus:ring-2 focus:ring-purple-500;
+    
+    &:disabled {
+        @apply opacity-50 cursor-not-allowed;
+    }
+}
+
+.attachment-progress {
+    @apply mt-2 space-y-2;
+    
+    &.hidden {
+        @apply hidden;
+    }
+}
+
+.attachment-progress-bar {
+    @apply h-2 bg-purple-600 rounded-full transition-all duration-300;
+}
+
+.attachment-progress-text {
+    @apply text-xs text-gray-500 text-center;
+}
+
+/* Hidden token styles */
+.hidden-token {
+    @apply inline-flex items-center gap-2 px-3 py-1;
+    @apply bg-orange-50 border border-orange-200 rounded-md;
+    @apply text-orange-800 hover:bg-orange-100;
+    @apply cursor-pointer transition-colors;
+    @apply focus:outline-none focus:ring-2 focus:ring-orange-500;
+    
+    &--revealed {
+        @apply bg-green-50 border-green-200 text-green-800;
+        @apply hover:bg-green-100;
+    }
+    
+    &--loading {
+        @apply bg-gray-50 border-gray-200 text-gray-500;
+        @apply cursor-wait;
+    }
+}
+
+/* Modal styles for 2FA */
+.modal-overlay {
+    @apply fixed inset-0 z-50;
+    background-color: rgba(0, 0, 0, 0.5);
+    @apply opacity-0 invisible transition-all duration-300;
+    
+    &--active {
+        @apply opacity-100 visible;
+    }
+}
+
+.modal {
+    @apply absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    @apply bg-white rounded-xl shadow-2xl border border-gray-200;
+    @apply w-full max-w-md mx-4;
+    @apply transform scale-95 transition-transform duration-300;
+    
+    .modal-overlay--active & {
+        @apply transform scale-100;
+    }
+    
+    &-sm {
+        @apply max-w-sm;
+    }
+    
+    &-md {
+        @apply max-w-md;
+    }
+    
+    &-lg {
+        @apply max-w-2xl;
+    }
+}
+
+.modal-header {
+    @apply px-6 py-4 border-b border-gray-200;
+    @apply flex items-center justify-between;
+}
+
+.modal-title {
+    @apply text-lg font-semibold text-gray-900;
+    @apply flex items-center gap-2;
+}
+
+.modal-icon {
+    @apply text-2xl;
+}
+
+.modal-close {
+    @apply text-gray-400 hover:text-gray-600;
+    @apply text-2xl font-light cursor-pointer;
+    @apply transition-colors duration-200;
+}
+
+.modal-body {
+    @apply px-6 py-6;
+}
+
+.modal-description {
+    @apply text-gray-600 mb-6;
+}
+
+.modal-actions {
+    @apply flex gap-3 justify-end mt-6;
+}
+
+/* 2FA specific styles */
+.2fa-status {
+    @apply text-sm text-gray-600 mb-4 p-3;
+    @apply bg-blue-50 border border-blue-200 rounded-md;
+}
+
+.2fa-form {
+    &.hidden {
+        @apply hidden;
+    }
+}
+
+.2fa-help {
+    @apply mt-6 pt-6 border-t border-gray-100;
+    @apply text-sm text-gray-500 space-y-2;
+    
+    .link-button {
+        @apply text-purple-600 hover:text-purple-700;
+        @apply cursor-pointer underline;
+        @apply bg-transparent border-none p-0;
+    }
+}
+
+/* Integration styles */
+.connection-status {
+    @apply grid grid-cols-1 md:grid-cols-2 gap-4;
+}
+
+.connection-item {
+    @apply flex items-center gap-3 p-4;
+    @apply border border-gray-200 rounded-lg;
+    @apply transition-colors duration-200;
+    
+    &.connected {
+        @apply border-green-200 bg-green-50;
+        
+        .connection-badge {
+            @apply bg-green-100 text-green-800;
+        }
+    }
+    
+    &.disconnected {
+        @apply border-gray-200 bg-gray-50;
+        
+        .connection-badge {
+            @apply bg-gray-100 text-gray-600;
+        }
+    }
+}
+
+.connection-icon {
+    @apply text-2xl flex-shrink-0;
+}
+
+.connection-name {
+    @apply flex-1 font-medium text-gray-900;
+}
+
+.connection-badge {
+    @apply px-2 py-1 text-xs font-medium rounded-full;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+    .notification {
+        @apply max-w-full mx-4;
+    }
+    
+    .notification-container--top-right,
+    .notification-container--bottom-right {
+        @apply right-0;
+    }
+    
+    .notification-container--top-left,
+    .notification-container--bottom-left {
+        @apply left-0;
+    }
+}

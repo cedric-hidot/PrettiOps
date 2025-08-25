@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Features - PrettiOps{% endblock %}
+
+{% block body_class %}liquid-glass-page{% endblock %}
+
+{% block content %}
+    <section class="glass-section hero">
+        <div class="glass-container">
+            <div class="text-center mb-12">
+                <h1 class="glass-title h1">Powerful Features for Developers</h1>
+                <p class="glass-text lead max-w-3xl mx-auto">
+                    Everything you need to share beautiful code snippets in emails and documentation
+                </p>
+            </div>
+            
+            {# Include the feature cards component #}
+            {% include 'components/_advanced_feature_cards.html.twig' %}
+            
+            {# CTA Section #}
+            <div class="text-center mt-12">
+                <a href="{{ path('app_register') }}" class="glass-btn primary large">
+                    Start Free Trial
+                </a>
+                <p class="glass-text mt-4">No credit card required • 14-day free trial</p>
+            </div>
+        </div>
+    </section>
+    
+    {# Detailed Features Section #}
+    <section class="glass-section">
+        <div class="glass-container">
+            <div class="glass-grid cols-2">
+                <div class="glass-card">
+                    <h3 class="glass-title h3 mb-4">Advanced Editor</h3>
+                    <ul class="space-y-3">
+                        <li class="glass-text flex items-start gap-2">
+                            <span class="text-violet-600">•</span>
+                            Syntax highlighting for 150+ languages
+                        </li>
+                        <li class="glass-text flex items-start gap-2">
+                            <span class="text-violet-600">•</span>
+                            Real-time preview as you type
+                        </li>
+                        <li class="glass-text flex items-start gap-2">
+                            <span class="text-violet-600">•</span>
+                            Multiple themes and customization options
+                        </li>
+                        <li class="glass-text flex items-start gap-2">
+                            <span class="text-violet-600">•</span>
+                            Auto-completion and linting
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="glass-card">
+                    <h3 class="glass-title h3 mb-4">Security First</h3>
+                    <ul class="space-y-3">
+                        <li class="glass-text flex items-start gap-2">
+                            <span class="text-violet-600">•</span>
+                            AES-256 encryption for sensitive data
+                        </li>
+                        <li class="glass-text flex items-start gap-2">
+                            <span class="text-violet-600">•</span>
+                            Automatic secret and API key detection
+                        </li>
+                        <li class="glass-text flex items-start gap-2">
+                            <span class="text-violet-600">•</span>
+                            Temporary sharing links with expiration
+                        </li>
+                        <li class="glass-text flex items-start gap-2">
+                            <span class="text-violet-600">•</span>
+                            GDPR and SOC2 compliant
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,191 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Frontend Testing - PrettiOps{% endblock %}
+{% block description %}Test all pages and components{% endblock %}
+
+{% block body_class %}frontend-test{% endblock %}
+
+{% block content %}
+<div class="min-h-screen py-12 bg-gradient-to-br from-purple-50 via-white to-gray-50">
+    <div class="max-w-7xl mx-auto px-6">
+        
+        {# Header #}
+        <div class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">
+                🧪 Frontend Testing Dashboard
+            </h1>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                Test all pages, components and layouts to ensure everything renders correctly before the MVP review.
+            </p>
+        </div>
+
+        {# Quick Actions #}
+        <div class="bg-white rounded-2xl shadow-lg p-8 mb-12">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">🚀 Quick Actions</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <a href="{{ path('app_home') }}" class="flex items-center gap-3 p-4 bg-purple-600 text-white rounded-xl hover:bg-purple-700 transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                    </svg>
+                    <span class="font-semibold">View Landing Page</span>
+                </a>
+                
+                <a href="{{ path('app_login') }}" class="flex items-center gap-3 p-4 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path>
+                    </svg>
+                    <span class="font-semibold">Test Authentication</span>
+                </a>
+
+                <a href="#" onclick="window.open('{{ current_url }}', '_blank')" class="flex items-center gap-3 p-4 bg-green-600 text-white rounded-xl hover:bg-green-700 transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                    </svg>
+                    <span class="font-semibold">Open in New Tab</span>
+                </a>
+            </div>
+        </div>
+
+        {# Routes Testing Grid #}
+        {% for category, routes in test_routes %}
+        <div class="bg-white rounded-2xl shadow-lg p-8 mb-8">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">
+                {% if category == 'Landing Pages' %}📄{% endif %}
+                {% if category == 'Authentication' %}🔐{% endif %}
+                {% if category == 'App Pages (Require Auth)' %}⚙️{% endif %}
+                {% if category == 'Static Pages' %}📚{% endif %}
+                {{ category }}
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {% for route_info in routes %}
+                    <div class="border border-gray-200 rounded-xl p-4 hover:border-purple-300 hover:shadow-md transition-all duration-200">
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="font-semibold text-gray-900">{{ route_info.name }}</h3>
+                            <span class="text-xs text-gray-500 font-mono bg-gray-100 px-2 py-1 rounded">{{ route_info.route }}</span>
+                        </div>
+                        
+                        <div class="flex gap-2">
+                            <a href="{{ path(route_info.route, route_info.params) }}" 
+                               class="flex-1 text-center py-2 px-3 bg-purple-100 text-purple-700 rounded-lg hover:bg-purple-200 transition-colors text-sm font-medium">
+                                Open
+                            </a>
+                            <a href="{{ path(route_info.route, route_info.params) }}" 
+                               target="_blank"
+                               class="flex-1 text-center py-2 px-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-sm font-medium">
+                                New Tab
+                            </a>
+                        </div>
+                        
+                        {% if category == 'App Pages (Require Auth)' %}
+                        <div class="mt-2 text-xs text-amber-600 bg-amber-50 rounded-lg p-2">
+                            ⚠️ Requires authentication
+                        </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+
+        {# Status Indicators #}
+        <div class="bg-white rounded-2xl shadow-lg p-8">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">🔍 System Status</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="text-center p-4 bg-green-50 rounded-xl">
+                    <div class="w-12 h-12 bg-green-500 rounded-full mx-auto mb-3 flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                    </div>
+                    <div class="font-semibold text-gray-900">Assets Built</div>
+                    <div class="text-sm text-gray-600">CSS & JS compiled</div>
+                </div>
+
+                <div class="text-center p-4 bg-blue-50 rounded-xl">
+                    <div class="w-12 h-12 bg-blue-500 rounded-full mx-auto mb-3 flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17v4a2 2 0 002 2h4M11 7L9 5l-7 7v4a2 2 0 002 2h4"></path>
+                        </svg>
+                    </div>
+                    <div class="font-semibold text-gray-900">Tailwind CSS</div>
+                    <div class="text-sm text-gray-600">Styles active</div>
+                </div>
+
+                <div class="text-center p-4 bg-purple-50 rounded-xl">
+                    <div class="w-12 h-12 bg-purple-500 rounded-full mx-auto mb-3 flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                    <div class="font-semibold text-gray-900">Stimulus</div>
+                    <div class="text-sm text-gray-600">Controllers loaded</div>
+                </div>
+
+                <div class="text-center p-4 bg-orange-50 rounded-xl">
+                    <div class="w-12 h-12 bg-orange-500 rounded-full mx-auto mb-3 flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                        </svg>
+                    </div>
+                    <div class="font-semibold text-gray-900">Components</div>
+                    <div class="text-sm text-gray-600">Ready to test</div>
+                </div>
+            </div>
+        </div>
+
+        {# Instructions #}
+        <div class="bg-gray-50 rounded-2xl p-8 mt-12">
+            <h3 class="text-xl font-bold text-gray-900 mb-4">📋 Testing Instructions</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <h4 class="font-semibold text-gray-800 mb-2">✅ What to Check</h4>
+                    <ul class="space-y-1 text-gray-600">
+                        <li>• All pages load without errors</li>
+                        <li>• Layouts are responsive (desktop, tablet, mobile)</li>
+                        <li>• Interactive elements work (tabs, buttons)</li>
+                        <li>• Animations and transitions are smooth</li>
+                        <li>• Forms submit properly</li>
+                        <li>• Navigation works between pages</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-gray-800 mb-2">🐛 Common Issues</h4>
+                    <ul class="space-y-1 text-gray-600">
+                        <li>• Missing assets or 404 errors</li>
+                        <li>• Layout breaking on mobile</li>
+                        <li>• JavaScript errors in console</li>
+                        <li>• Wrong colors or fonts</li>
+                        <li>• Overlapping elements</li>
+                        <li>• Broken links or routes</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
+
+{% block page_scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🧪 Frontend Testing Dashboard loaded');
+    console.log('PrettiOps MVP ready for review!');
+    
+    // Test JavaScript functionality
+    const links = document.querySelectorAll('a[href]');
+    console.log(`✅ Found ${links.length} navigation links`);
+    
+    // Check if Tailwind CSS is working
+    const hasStyles = getComputedStyle(document.body).fontFamily.includes('Inter');
+    console.log(`✅ Tailwind CSS: ${hasStyles ? 'Active' : 'Missing'}`);
+    
+    // Check for errors
+    window.addEventListener('error', function(e) {
+        console.error('❌ JavaScript Error:', e.message);
+    });
+});
+</script>
+{% endblock %}

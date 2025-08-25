@@ -1,100 +1,14 @@
 {
     "controllers": {
-        "hero": {
-            "enabled": true,
-            "fetch": "eager"
-        },
-        "feature-card": {
-            "enabled": true,
-            "fetch": "eager"
-        },
-        "tabs": {
-            "enabled": true,
-            "fetch": "eager"
-        },
-        "navigation": {
-            "enabled": true,
-            "fetch": "eager"
-        },
-        "dashboard": {
-            "enabled": true,
-            "fetch": "lazy"
-        },
-        "editor": {
-            "enabled": true,
-            "fetch": "lazy"
-        },
-        "email-preview": {
-            "enabled": true,
-            "fetch": "lazy"
-        },
-        "snippet": {
-            "enabled": true,
-            "fetch": "lazy"
-        },
-        "modal": {
-            "enabled": true,
-            "fetch": "lazy"
-        },
-        "dropdown": {
-            "enabled": true,
-            "fetch": "lazy"
-        },
-        "form": {
-            "enabled": true,
-            "fetch": "lazy"
-        },
-        "theme": {
-            "enabled": true,
-            "fetch": "lazy"
-        },
-        "toolbar": {
-            "enabled": true,
-            "fetch": "lazy"
-        },
-        "hidden-token": {
-            "enabled": true,
-            "fetch": "lazy"
-        },
-        "password-toggle": {
-            "enabled": true,
-            "fetch": "lazy"
-        },
-        "input-field": {
-            "enabled": true,
-            "fetch": "lazy"
-        },
-        "mega-menu": {
-            "enabled": true,
-            "fetch": "eager"
-        },
-        "noise-card": {
-            "enabled": true,
-            "fetch": "lazy"
-        },
-        "advanced-form": {
-            "enabled": true,
-            "fetch": "lazy"
-        },
-        "mobile-menu": {
-            "enabled": true,
-            "fetch": "eager"
-        },
-        "billing-tabs": {
-            "enabled": true,
-            "fetch": "lazy"
-        },
-        "pricing-card": {
-            "enabled": true,
-            "fetch": "lazy"
-        },
-        "marquee-logos": {
-            "enabled": true,
-            "fetch": "lazy"
-        },
-        "counter": {
-            "enabled": true,
-            "fetch": "lazy"
+        "@symfony/ux-turbo": {
+            "turbo-core": {
+                "enabled": true,
+                "fetch": "eager"
+            },
+            "mercure-turbo-stream": {
+                "enabled": false,
+                "fetch": "eager"
+            }
         }
     },
     "entrypoints": []

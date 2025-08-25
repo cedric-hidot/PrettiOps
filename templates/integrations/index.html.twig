@@ -1,0 +1,412 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Integrations - PrettiOps{% endblock %}
+
+{% block body_controllers %}{{ parent() }} integration{% endblock %}
+
+{% block body_class %}liquid-glass-page{% endblock %}
+
+{% block body %}
+<section class="glass-section">
+    <div class="glass-container" 
+         data-controller="integration"
+         data-integration-github-connected-value="{{ github_connected|default(false) }}"
+         data-integration-jira-connected-value="{{ jira_connected|default(false) }}">
+    
+    {# Header #}
+    <div class="mb-8">
+        <h1 class="glass-title h1 mb-2">Integrations</h1>
+        <p class="glass-text lead">Connect PrettiOps with your favorite development tools and services.</p>
+    </div>
+    
+    {# Connection Status Overview #}
+    <div class="glass-card mb-8">
+        <h2 class="glass-title h2 mb-4">Connection Status</h2>
+        
+        <div data-integration-target="connectionStatus" class="glass-grid cols-3">
+            {# Connection status will be populated by JavaScript #}
+        </div>
+    </div>
+    
+    {# Integration Cards Grid #}
+    <div class="glass-grid cols-3">
+        
+        {# GitHub Integration #}
+        <div class="glass-feature-card">
+            <div class="flex items-center mb-4">
+                <div class="w-12 h-12 bg-gray-900 rounded-lg flex items-center justify-center text-white text-2xl mr-4">
+                    📂
+                </div>
+                <div>
+                    <h3 class="glass-title h3">GitHub</h3>
+                    <p class="glass-text">Export snippets to repositories</p>
+                </div>
+            </div>
+            
+            <p class="glass-text mb-6">
+                Push your code snippets directly to GitHub repositories. Create gists, add to existing projects, or start new repositories.
+            </p>
+            
+            <div class="space-y-3">
+                <button class="glass-btn primary w-full inline-flex items-center justify-center gap-2"
+                        data-action="click->integration#connectGitHub"
+                        data-integration-target="githubConnect">
+                    <span class="flex items-center justify-center gap-2">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 0C4.477 0 0 4.484 0 10.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0110 4.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.942.359.31.678.921.678 1.856 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0020 10.017C20 4.484 15.522 0 10 0z" clip-rule="evenodd"></path>
+                        </svg>
+                        Connect GitHub
+                    </span>
+                </button>
+                
+                <div data-integration-target="githubRepos" class="hidden">
+                    {# GitHub repos will be populated dynamically #}
+                </div>
+            </div>
+        </div>
+        
+        {# Jira Integration #}
+        <div class="glass-feature-card">
+            <div class="flex items-center mb-4">
+                <div class="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center text-white text-2xl mr-4">
+                    📋
+                </div>
+                <div>
+                    <h3 class="glass-title h3">Jira</h3>
+                    <p class="glass-text">Attach to issues and tickets</p>
+                </div>
+            </div>
+            
+            <p class="glass-text mb-6">
+                Add code snippets as comments or attachments to Jira issues. Perfect for bug reports and feature discussions.
+            </p>
+            
+            <div class="space-y-3">
+                <button class="glass-btn primary w-full inline-flex items-center justify-center gap-2"
+                        data-action="click->integration#connectJira"
+                        data-integration-target="jiraConnect">
+                    <span class="flex items-center justify-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        </svg>
+                        Connect Jira
+                    </span>
+                </button>
+                
+                <div data-integration-target="jiraProjects" class="hidden">
+                    {# Jira projects will be populated dynamically #}
+                </div>
+            </div>
+        </div>
+        
+        {# IDE Export #}
+        <div class="glass-feature-card">
+            <div class="flex items-center mb-4">
+                <div class="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center text-white text-2xl mr-4">
+                    💻
+                </div>
+                <div>
+                    <h3 class="glass-title h3">IDE Export</h3>
+                    <p class="glass-text">Export to your favorite editor</p>
+                </div>
+            </div>
+            
+            <p class="glass-text mb-6">
+                Export snippets as live templates, code snippets, or files compatible with VS Code, WebStorm, Sublime Text, and more.
+            </p>
+            
+            <div class="space-y-3">
+                <div class="grid grid-cols-2 gap-2">
+                    <button class="glass-btn text-sm"
+                            data-action="click->integration#exportToIDE" 
+                            data-ide="vscode">
+                        VS Code
+                    </button>
+                    <button class="glass-btn text-sm"
+                            data-action="click->integration#exportToIDE" 
+                            data-ide="webstorm">
+                        WebStorm
+                    </button>
+                    <button class="glass-btn text-sm"
+                            data-action="click->integration#exportToIDE" 
+                            data-ide="sublime">
+                        Sublime
+                    </button>
+                    <button class="glass-btn text-sm"
+                            data-action="click->integration#exportToIDE" 
+                            data-ide="atom">
+                        Atom
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        {# Slack Integration (Coming Soon) #}
+        <div class="bg-white border border-gray-200 rounded-xl shadow-sm p-6 opacity-75 hover:shadow-md transition-shadow">
+            <div class="flex items-center mb-4">
+                <div class="w-12 h-12 bg-green-600 rounded-lg flex items-center justify-center text-white text-2xl mr-4">
+                    💬
+                </div>
+                <div>
+                    <h3 class="glass-title h3">Slack</h3>
+                    <p class="glass-text">Share snippets in channels</p>
+                </div>
+            </div>
+            
+            <p class="glass-text mb-6">
+                Share formatted code snippets directly in Slack channels and DMs. Perfect for team collaboration and code reviews.
+            </p>
+            
+            <div class="space-y-3">
+                <button class="w-full px-4 py-2 bg-gray-300 text-gray-500 rounded-lg cursor-not-allowed font-medium" disabled>
+                    <span class="flex items-center justify-center gap-2">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L11 10.586 14.586 7H12z" clip-rule="evenodd"></path>
+                        </svg>
+                        Coming Soon
+                    </span>
+                </button>
+            </div>
+        </div>
+        
+        {# Discord Integration (Coming Soon) #}
+        <div class="bg-white border border-gray-200 rounded-xl shadow-sm p-6 opacity-75 hover:shadow-md transition-shadow">
+            <div class="flex items-center mb-4">
+                <div class="w-12 h-12 bg-indigo-600 rounded-lg flex items-center justify-center text-white text-2xl mr-4">
+                    🎮
+                </div>
+                <div>
+                    <h3 class="glass-title h3">Discord</h3>
+                    <p class="glass-text">Share in dev communities</p>
+                </div>
+            </div>
+            
+            <p class="glass-text mb-6">
+                Share code snippets in Discord servers with beautiful syntax highlighting. Great for developer communities and support.
+            </p>
+            
+            <div class="space-y-3">
+                <button class="w-full px-4 py-2 bg-gray-300 text-gray-500 rounded-lg cursor-not-allowed font-medium" disabled>
+                    <span class="flex items-center justify-center gap-2">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L11 10.586 14.586 7H12z" clip-rule="evenodd"></path>
+                        </svg>
+                        Coming Soon
+                    </span>
+                </button>
+            </div>
+        </div>
+        
+        {# API Access #}
+        <div class="glass-feature-card">
+            <div class="flex items-center mb-4">
+                <div class="w-12 h-12 bg-orange-600 rounded-lg flex items-center justify-center text-white text-2xl mr-4">
+                    ⚡
+                </div>
+                <div>
+                    <h3 class="glass-title h3">API Access</h3>
+                    <p class="glass-text">Build custom integrations</p>
+                </div>
+            </div>
+            
+            <p class="glass-text mb-6">
+                Use our REST API to build custom integrations and automations. Full CRUD access to your snippets and data.
+            </p>
+            
+            <div class="space-y-3">
+                <a href="{{ path('api_docs') }}" 
+                   class="glass-btn primary w-full inline-flex items-center justify-center gap-2">
+                    <span class="flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                        </svg>
+                        View API Docs
+                    </span>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    {# Integration Guide Section with Enhanced Design #}
+    <div class="mt-16 mb-16">
+        <div class="text-center mb-10">
+            <h2 class="glass-title h2 mb-4">Getting Started</h2>
+            <p class="glass-text lead">Three simple steps to supercharge your development workflow</p>
+        </div>
+        
+        <div class="glass-grid cols-3" style="padding-top: 1.5rem;">
+            {# Step 1 #}
+            <div class="relative group">
+                <div class="absolute -top-6 left-1/2 transform -translate-x-1/2 z-10">
+                    <div class="w-12 h-12 rounded-full bg-gradient-to-br from-violet-500 to-purple-600 text-white flex items-center justify-center font-bold text-lg shadow-lg">
+                        1
+                    </div>
+                </div>
+                <div class="glass-card h-full transition-all duration-300 hover:transform hover:scale-105 overflow-visible">
+                    <div class="pt-10 text-center">
+                        <div class="mb-4 mx-auto w-16 h-16 rounded-xl bg-gradient-to-br from-violet-100 to-purple-50 flex items-center justify-center">
+                            <svg class="w-8 h-8 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
+                            </svg>
+                        </div>
+                        <h3 class="glass-title h3 mb-3">Connect Services</h3>
+                        <p class="glass-text text-sm">Link GitHub, Jira, and development tools with secure OAuth authentication</p>
+                    </div>
+                </div>
+                {# Connector line #}
+                <div class="hidden lg:block absolute top-1/2 -right-4 transform -translate-y-1/2 w-8 h-0.5 bg-gradient-to-r from-violet-300 to-transparent"></div>
+            </div>
+            
+            {# Step 2 #}
+            <div class="relative group">
+                <div class="absolute -top-6 left-1/2 transform -translate-x-1/2 z-10">
+                    <div class="w-12 h-12 rounded-full bg-gradient-to-br from-violet-500 to-purple-600 text-white flex items-center justify-center font-bold text-lg shadow-lg">
+                        2
+                    </div>
+                </div>
+                <div class="glass-card h-full transition-all duration-300 hover:transform hover:scale-105 overflow-visible">
+                    <div class="pt-10 text-center">
+                        <div class="mb-4 mx-auto w-16 h-16 rounded-xl bg-gradient-to-br from-violet-100 to-purple-50 flex items-center justify-center">
+                            <svg class="w-8 h-8 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                            </svg>
+                        </div>
+                        <h3 class="glass-title h3 mb-3">Create & Share</h3>
+                        <p class="glass-text text-sm">Write code snippets and instantly export to your connected services</p>
+                    </div>
+                </div>
+                {# Connector line #}
+                <div class="hidden lg:block absolute top-1/2 -right-4 transform -translate-y-1/2 w-8 h-0.5 bg-gradient-to-r from-violet-300 to-transparent"></div>
+            </div>
+            
+            {# Step 3 #}
+            <div class="relative group">
+                <div class="absolute -top-6 left-1/2 transform -translate-x-1/2 z-10">
+                    <div class="w-12 h-12 rounded-full bg-gradient-to-br from-violet-500 to-purple-600 text-white flex items-center justify-center font-bold text-lg shadow-lg">
+                        3
+                    </div>
+                </div>
+                <div class="glass-card h-full transition-all duration-300 hover:transform hover:scale-105 overflow-visible">
+                    <div class="pt-10 text-center">
+                        <div class="mb-4 mx-auto w-16 h-16 rounded-xl bg-gradient-to-br from-violet-100 to-purple-50 flex items-center justify-center">
+                            <svg class="w-8 h-8 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="glass-title h3 mb-3">Streamline Workflow</h3>
+                        <p class="glass-text text-sm">Automate your workflow with professional code sharing everywhere</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    {# Help & Support - Enhanced Design #}
+    <div class="mt-20 relative">
+        <div class="glass-card overflow-hidden" style="background: linear-gradient(135deg, rgba(111, 0, 255, 0.03) 0%, rgba(139, 92, 246, 0.03) 100%);">
+            <div class="relative z-10 py-12 px-8">
+                <div class="text-center mb-8">
+                    <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-violet-100 to-purple-50 mb-4">
+                        <svg class="w-8 h-8 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="glass-title h3 mb-3">Need Help with Integrations?</h3>
+                    <p class="glass-text lead max-w-2xl mx-auto">
+                        Our comprehensive documentation and support team are here to help you get the most out of PrettiOps integrations
+                    </p>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-4 max-w-2xl mx-auto">
+                    {# Documentation Card #}
+                    <a href="{{ path('docs_integrations') }}" 
+                       class="group glass-card hover:transform hover:scale-105 transition-all duration-300 text-left">
+                        <div class="flex items-start gap-4">
+                            <div class="flex-shrink-0 w-12 h-12 rounded-lg bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                                </svg>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="font-semibold text-gray-900 mb-1">Integration Guide</h4>
+                                <p class="text-sm text-gray-600">Step-by-step tutorials and API documentation</p>
+                                <span class="inline-flex items-center gap-1 text-sm text-blue-600 mt-2 group-hover:gap-2 transition-all">
+                                    Read docs
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                    </svg>
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                    
+                    {# Support Card #}
+                    <a href="{{ path('support') }}" 
+                       class="group glass-card hover:transform hover:scale-105 transition-all duration-300 text-left">
+                        <div class="flex items-start gap-4">
+                            <div class="flex-shrink-0 w-12 h-12 rounded-lg bg-gradient-to-br from-green-500 to-green-600 flex items-center justify-center text-white">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                                </svg>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="font-semibold text-gray-900 mb-1">Get Support</h4>
+                                <p class="text-sm text-gray-600">Chat with our team for personalized help</p>
+                                <span class="inline-flex items-center gap-1 text-sm text-green-600 mt-2 group-hover:gap-2 transition-all">
+                                    Contact us
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                    </svg>
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            
+            {# Decorative elements #}
+            <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-violet-200 to-purple-200 rounded-full opacity-10 -mr-16 -mt-16"></div>
+            <div class="absolute bottom-0 left-0 w-40 h-40 bg-gradient-to-tr from-blue-200 to-violet-200 rounded-full opacity-10 -ml-20 -mb-20"></div>
+        </div>
+    </div>
+    
+    </div>
+</section>
+
+{# Hidden Modals and Forms #}
+<div data-integration-target="jiraModal" class="hidden">
+    {# Jira connection modal will be inserted here dynamically #}
+</div>
+
+<div data-integration-target="githubExportModal" class="hidden">
+    {# GitHub export options will be inserted here dynamically #}
+</div>
+
+<div data-integration-target="diffViewer" class="hidden">
+    {# Version comparison viewer will be inserted here dynamically #}
+</div>
+{% endblock %}
+
+{% block page_scripts %}
+<script>
+// Initialize integration features on page load
+document.addEventListener('DOMContentLoaded', function() {
+    // Load connection status
+    if (window.integrationController) {
+        window.integrationController.loadIntegrationStatus();
+    }
+    
+    // Show success message if redirected from OAuth
+    const urlParams = new URLSearchParams(window.location.search);
+    const connected = urlParams.get('connected');
+    const service = urlParams.get('service');
+    
+    if (connected === 'true' && service && window.notificationManager) {
+        window.notificationManager.success(`Successfully connected to ${service}!`);
+        
+        // Clean up URL
+        window.history.replaceState({}, '', window.location.pathname);
+    }
+});
+</script>
+{% endblock %}

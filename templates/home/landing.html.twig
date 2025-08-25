@@ -9,7 +9,7 @@
 {% block title %}PrettiOps - Beautiful Code Emails for Developers{% endblock %}
 {% block description %}Transform your technical emails with professional code snippets, syntax highlighting, and secure sharing. Trusted by 10,000+ developers worldwide.{% endblock %}
 
-{% block body_class %}landing-page{% endblock %}
+{% block body_class %}liquid-glass-page{% endblock %}
 {% block body_controllers %}theme hero-advanced{% endblock %}
 
 {% block content %}
@@ -20,13 +20,13 @@
     {% include 'components/_code_showcase.html.twig' %}
     
     {# Advanced Feature Cards #}
-    <section class="features-section py-24 bg-white">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold text-gray-900 mb-6">
+    <section class="glass-section">
+        <div class="glass-container">
+            <div class="text-center mb-12">
+                <h2 class="glass-title h2">
                     Why Developers Choose PrettiOps
                 </h2>
-                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                <p class="glass-text lead max-w-3xl mx-auto">
                     Everything you need to make your technical communication professional, 
                     secure, and beautiful. No more ugly plain text emails.
                 </p>
@@ -166,7 +166,7 @@
             
             <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
                 <a 
-                    href="{{ path('app_register') }}" 
+                    href="{{ path('register') }}" 
                     class="po-button btn-primary btn-large group inline-flex items-center gap-3 px-8 py-4 bg-white text-purple-700 rounded-xl font-semibold text-lg hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
                 >
                     <div class="btn-content">Start Free Trial</div>

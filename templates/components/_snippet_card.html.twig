@@ -28,12 +28,12 @@
 
 <div 
     class="snippet-card snippet-card--{{ card_size }}{% if clickable %} snippet-card--clickable{% endif %}"
-    data-controller="snippet-card"
-    data-snippet-card-id-value="{{ snippet.id }}"
+    data-controller="snippet"
+    data-snippet-id-value="{{ snippet.id }}"
     data-language="{{ snippet.language|lower }}"
-    data-status="{{ snippet.status }}"
+    data-status="{% if snippet.expiresAt and snippet.expiresAt < date() %}expired{% else %}active{% endif %}"
     {% if clickable %}
-        data-action="click->snippet-card#navigate"
+        data-action="click->snippet#navigate"
         tabindex="0"
         role="button"
         aria-label="Open snippet: {{ snippet.title }}"
@@ -45,9 +45,9 @@
         
         <div class="snippet-meta">
             <span class="snippet-language">{{ snippet.language|title }}</span>
-            <span class="snippet-lines">{{ snippet.lineCount ?? 0 }} lines</span>
+            <span class="snippet-lines">{{ snippet.content|split('\n')|length }} lines</span>
             <time class="snippet-date" datetime="{{ snippet.createdAt|date('c') }}">
-                Created {{ snippet.createdAt|date('relative') }}
+                Created {{ snippet.createdAt|date('M j, Y') }}
             </time>
         </div>
         
@@ -60,15 +60,16 @@
                 } %}
                 
                 <div class="snippet-status">
-                    {% set status_class = snippet.status == 'active' ? 'active' : (snippet.status == 'expiring' ? 'expiring' : 'expired') %}
+                    {% set is_expired = snippet.expiresAt and snippet.expiresAt < date() %}
+                    {% set status_class = is_expired ? 'expired' : 'active' %}
                     <div class="status-dot status-dot--{{ status_class }}" aria-hidden="true"></div>
                     <span class="status-text">
-                        {% if snippet.status == 'active' %}
-                            Active
-                        {% elseif snippet.status == 'expiring' %}
-                            Expires in {{ snippet.expiresAt|date_diff|format('%d days') }}
-                        {% else %}
+                        {% if is_expired %}
                             Expired
+                        {% elseif snippet.expiresAt %}
+                            Expires {{ snippet.expiresAt|date('M j, Y') }}
+                        {% else %}
+                            Active
                         {% endif %}
                     </span>
                 </div>
@@ -106,20 +107,20 @@
                     <span class="sr-only">Views: </span>
                     {{ snippet.viewCount ?? 0 }}
                 </span>
-                <span class="stat-item" title="Email sends">
-                    <span aria-hidden="true">📧</span>
-                    <span class="sr-only">Email sends: </span>
-                    {{ snippet.emailSends ?? 0 }}
+                <span class="stat-item" title="Visibility">
+                    <span aria-hidden="true">🔗</span>
+                    <span class="sr-only">Visibility: </span>
+                    {{ snippet.visibility|title }}
                 </span>
-                <span class="stat-item" title="Comments">
-                    <span aria-hidden="true">💬</span>
-                    <span class="sr-only">Comments: </span>
-                    {{ snippet.commentCount ?? 0 }}
+                <span class="stat-item" title="Language">
+                    <span aria-hidden="true">💻</span>
+                    <span class="sr-only">Language: </span>
+                    {{ snippet.language|title }}
                 </span>
             </div>
             
             <time class="snippet-date" datetime="{{ snippet.updatedAt|date('c') }}">
-                {{ snippet.updatedAt|date_diff }}
+                Updated {{ snippet.updatedAt|date('M j, Y') }}
             </time>
         </div>
     {% endif %}

@@ -7,23 +7,22 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Settings - PrettiOps{% endblock %}
-{% block body_class %}settings-page{% endblock %}
+{% block body_class %}settings-page liquid-glass-page{% endblock %}
 
 {% block content %}
-<div class="min-h-screen bg-gray-50 py-8">
-    <div class="max-w-6xl mx-auto px-6">
-        
-        {# Page Header #}
-        <div class="mb-8">
-            <h1 class="text-3xl font-bold text-gray-900">Settings</h1>
-            <p class="text-gray-600 mt-1">Manage your account, preferences, and security settings</p>
-        </div>
+<main class="max-w-6xl mx-auto px-6 py-8">
+    
+    {# Page Header #}
+    <div class="page-header-glass">
+        <h1 class="page-title">Settings</h1>
+        <p class="page-subtitle">Manage your account, preferences, and security settings</p>
+    </div>
         
         <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
             
-            {# Settings Navigation #}
-            <div class="lg:col-span-1">
-                <nav class="bg-white rounded-2xl shadow-sm border border-gray-200 p-4 sticky top-8">
+        {# Settings Navigation #}
+        <div class="lg:col-span-1">
+            <nav class="glass-panel--small sticky top-8">
                     <div class="space-y-1">
                         <a 
                             href="#profile" 

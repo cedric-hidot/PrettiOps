@@ -415,9 +415,11 @@ export default class extends Controller {
      * Setup tooltips for toolbar buttons
      */
     setupTooltips() {
-        this.targets.forEach(target => {
-            if (this[`has${target.charAt(0).toUpperCase() + target.slice(1)}Target`]) {
-                const button = this[`${target}Target`]
+        // Use the static targets array instead of this.targets
+        this.constructor.targets.forEach(targetName => {
+            const hasTarget = this[`has${targetName.charAt(0).toUpperCase() + targetName.slice(1)}Target`]
+            if (hasTarget) {
+                const button = this[`${targetName}Target`]
                 if (button && button.title) {
                     this.addTooltip(button)
                 }
