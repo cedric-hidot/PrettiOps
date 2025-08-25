@@ -1,7 +1,7 @@
 {#
- # Customer Logos Wall - Tiptap-inspired
+ # Customer Logos Wall - Simplified and Optimized
  # 
- # Animated customer logos with marquee effects and responsive design
+ # Clean customer logos section without complex animations
 #}
 
 <section class="customer-logos-section py-16 bg-gradient-to-br from-gray-50 to-white">
@@ -17,81 +17,51 @@
             </p>
         </div>
         
-        {# Logo Marquee Container #}
-        <div 
-            class="logos-marquee-container relative overflow-hidden"
-            data-controller="marquee-logos"
-            data-marquee-logos-speed-value="30"
-            data-marquee-logos-pause-on-hover-value="true"
-        >
+        {# Logo Grid - Simplified #}
+        <div class="logos-grid">
             
             {# Row 1 - Tech Companies #}
-            <div class="marquee-row mb-8" data-marquee-logos-target="row">
-                <div class="marquee-content flex items-center gap-12" data-marquee-logos-target="content">
-                    {# Tech Giants & Unicorns #}
-                    <img src="https://via.placeholder.com/120x40/6f00ff/ffffff?text=GitHub" alt="GitHub" class="logo-item h-8 opacity-60 hover:opacity-100 transition-opacity">
-                    <img src="https://via.placeholder.com/120x40/6f00ff/ffffff?text=GitLab" alt="GitLab" class="logo-item h-8 opacity-60 hover:opacity-100 transition-opacity">
-                    <img src="https://via.placeholder.com/120x40/6f00ff/ffffff?text=Notion" alt="Notion" class="logo-item h-8 opacity-60 hover:opacity-100 transition-opacity">
-                    <img src="https://via.placeholder.com/120x40/6f00ff/ffffff?text=Linear" alt="Linear" class="logo-item h-8 opacity-60 hover:opacity-100 transition-opacity">
-                    <img src="https://via.placeholder.com/120x40/6f00ff/ffffff?text=Vercel" alt="Vercel" class="logo-item h-8 opacity-60 hover:opacity-100 transition-opacity">
-                    <img src="https://via.placeholder.com/120x40/6f00ff/ffffff?text=Supabase" alt="Supabase" class="logo-item h-8 opacity-60 hover:opacity-100 transition-opacity">
-                    <img src="https://via.placeholder.com/120x40/6f00ff/ffffff?text=Stripe" alt="Stripe" class="logo-item h-8 opacity-60 hover:opacity-100 transition-opacity">
-                    <img src="https://via.placeholder.com/120x40/6f00ff/ffffff?text=MongoDB" alt="MongoDB" class="logo-item h-8 opacity-60 hover:opacity-100 transition-opacity">
-                </div>
+            <div class="grid grid-cols-4 md:grid-cols-8 gap-8 mb-8 items-center justify-items-center opacity-60">
+                <div class="logo-item h-8 w-20 bg-gray-200 rounded flex items-center justify-center text-xs font-semibold text-gray-600 hover:opacity-100 transition-opacity">GitHub</div>
+                <div class="logo-item h-8 w-20 bg-gray-200 rounded flex items-center justify-center text-xs font-semibold text-gray-600 hover:opacity-100 transition-opacity">GitLab</div>
+                <div class="logo-item h-8 w-20 bg-gray-200 rounded flex items-center justify-center text-xs font-semibold text-gray-600 hover:opacity-100 transition-opacity">Notion</div>
+                <div class="logo-item h-8 w-20 bg-gray-200 rounded flex items-center justify-center text-xs font-semibold text-gray-600 hover:opacity-100 transition-opacity">Linear</div>
+                <div class="logo-item h-8 w-20 bg-gray-200 rounded flex items-center justify-center text-xs font-semibold text-gray-600 hover:opacity-100 transition-opacity">Vercel</div>
+                <div class="logo-item h-8 w-20 bg-gray-200 rounded flex items-center justify-center text-xs font-semibold text-gray-600 hover:opacity-100 transition-opacity">Supabase</div>
+                <div class="logo-item h-8 w-20 bg-gray-200 rounded flex items-center justify-center text-xs font-semibold text-gray-600 hover:opacity-100 transition-opacity">Stripe</div>
+                <div class="logo-item h-8 w-20 bg-gray-200 rounded flex items-center justify-center text-xs font-semibold text-gray-600 hover:opacity-100 transition-opacity">MongoDB</div>
             </div>
             
-            {# Row 2 - Enterprises & Scale-ups #}
-            <div class="marquee-row mb-8" data-marquee-logos-target="row">
-                <div class="marquee-content flex items-center gap-12" data-marquee-logos-target="content" data-direction="reverse">
-                    {# Enterprise Companies #}
-                    <img src="https://via.placeholder.com/120x40/6f00ff/ffffff?text=Atlassian" alt="Atlassian" class="logo-item h-8 opacity-60 hover:opacity-100 transition-opacity">
-                    <img src="https://via.placeholder.com/120x40/6f00ff/ffffff?text=Microsoft" alt="Microsoft" class="logo-item h-8 opacity-60 hover:opacity-100 transition-opacity">
-                    <img src="https://via.placeholder.com/120x40/6f00ff/ffffff?text=JetBrains" alt="JetBrains" class="logo-item h-8 opacity-60 hover:opacity-100 transition-opacity">
-                    <img src="https://via.placeholder.com/120x40/6f00ff/ffffff?text=Docker" alt="Docker" class="logo-item h-8 opacity-60 hover:opacity-100 transition-opacity">
-                    <img src="https://via.placeholder.com/120x40/6f00ff/ffffff?text=Kubernetes" alt="Kubernetes" class="logo-item h-8 opacity-60 hover:opacity-100 transition-opacity">
-                    <img src="https://via.placeholder.com/120x40/6f00ff/ffffff?text=AWS" alt="AWS" class="logo-item h-8 opacity-60 hover:opacity-100 transition-opacity">
-                    <img src="https://via.placeholder.com/120x40/6f00ff/ffffff?text=Google" alt="Google Cloud" class="logo-item h-8 opacity-60 hover:opacity-100 transition-opacity">
-                    <img src="https://via.placeholder.com/120x40/6f00ff/ffffff?text=Digital+Ocean" alt="Digital Ocean" class="logo-item h-8 opacity-60 hover:opacity-100 transition-opacity">
-                </div>
+            {# Row 2 - Enterprises #}
+            <div class="grid grid-cols-4 md:grid-cols-8 gap-8 mb-8 items-center justify-items-center opacity-60">
+                <div class="logo-item h-8 w-20 bg-gray-200 rounded flex items-center justify-center text-xs font-semibold text-gray-600 hover:opacity-100 transition-opacity">Microsoft</div>
+                <div class="logo-item h-8 w-20 bg-gray-200 rounded flex items-center justify-center text-xs font-semibold text-gray-600 hover:opacity-100 transition-opacity">JetBrains</div>
+                <div class="logo-item h-8 w-20 bg-gray-200 rounded flex items-center justify-center text-xs font-semibold text-gray-600 hover:opacity-100 transition-opacity">Docker</div>
+                <div class="logo-item h-8 w-20 bg-gray-200 rounded flex items-center justify-center text-xs font-semibold text-gray-600 hover:opacity-100 transition-opacity">AWS</div>
+                <div class="logo-item h-8 w-20 bg-gray-200 rounded flex items-center justify-center text-xs font-semibold text-gray-600 hover:opacity-100 transition-opacity">Google</div>
+                <div class="logo-item h-8 w-20 bg-gray-200 rounded flex items-center justify-center text-xs font-semibold text-gray-600 hover:opacity-100 transition-opacity">Atlassian</div>
+                <div class="logo-item h-8 w-20 bg-gray-200 rounded flex items-center justify-center text-xs font-semibold text-gray-600 hover:opacity-100 transition-opacity">Kubernetes</div>
+                <div class="logo-item h-8 w-24 bg-gray-200 rounded flex items-center justify-center text-xs font-semibold text-gray-600 hover:opacity-100 transition-opacity">Digital Ocean</div>
             </div>
-            
-            {# Row 3 - Developer Tools & Communities #}
-            <div class="marquee-row" data-marquee-logos-target="row">
-                <div class="marquee-content flex items-center gap-12" data-marquee-logos-target="content">
-                    {# Developer Communities #}
-                    <img src="https://via.placeholder.com/120x40/6f00ff/ffffff?text=Stack+Overflow" alt="Stack Overflow" class="logo-item h-8 opacity-60 hover:opacity-100 transition-opacity">
-                    <img src="https://via.placeholder.com/120x40/6f00ff/ffffff?text=Dev.to" alt="Dev.to" class="logo-item h-8 opacity-60 hover:opacity-100 transition-opacity">
-                    <img src="https://via.placeholder.com/120x40/6f00ff/ffffff?text=Hashnode" alt="Hashnode" class="logo-item h-8 opacity-60 hover:opacity-100 transition-opacity">
-                    <img src="https://via.placeholder.com/120x40/6f00ff/ffffff?text=Product+Hunt" alt="Product Hunt" class="logo-item h-8 opacity-60 hover:opacity-100 transition-opacity">
-                    <img src="https://via.placeholder.com/120x40/6f00ff/ffffff?text=Y+Combinator" alt="Y Combinator" class="logo-item h-8 opacity-60 hover:opacity-100 transition-opacity">
-                    <img src="https://via.placeholder.com/120x40/6f00ff/ffffff?text=Hacker+News" alt="Hacker News" class="logo-item h-8 opacity-60 hover:opacity-100 transition-opacity">
-                    <img src="https://via.placeholder.com/120x40/6f00ff/ffffff?text=Reddit" alt="Reddit" class="logo-item h-8 opacity-60 hover:opacity-100 transition-opacity">
-                    <img src="https://via.placeholder.com/120x40/6f00ff/ffffff?text=Discord" alt="Discord" class="logo-item h-8 opacity-60 hover:opacity-100 transition-opacity">
-                </div>
-            </div>
-            
-            {# Gradient Fade Effects #}
-            <div class="marquee-fade-left absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-gray-50 to-transparent z-10 pointer-events-none"></div>
-            <div class="marquee-fade-right absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-gray-50 to-transparent z-10 pointer-events-none"></div>
         </div>
         
         {# Statistics Row #}
         <div class="stats-grid grid grid-cols-2 md:grid-cols-4 gap-8 mt-16 pt-16 border-t border-gray-200">
             <div class="stat-item text-center">
-                <div class="stat-number text-3xl font-bold text-purple-600 mb-2" data-controller="counter" data-counter-target-value="10000">0</div>
+                <div class="stat-number text-3xl font-bold text-purple-600 mb-2">10K+</div>
                 <div class="stat-label text-sm text-gray-600 font-medium">Active Users</div>
             </div>
             <div class="stat-item text-center">
-                <div class="stat-number text-3xl font-bold text-purple-600 mb-2" data-controller="counter" data-counter-target-value="500000">0</div>
+                <div class="stat-number text-3xl font-bold text-purple-600 mb-2">500K+</div>
                 <div class="stat-label text-sm text-gray-600 font-medium">Snippets Created</div>
             </div>
             <div class="stat-item text-center">
-                <div class="stat-number text-3xl font-bold text-purple-600 mb-2" data-controller="counter" data-counter-target-value="150">0</div>
+                <div class="stat-number text-3xl font-bold text-purple-600 mb-2">150+</div>
                 <div class="stat-label text-sm text-gray-600 font-medium">Languages Supported</div>
             </div>
             <div class="stat-item text-center">
-                <div class="stat-number text-3xl font-bold text-purple-600 mb-2" data-controller="counter" data-counter-target-value="99">0</div>
-                <div class="stat-label text-sm text-gray-600 font-medium">Uptime %</div>
+                <div class="stat-number text-3xl font-bold text-purple-600 mb-2">99.9%</div>
+                <div class="stat-label text-sm text-gray-600 font-medium">Uptime</div>
             </div>
         </div>
         
@@ -122,63 +92,26 @@
 </section>
 
 <style>
-.marquee-row {
-    position: relative;
-    width: 100%;
-}
-
-.marquee-content {
-    animation: marquee 20s linear infinite;
-    width: fit-content;
-    will-change: transform;
-}
-
-.marquee-content[data-direction="reverse"] {
-    animation: marquee-reverse 25s linear infinite;
-}
-
-@keyframes marquee {
-    0% {
-        transform: translateX(0);
-    }
-    100% {
-        transform: translateX(-50%);
-    }
-}
-
-@keyframes marquee-reverse {
-    0% {
-        transform: translateX(-50%);
-    }
-    100% {
-        transform: translateX(0);
-    }
-}
-
-.marquee-row:hover .marquee-content {
-    animation-play-state: paused;
-}
-
 .logo-item {
-    flex-shrink: 0;
-    filter: grayscale(100%);
     transition: all 0.3s ease;
 }
 
 .logo-item:hover {
-    filter: grayscale(0%);
-    transform: scale(1.1);
+    transform: scale(1.05);
+    background-color: #e5e7eb !important;
+    color: #374151 !important;
 }
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-    .marquee-content {
-        gap: 8px;
-        animation-duration: 15s;
+    .grid-cols-8 {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
     }
     
     .logo-item {
         height: 24px;
+        width: auto;
+        min-width: 60px;
     }
 }
 </style>

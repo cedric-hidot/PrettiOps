@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <title>PrettiOps - Beautiful Code Emails for Developers</title>
+    <meta name="description" content="Transform your technical emails with beautiful code snippets, syntax highlighting, and professional formatting.">
+    
+    <!-- Tailwind CSS CDN for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Inter:wght@400;500;600&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Custom CSS for PrettiOps */
+        :root {
+            --purple-600: #9333ea;
+            --purple-700: #7c3aed;
+            --purple-50: #faf5ff;
+        }
+        
+        body {
+            font-family: 'DM Sans', sans-serif;
+        }
+        
+        .font-display {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .font-mono {
+            font-family: 'Fira Code', monospace;
+        }
+        
+        /* Hero animations */
+        .code-snippet {
+            animation: slideInUp 0.6s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .code-snippet:nth-child(1) { animation-delay: 0.2s; }
+        .code-snippet:nth-child(2) { animation-delay: 0.4s; }
+        .code-snippet:nth-child(3) { animation-delay: 0.6s; }
+        
+        @keyframes slideInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Loading spinner */
+        .loading-spinner {
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #9333ea;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Tab system */
+        .po-tab-btn.active {
+            border-bottom-color: #9333ea;
+            color: white;
+        }
+        
+        .po-tab-pane {
+            display: none;
+        }
+        
+        .po-tab-pane.active {
+            display: block;
+        }
+        
+        /* Logo marquee animations */
+        .marquee-content {
+            animation: marquee 20s linear infinite;
+            width: fit-content;
+            will-change: transform;
+        }
+        
+        .marquee-content[data-direction="reverse"] {
+            animation: marquee-reverse 25s linear infinite;
+        }
+        
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        
+        @keyframes marquee-reverse {
+            0% { transform: translateX(-50%); }
+            100% { transform: translateX(0); }
+        }
+        
+        .marquee-row:hover .marquee-content {
+            animation-play-state: paused;
+        }
+        
+        .logo-item {
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .logo-item:hover {
+            transform: scale(1.1);
+            background-color: #e5e7eb !important;
+            color: #374151 !important;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .marquee-content {
+                gap: 8px;
+                animation-duration: 15s;
+            }
+            
+            .logo-item {
+                height: 24px;
+                width: auto;
+                min-width: 60px;
+            }
+        }
+    </style>
+</head>
+<body class="font-body text-gray-700 bg-gray-50 min-h-screen flex flex-col">
+    
+    <!-- Skip to main content link for accessibility -->
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 z-50 bg-purple-600 text-white px-4 py-2 rounded-md">
+        Skip to main content
+    </a>
+    
+    <!-- Background pattern -->
+    <div class="fixed inset-0 z-0 opacity-20 pointer-events-none">
+        <div class="w-full h-full" style="background-image: linear-gradient(rgba(111, 0, 255, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(111, 0, 255, 0.1) 1px, transparent 1px); background-size: 20px 20px;"></div>
+    </div>
+    
+    <!-- Navigation -->
+    <nav class="relative z-20 bg-white/90 backdrop-blur-md border-b border-gray-200" role="banner">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex items-center justify-between h-20">
+                
+                <!-- Logo -->
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-purple-600 to-purple-700 rounded-xl flex items-center justify-center">
+                        <span class="text-white font-bold text-lg">P</span>
+                    </div>
+                    <span class="text-2xl font-bold text-gray-900 font-display">PrettiOps</span>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden lg:flex items-center space-x-8">
+                    <div class="flex items-center space-x-8">
+                        <div class="relative group">
+                            <button class="flex items-center gap-2 text-gray-700 hover:text-purple-700 font-medium transition-colors duration-200">
+                                Features
+                                <svg class="w-4 h-4 transition-transform duration-200 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                        </div>
+                        
+                        <a href="#pricing" class="text-gray-700 hover:text-purple-700 font-medium transition-colors duration-200">Pricing</a>
+                        
+                        <div class="relative group">
+                            <button class="flex items-center gap-2 text-gray-700 hover:text-purple-700 font-medium transition-colors duration-200">
+                                Resources
+                                <svg class="w-4 h-4 transition-transform duration-200 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center gap-4">
+                        <a href="#login" class="text-gray-700 hover:text-purple-700 font-medium transition-colors duration-200">Sign In</a>
+                        <a href="#register" class="inline-flex items-center gap-2 px-6 py-3 bg-purple-600 text-white rounded-xl font-semibold hover:bg-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl">
+                            Get Started Free
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <div class="lg:hidden">
+                    <button class="w-10 h-10 flex items-center justify-center text-gray-700 hover:text-purple-700 transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <main id="main-content" class="flex-1 relative z-10" role="main">
+        
+        <!-- Hero Section -->
+        <section class="relative overflow-hidden py-20 lg:py-28 bg-gradient-to-br from-white via-purple-50/50 to-gray-50">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                    
+                    <!-- Left Column - Content -->
+                    <div class="text-center lg:text-left">
+                        <!-- Floating code snippets (decorative) -->
+                        <div class="hidden lg:block absolute -top-8 left-16 transform -rotate-12">
+                            <div class="code-snippet bg-gray-900 text-green-400 px-3 py-2 rounded-lg text-sm font-mono shadow-xl">
+                                console.log('Beautiful!');
+                            </div>
+                        </div>
+                        <div class="hidden lg:block absolute top-32 -left-4 transform rotate-6">
+                            <div class="code-snippet bg-gray-900 text-blue-400 px-3 py-2 rounded-lg text-sm font-mono shadow-xl">
+                                function prettiOps() { }
+                            </div>
+                        </div>
+                        <div class="hidden lg:block absolute top-64 left-20 transform -rotate-3">
+                            <div class="code-snippet bg-gray-900 text-yellow-400 px-3 py-2 rounded-lg text-sm font-mono shadow-xl">
+                                const snippet = new PrettiOps();
+                            </div>
+                        </div>
+                        
+                        <!-- Main heading with emphasis -->
+                        <h1 class="text-4xl lg:text-6xl font-bold text-gray-900 mb-8 leading-tight">
+                            Make your 
+                            <span class="text-purple-600 relative">
+                                <span class="relative z-10">code emails</span>
+                                <span class="absolute inset-0 bg-purple-100 transform -skew-y-1 z-0"></span>
+                            </span>
+                            <br>
+                            <span class="bg-gradient-to-r from-purple-600 to-purple-800 bg-clip-text text-transparent">beautiful</span> ⚡ 
+                            <br>
+                            with <span class="text-purple-600">PrettiOps</span>
+                        </h1>
+                        
+                        <!-- Description -->
+                        <p class="text-xl lg:text-2xl text-gray-600 mb-8 max-w-2xl mx-auto lg:mx-0">
+                            Transform your technical communication with professional code snippets, secure sharing, and seamless integrations that make developers smile.
+                        </p>
+                        
+                        <!-- Trust indicators -->
+                        <div class="flex flex-wrap justify-center lg:justify-start items-center gap-6 mb-10">
+                            <div class="flex items-center gap-2 text-sm text-gray-600">
+                                <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.031 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                                </svg>
+                                <div>
+                                    <div class="font-semibold">GDPR Compliant</div>
+                                    <div class="text-xs">Strict EU data regulations</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2 text-sm text-gray-600">
+                                <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                                </svg>
+                                <div>
+                                    <div class="font-semibold">AES-256 Encrypted</div>
+                                    <div class="text-xs">Bank-grade security</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2 text-sm text-gray-600">
+                                <svg class="w-5 h-5 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                                </svg>
+                                <div>
+                                    <div class="font-semibold">Open Source Core</div>
+                                    <div class="text-xs">Community driven</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- CTA Buttons -->
+                        <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-12">
+                            <a href="#register" class="inline-flex items-center gap-2 px-8 py-4 bg-purple-600 text-white rounded-xl font-semibold hover:bg-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                                <span class="relative z-10">Start Free Trial</span>
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                                </svg>
+                            </a>
+                            <a href="#demo" class="inline-flex items-center gap-2 px-8 py-4 bg-white text-gray-900 border-2 border-gray-200 rounded-xl font-semibold hover:border-purple-300 hover:text-purple-700 transition-all duration-200">
+                                <span class="relative z-10">Watch Demo</span>
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h1m4 0h1m-6-8h1m4 0h1M7 3h10a4 4 0 014 4v10a4 4 0 01-4 4H7a4 4 0 01-4-4V7a4 4 0 014-4z"></path>
+                                </svg>
+                            </a>
+                        </div>
+                        
+                        <!-- Social proof stats -->
+                        <div class="grid grid-cols-3 gap-6 text-center">
+                            <div>
+                                <div class="text-2xl font-bold text-purple-600">150+</div>
+                                <div class="text-sm text-gray-600">Languages Supported</div>
+                            </div>
+                            <div>
+                                <div class="text-2xl font-bold text-purple-600">10,000+</div>
+                                <div class="text-sm text-gray-600">Developers Trust Us</div>
+                            </div>
+                            <div>
+                                <div class="text-2xl font-bold text-purple-600">99.9%</div>
+                                <div class="text-sm text-gray-600">Uptime Guarantee</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Right Column - Hero Visual -->
+                    <div class="lg:pl-8">
+                        <div class="w-full h-96 bg-gradient-to-br from-purple-600 to-purple-800 rounded-2xl flex items-center justify-center text-white font-semibold text-2xl shadow-2xl">
+                            Interactive Demo Preview
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Code Showcase Section -->
+        <section class="py-24 bg-gradient-to-br from-gray-50 to-white">
+            <div class="max-w-7xl mx-auto px-6">
+                
+                <!-- Section Header -->
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold text-gray-900 mb-6">
+                        See PrettiOps in Action
+                    </h2>
+                    <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                        Experience how PrettiOps transforms your code snippets into professional, 
+                        shareable content with advanced syntax highlighting and secure sharing.
+                    </p>
+                </div>
+                
+                <!-- Interactive Code Examples -->
+                <div class="max-w-6xl mx-auto">
+                    
+                    <!-- Tab Navigation -->
+                    <div class="bg-gray-900 rounded-t-2xl flex overflow-x-auto">
+                        <button class="po-tab-btn px-6 py-4 text-sm font-medium text-gray-300 hover:text-white border-b-2 border-transparent focus:outline-none focus:border-purple-500 transition-all duration-200 whitespace-nowrap" onclick="switchTab('gmail-integration')">
+                            Gmail Integration
+                        </button>
+                        <button class="po-tab-btn px-6 py-4 text-sm font-medium text-gray-300 hover:text-white border-b-2 border-transparent focus:outline-none focus:border-purple-500 transition-all duration-200 whitespace-nowrap" onclick="switchTab('snippet-editor')">
+                            Snippet Editor
+                        </button>
+                        <button class="po-tab-btn px-6 py-4 text-sm font-medium text-gray-300 hover:text-white border-b-2 border-transparent focus:outline-none focus:border-purple-500 transition-all duration-200 whitespace-nowrap" onclick="switchTab('secure-sharing')">
+                            Secure Sharing
+                        </button>
+                        <button class="po-tab-btn active px-6 py-4 text-sm font-medium text-gray-300 hover:text-white border-b-2 border-transparent focus:outline-none focus:border-purple-500 transition-all duration-200 whitespace-nowrap" onclick="switchTab('ide-export')">
+                            IDE Export
+                        </button>
+                    </div>
+                    
+                    <!-- Tab Content -->
+                    <div class="bg-white border border-t-0 border-gray-200 rounded-b-2xl">
+                        
+                        <!-- Gmail Integration Demo -->
+                        <div class="po-tab-pane" data-tab="gmail-integration">
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 p-8">
+                                <div>
+                                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Gmail Integration</h3>
+                                    <p class="text-gray-600 mb-6">
+                                        Compose emails with beautiful code snippets directly in Gmail. 
+                                        No more ugly plain text or broken formatting.
+                                    </p>
+                                    <ul class="space-y-3">
+                                        <li class="flex items-center gap-3">
+                                            <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                            </svg>
+                                            Native Gmail extension
+                                        </li>
+                                        <li class="flex items-center gap-3">
+                                            <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                            </svg>
+                                            Real-time syntax highlighting
+                                        </li>
+                                        <li class="flex items-center gap-3">
+                                            <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                            </svg>
+                                            One-click insertion
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="bg-gray-100 rounded-xl p-4">
+                                    <div class="bg-white rounded-lg shadow-sm">
+                                        <div class="w-full h-64 bg-gradient-to-br from-purple-600 to-purple-700 rounded-lg flex items-center justify-center text-white font-semibold text-lg">
+                                            Gmail Demo Preview
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Snippet Editor Demo -->
+                        <div class="po-tab-pane" data-tab="snippet-editor">
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 p-8">
+                                <div>
+                                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Advanced Snippet Editor</h3>
+                                    <p class="text-gray-600 mb-6">
+                                        Professional code editor with 150+ languages, themes, 
+                                        and automatic secret masking for security.
+                                    </p>
+                                    <div class="bg-gray-900 text-green-400 p-4 rounded-lg text-sm font-mono mb-4">
+                                        <div class="flex items-center gap-2 mb-2">
+                                            <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                                            <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                                            <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                                            <span class="text-gray-400 ml-2">api-example.js</span>
+                                        </div>
+                                        <pre><code>const apiKey = '<span class="text-yellow-400">***SECRET_MASKED***</span>';
+const response = await fetch('/api/users', {
+  headers: { 'Authorization': `Bearer ${apiKey}` }
+});
+console.log('✨ Beautiful code!');</code></pre>
+                                    </div>
+                                </div>
+                                <div class="bg-gray-100 rounded-xl p-4">
+                                    <div class="bg-white rounded-lg shadow-sm">
+                                        <div class="w-full h-64 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center text-white font-semibold text-lg">
+                                            Editor Demo Preview
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Secure Sharing Demo -->
+                        <div class="po-tab-pane" data-tab="secure-sharing">
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 p-8">
+                                <div>
+                                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Secure Sharing</h3>
+                                    <p class="text-gray-600 mb-6">
+                                        Share code snippets with expiration dates, password protection, 
+                                        and viewer analytics for complete control.
+                                    </p>
+                                    <div class="space-y-4">
+                                        <div class="flex items-center gap-3 p-3 bg-green-50 rounded-lg">
+                                            <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                                            </svg>
+                                            <div>
+                                                <div class="font-semibold text-green-800">Password Protected</div>
+                                                <div class="text-sm text-green-600">Optional access control</div>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center gap-3 p-3 bg-blue-50 rounded-lg">
+                                            <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                            </svg>
+                                            <div>
+                                                <div class="font-semibold text-blue-800">Auto Expiration</div>
+                                                <div class="text-sm text-blue-600">Links expire automatically</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bg-gray-100 rounded-xl p-4">
+                                    <div class="bg-white rounded-lg shadow-sm">
+                                        <div class="w-full h-64 bg-gradient-to-br from-green-600 to-green-700 rounded-lg flex items-center justify-center text-white font-semibold text-lg">
+                                            Secure Sharing Preview
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- IDE Export Demo - Default Active -->
+                        <div class="po-tab-pane active" data-tab="ide-export">
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 p-8">
+                                <div>
+                                    <h3 class="text-2xl font-bold text-gray-900 mb-4">IDE Export & Integrations</h3>
+                                    <p class="text-gray-600 mb-6">
+                                        Export snippets directly to your favorite IDEs and integrate 
+                                        with your existing development workflow.
+                                    </p>
+                                    <div class="grid grid-cols-2 gap-4">
+                                        <div class="flex items-center gap-2 p-3 bg-gray-50 rounded-lg">
+                                            <div class="w-6 h-6 bg-blue-500 rounded flex items-center justify-center text-white text-xs font-bold">VS</div>
+                                            <span class="text-sm font-medium">VS Code</span>
+                                        </div>
+                                        <div class="flex items-center gap-2 p-3 bg-gray-50 rounded-lg">
+                                            <div class="w-6 h-6 bg-gray-900 rounded flex items-center justify-center text-white text-xs font-bold">IJ</div>
+                                            <span class="text-sm font-medium">IntelliJ</span>
+                                        </div>
+                                        <div class="flex items-center gap-2 p-3 bg-gray-50 rounded-lg">
+                                            <div class="w-6 h-6 bg-orange-500 rounded flex items-center justify-center text-white text-xs font-bold">PM</div>
+                                            <span class="text-sm font-medium">Postman</span>
+                                        </div>
+                                        <div class="flex items-center gap-2 p-3 bg-gray-50 rounded-lg">
+                                            <div class="w-6 h-6 bg-gray-800 rounded flex items-center justify-center text-white text-xs font-bold">GH</div>
+                                            <span class="text-sm font-medium">GitHub</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bg-gray-100 rounded-xl p-4">
+                                    <div class="bg-white rounded-lg shadow-sm">
+                                        <div class="w-full h-64 bg-gradient-to-br from-purple-600 to-purple-700 rounded-lg flex items-center justify-center text-white font-semibold text-lg">
+                                            IDE Export Demo
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Quick Start Section -->
+                <div class="mt-16 max-w-4xl mx-auto">
+                    <div class="bg-gray-900 rounded-2xl p-8 text-white">
+                        <h3 class="text-2xl font-bold mb-6">
+                            # <span class="uppercase text-purple-400">Quick Start</span>
+                        </h3>
+                        <ol class="space-y-4 mb-8" role="list">
+                            <li class="flex items-start gap-4">
+                                <span class="flex items-center justify-center w-8 h-8 bg-purple-600 text-white rounded-full text-sm font-bold">1</span>
+                                <div>
+                                    <div class="font-semibold">Create your PrettiOps account</div>
+                                    <div class="text-gray-300 text-sm">Sign up in less than 30 seconds</div>
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-4">
+                                <span class="flex items-center justify-center w-8 h-8 bg-purple-600 text-white rounded-full text-sm font-bold">2</span>
+                                <div>
+                                    <div class="font-semibold">Install the Gmail extension</div>
+                                    <div class="text-gray-300 text-sm">Available for Chrome and Firefox</div>
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-4">
+                                <span class="flex items-center justify-center w-8 h-8 bg-purple-600 text-white rounded-full text-sm font-bold">3</span>
+                                <div>
+                                    <div class="font-semibold">Start creating beautiful snippets</div>
+                                    <div class="text-gray-300 text-sm">Paste your code and watch the magic happen</div>
+                                </div>
+                            </li>
+                        </ol>
+                        <p class="text-gray-300">
+                            💡 <code class="bg-gray-800 px-2 py-1 rounded text-purple-400">[Read docs]</code>
+                            <a class="text-purple-400 hover:text-purple-300 underline ml-2" href="#documentation">
+                                https://docs.prettiops.dev/getting-started
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Customer Logos Section -->
+        <section id="customer-logos" class="py-16 bg-gradient-to-br from-gray-50 to-white">
+            <div class="max-w-7xl mx-auto px-6">
+                
+                <!-- Section Header -->
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-4">
+                        Trusted by developers worldwide
+                    </h2>
+                    <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                        Join thousands of developers and teams who trust PrettiOps for their code snippet sharing needs.
+                    </p>
+                </div>
+                
+                <!-- Logo Marquee Container -->
+                <div class="relative overflow-hidden">
+                    
+                    <!-- Row 1 - Tech Companies -->
+                    <div class="marquee-row mb-8">
+                        <div class="marquee-content flex items-center gap-12">
+                            <div class="logo-item h-8 w-24 bg-gray-200 rounded flex items-center justify-center opacity-60 hover:opacity-100 transition-opacity text-xs font-semibold text-gray-600">GitHub</div>
+                            <div class="logo-item h-8 w-24 bg-gray-200 rounded flex items-center justify-center opacity-60 hover:opacity-100 transition-opacity text-xs font-semibold text-gray-600">GitLab</div>
+                            <div class="logo-item h-8 w-24 bg-gray-200 rounded flex items-center justify-center opacity-60 hover:opacity-100 transition-opacity text-xs font-semibold text-gray-600">Notion</div>
+                            <div class="logo-item h-8 w-24 bg-gray-200 rounded flex items-center justify-center opacity-60 hover:opacity-100 transition-opacity text-xs font-semibold text-gray-600">Linear</div>
+                            <div class="logo-item h-8 w-24 bg-gray-200 rounded flex items-center justify-center opacity-60 hover:opacity-100 transition-opacity text-xs font-semibold text-gray-600">Vercel</div>
+                            <div class="logo-item h-8 w-24 bg-gray-200 rounded flex items-center justify-center opacity-60 hover:opacity-100 transition-opacity text-xs font-semibold text-gray-600">Supabase</div>
+                            <div class="logo-item h-8 w-24 bg-gray-200 rounded flex items-center justify-center opacity-60 hover:opacity-100 transition-opacity text-xs font-semibold text-gray-600">Stripe</div>
+                            <div class="logo-item h-8 w-24 bg-gray-200 rounded flex items-center justify-center opacity-60 hover:opacity-100 transition-opacity text-xs font-semibold text-gray-600">MongoDB</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Row 2 - Enterprises & Scale-ups -->
+                    <div class="marquee-row mb-8">
+                        <div class="marquee-content flex items-center gap-12" data-direction="reverse">
+                            <div class="logo-item h-8 w-24 bg-gray-200 rounded flex items-center justify-center opacity-60 hover:opacity-100 transition-opacity text-xs font-semibold text-gray-600">Atlassian</div>
+                            <div class="logo-item h-8 w-24 bg-gray-200 rounded flex items-center justify-center opacity-60 hover:opacity-100 transition-opacity text-xs font-semibold text-gray-600">Microsoft</div>
+                            <div class="logo-item h-8 w-24 bg-gray-200 rounded flex items-center justify-center opacity-60 hover:opacity-100 transition-opacity text-xs font-semibold text-gray-600">JetBrains</div>
+                            <div class="logo-item h-8 w-24 bg-gray-200 rounded flex items-center justify-center opacity-60 hover:opacity-100 transition-opacity text-xs font-semibold text-gray-600">Docker</div>
+                            <div class="logo-item h-8 w-24 bg-gray-200 rounded flex items-center justify-center opacity-60 hover:opacity-100 transition-opacity text-xs font-semibold text-gray-600">Kubernetes</div>
+                            <div class="logo-item h-8 w-24 bg-gray-200 rounded flex items-center justify-center opacity-60 hover:opacity-100 transition-opacity text-xs font-semibold text-gray-600">AWS</div>
+                            <div class="logo-item h-8 w-24 bg-gray-200 rounded flex items-center justify-center opacity-60 hover:opacity-100 transition-opacity text-xs font-semibold text-gray-600">Google</div>
+                            <div class="logo-item h-8 w-24 bg-gray-200 rounded flex items-center justify-center opacity-60 hover:opacity-100 transition-opacity text-xs font-semibold text-gray-600">Digital Ocean</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Row 3 - Developer Tools & Communities -->
+                    <div class="marquee-row">
+                        <div class="marquee-content flex items-center gap-12">
+                            <div class="logo-item h-8 w-28 bg-gray-200 rounded flex items-center justify-center opacity-60 hover:opacity-100 transition-opacity text-xs font-semibold text-gray-600">Stack Overflow</div>
+                            <div class="logo-item h-8 w-24 bg-gray-200 rounded flex items-center justify-center opacity-60 hover:opacity-100 transition-opacity text-xs font-semibold text-gray-600">Dev.to</div>
+                            <div class="logo-item h-8 w-24 bg-gray-200 rounded flex items-center justify-center opacity-60 hover:opacity-100 transition-opacity text-xs font-semibold text-gray-600">Hashnode</div>
+                            <div class="logo-item h-8 w-28 bg-gray-200 rounded flex items-center justify-center opacity-60 hover:opacity-100 transition-opacity text-xs font-semibold text-gray-600">Product Hunt</div>
+                            <div class="logo-item h-8 w-28 bg-gray-200 rounded flex items-center justify-center opacity-60 hover:opacity-100 transition-opacity text-xs font-semibold text-gray-600">Y Combinator</div>
+                            <div class="logo-item h-8 w-28 bg-gray-200 rounded flex items-center justify-center opacity-60 hover:opacity-100 transition-opacity text-xs font-semibold text-gray-600">Hacker News</div>
+                            <div class="logo-item h-8 w-24 bg-gray-200 rounded flex items-center justify-center opacity-60 hover:opacity-100 transition-opacity text-xs font-semibold text-gray-600">Reddit</div>
+                            <div class="logo-item h-8 w-24 bg-gray-200 rounded flex items-center justify-center opacity-60 hover:opacity-100 transition-opacity text-xs font-semibold text-gray-600">Discord</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Gradient Fade Effects -->
+                    <div class="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-gray-50 to-transparent z-10 pointer-events-none"></div>
+                    <div class="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-gray-50 to-transparent z-10 pointer-events-none"></div>
+                </div>
+                
+                <!-- Statistics Row -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16 pt-16 border-t border-gray-200">
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-purple-600 mb-2">10,000</div>
+                        <div class="text-sm text-gray-600 font-medium">Active Users</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-purple-600 mb-2">500,000</div>
+                        <div class="text-sm text-gray-600 font-medium">Snippets Created</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-purple-600 mb-2">150</div>
+                        <div class="text-sm text-gray-600 font-medium">Languages Supported</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-purple-600 mb-2">99</div>
+                        <div class="text-sm text-gray-600 font-medium">Uptime %</div>
+                    </div>
+                </div>
+                
+                <!-- Call to Action -->
+                <div class="text-center mt-16">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">
+                        Ready to join them?
+                    </h3>
+                    <p class="text-lg text-gray-600 mb-8 max-w-xl mx-auto">
+                        Start creating beautiful code snippets that make your technical communication shine.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <a href="#register" class="inline-flex items-center gap-2 px-8 py-4 bg-purple-600 text-white rounded-xl font-semibold hover:bg-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl">
+                            Start Free Trial
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                            </svg>
+                        </a>
+                        <a href="#demo" class="inline-flex items-center gap-2 px-8 py-4 bg-white text-gray-900 border-2 border-gray-200 rounded-xl font-semibold hover:border-purple-300 hover:text-purple-700 transition-all duration-200">
+                            Watch Demo
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h1m4 0h1m-6-8h1m4 0h1M7 3h10a4 4 0 014 4v10a4 4 0 01-4 4H7a4 4 0 01-4-4V7a4 4 0 014-4z"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+    </main>
+    
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 mt-auto">
+        <div class="max-w-7xl mx-auto px-6 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Brand Column -->
+                <div>
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-8 h-8 bg-gradient-to-br from-purple-600 to-purple-700 rounded-md flex items-center justify-center">
+                            <span class="text-white font-bold text-sm">P</span>
+                        </div>
+                        <span class="text-xl font-bold text-gray-900 font-display">PrettiOps</span>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-4 max-w-xs">
+                        Transform your technical emails with beautiful code snippets and professional formatting.
+                    </p>
+                </div>
+                
+                <!-- Product Column -->
+                <div>
+                    <h3 class="font-semibold text-gray-900 text-sm uppercase tracking-wider mb-4">Product</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#features" class="text-gray-600 hover:text-purple-600 text-sm transition-colors">Features</a></li>
+                        <li><a href="#pricing" class="text-gray-600 hover:text-purple-600 text-sm transition-colors">Pricing</a></li>
+                        <li><a href="#integrations" class="text-gray-600 hover:text-purple-600 text-sm transition-colors">Integrations</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Resources Column -->
+                <div>
+                    <h3 class="font-semibold text-gray-900 text-sm uppercase tracking-wider mb-4">Resources</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#documentation" class="text-gray-600 hover:text-purple-600 text-sm transition-colors">Documentation</a></li>
+                        <li><a href="#tutorials" class="text-gray-600 hover:text-purple-600 text-sm transition-colors">Tutorials</a></li>
+                        <li><a href="#blog" class="text-gray-600 hover:text-purple-600 text-sm transition-colors">Blog</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Company Column -->
+                <div>
+                    <h3 class="font-semibold text-gray-900 text-sm uppercase tracking-wider mb-4">Company</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#about" class="text-gray-600 hover:text-purple-600 text-sm transition-colors">About Us</a></li>
+                        <li><a href="#contact" class="text-gray-600 hover:text-purple-600 text-sm transition-colors">Contact</a></li>
+                        <li><a href="#privacy" class="text-gray-600 hover:text-purple-600 text-sm transition-colors">Privacy</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Bottom Section -->
+            <div class="border-t border-gray-200 mt-8 pt-8 text-center">
+                <p class="text-gray-500 text-sm">&copy; 2025 PrettiOps. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- JavaScript -->
+    <script>
+        // Tab switching functionality
+        function switchTab(tabId) {
+            // Hide all tab panes
+            document.querySelectorAll('.po-tab-pane').forEach(pane => {
+                pane.classList.remove('active');
+            });
+            
+            // Remove active class from all tab buttons
+            document.querySelectorAll('.po-tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected tab pane
+            document.querySelector(`[data-tab="${tabId}"]`).classList.add('active');
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+        }
+        
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('PrettiOps standalone page loaded successfully!');
+        });
+    </script>
+</body>
+</html>

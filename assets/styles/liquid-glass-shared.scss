@@ -1,0 +1,488 @@
+/* Shared Liquid Glass/Polymorphic Design System */
+/* Based on the editor-new.scss design but reusable across all pages */
+
+:root {
+  /* PrettiOps Enhanced Brand Colors & Gradients */
+  --prettiops-primary: #6f00ff;
+  --prettiops-gradient-main: linear-gradient(135deg, #6f00ff 0%, #8b5cf6 25%, #6366f1 50%, #3b82f6 75%, #6f00ff 100%);
+  --prettiops-gradient-subtle: linear-gradient(90deg, rgba(111, 0, 255, 0.1) 0%, rgba(139, 92, 246, 0.1) 50%, rgba(111, 0, 255, 0.1) 100%);
+  --prettiops-gradient-hover: linear-gradient(135deg, #8b00ff 0%, #9d5cff 25%, #7c6eff 50%, #5b92ff 75%, #8b00ff 100%);
+  
+  /* Refined Color Palette */
+  --pure-white: #ffffff;
+  --soft-gray: #f5f4f4; 
+  --deep-black: #0d0d0d;
+  --accent-purple: #6f00ff;
+  
+  /* Enhanced Background System */
+  --bg-primary: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 100%);
+  --bg-secondary: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  --bg-pure: #ffffff;
+  --bg-soft: #f5f4f4;
+  --bg-glass: rgba(255, 255, 255, 0.08);
+  --bg-glass-hover: rgba(255, 255, 255, 0.12);
+  --bg-glass-active: rgba(111, 0, 255, 0.15);
+  
+  /* Typography Colors */
+  --text-primary: #ffffff;
+  --text-secondary: #a8b2c8;
+  --text-tertiary: #64748b;
+  --text-muted: #475569;
+  --text-dark: #0d0d0d;
+  --text-gray: #6b7280;
+  
+  /* Enhanced Borders & Shadows */
+  --border-subtle: 1px solid #e7e5e4;
+  --border-glass: rgba(255, 255, 255, 0.12);
+  --border-glass-hover: rgba(111, 0, 255, 0.3);
+  
+  /* Sophisticated Shadow System */
+  --shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.05);
+  --shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  --shadow-glass-hover: 0 20px 40px rgba(111, 0, 255, 0.15), 0 0 0 1px rgba(111, 0, 255, 0.1);
+  --shadow-glass-lg: 0 25px 50px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(255, 255, 255, 0.08);
+  
+  /* Border Radius System */
+  --radius-sm: 0.5rem; /* 8px */
+  --radius-md: 0.75rem; /* 12px */
+  --radius-lg: 1rem; /* 16px */
+  --radius-xl: 1.5rem; /* 24px */
+}
+
+/* Base liquid glass page styles */
+.liquid-glass-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+  color: var(--text-primary);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Enhanced Glass Card with Gradient Effects */
+.glass-card {
+  background: var(--bg-glass);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: var(--shadow-glass);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* Subtle gradient overlay */
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--prettiops-gradient-subtle);
+    opacity: 0.5;
+  }
+  
+  &:hover {
+    background: var(--bg-glass-hover);
+    border-color: var(--border-glass-hover);
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: var(--shadow-glass-hover);
+    
+    &::before {
+      height: 2px;
+      background: var(--prettiops-gradient-main);
+      opacity: 1;
+    }
+  }
+  
+  &:active {
+    transform: translateY(-1px) scale(1.01);
+    transition-duration: 0.1s;
+  }
+}
+
+/* Glass panel (larger containers) */
+.glass-panel {
+  @extend .glass-card;
+  padding: 24px;
+  
+  &--large {
+    padding: 32px;
+  }
+  
+  &--small {
+    padding: 16px;
+  }
+}
+
+/* Enhanced Button System with Gradient Magic */
+.btn-primary-glass {
+  background: var(--prettiops-gradient-main);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: var(--shadow-glass);
+  text-decoration: none;
+  
+  /* Gradient animation effect */
+  background-size: 200% 200%;
+  animation: gradientShift 3s ease-in-out infinite;
+  
+  /* Shimmer effect overlay */
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg, 
+      transparent, 
+      rgba(255, 255, 255, 0.2), 
+      transparent
+    );
+    transition: left 0.5s ease;
+  }
+  
+  &:hover {
+    background: var(--prettiops-gradient-hover);
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: var(--shadow-glass-hover);
+    
+    &::before {
+      left: 100%;
+    }
+  }
+  
+  &:active {
+    transform: translateY(-1px) scale(1.02);
+    transition-duration: 0.1s;
+  }
+  
+  .icon {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.3s ease;
+  }
+  
+  &:hover .icon {
+    transform: scale(1.1) rotate(5deg);
+  }
+}
+
+.btn-secondary-glass {
+  background: var(--bg-glass);
+  color: var(--text-primary);
+  border: 1px solid var(--border-glass);
+  padding: 12px 24px;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(20px);
+  text-decoration: none;
+  
+  /* Subtle gradient border effect */
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    background: var(--prettiops-gradient-subtle);
+    border-radius: var(--radius-md);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: subtract;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  &:hover {
+    background: var(--bg-glass-hover);
+    border-color: var(--border-glass-hover);
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: var(--shadow-glass-hover);
+    
+    &::after {
+      opacity: 1;
+    }
+  }
+  
+  &:active {
+    transform: translateY(-1px) scale(1.01);
+  }
+  
+  .icon {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.3s ease;
+  }
+  
+  &:hover .icon {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* Enhanced Input System */
+.input-glass {
+  width: 100%;
+  background: var(--bg-glass);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  color: var(--text-primary);
+  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(20px);
+  
+  &:focus {
+    outline: none;
+    border-color: var(--accent-purple);
+    background: var(--bg-glass-hover);
+    box-shadow: 0 0 0 3px rgba(111, 0, 255, 0.1);
+    transform: translateY(-1px);
+  }
+  
+  &:hover:not(:focus) {
+    border-color: var(--border-glass-hover);
+    background: rgba(255, 255, 255, 0.1);
+  }
+  
+  &::placeholder {
+    color: var(--text-muted);
+    transition: color 0.3s ease;
+  }
+  
+  &:focus::placeholder {
+    color: var(--text-tertiary);
+  }
+}
+
+/* Enhanced Stats Card with Gradient Numbers */
+.stats-glass-card {
+  @extend .glass-card;
+  padding: 24px;
+  text-align: center;
+  position: relative;
+  
+  /* Subtle animated gradient background */
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--prettiops-gradient-subtle);
+    border-radius: var(--radius-lg);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+  }
+  
+  &:hover::after {
+    opacity: 1;
+  }
+  
+  .stats-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    font-family: 'DM Sans', 'Inter', sans-serif;
+    background: var(--prettiops-gradient-main);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    position: relative;
+    z-index: 1;
+    transition: all 0.3s ease;
+    
+    /* Glow effect on hover */
+    filter: drop-shadow(0 0 8px rgba(111, 0, 255, 0));
+  }
+  
+  &:hover .stats-number {
+    transform: scale(1.05);
+    filter: drop-shadow(0 0 12px rgba(111, 0, 255, 0.3));
+  }
+  
+  .stats-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-top: 12px;
+    position: relative;
+    z-index: 1;
+    transition: color 0.3s ease;
+  }
+  
+  &:hover .stats-label {
+    color: var(--text-primary);
+  }
+  
+  .stats-change {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 6px;
+    position: relative;
+    z-index: 1;
+    transition: color 0.3s ease;
+  }
+  
+  &:hover .stats-change {
+    color: var(--text-secondary);
+  }
+}
+
+/* Enhanced Page Header with Typography */
+.page-header-glass {
+  margin-bottom: 48px;
+  
+  .page-title {
+    font-size: 3rem;
+    font-weight: 800;
+    font-family: 'DM Sans', 'Inter', sans-serif;
+    line-height: 1.1;
+    margin-bottom: 12px;
+    background: var(--prettiops-gradient-main);
+    background-size: 200% 200%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientShift 4s ease-in-out infinite;
+    position: relative;
+    
+    /* Subtle glow effect */
+    &::after {
+      content: attr(title);
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: var(--prettiops-gradient-main);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: blur(20px);
+      opacity: 0.3;
+      z-index: -1;
+    }
+  }
+  
+  .page-subtitle {
+    font-size: 18px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    color: var(--text-secondary);
+    margin-bottom: 0;
+    line-height: 1.5;
+    transition: color 0.3s ease;
+  }
+  
+  &:hover .page-subtitle {
+    color: var(--text-primary);
+  }
+}
+
+/* Loading animation */
+.loading-shimmer-glass {
+  position: relative;
+  overflow: hidden;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg, 
+      transparent, 
+      rgba(139, 92, 246, 0.1), 
+      transparent
+    );
+    animation: loading-shimmer 1.5s infinite;
+  }
+}
+
+@keyframes loading-shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}
+
+/* Custom scrollbar */
+* {
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: var(--bg-glass);
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: var(--border-glass);
+    border-radius: 3px;
+    
+    &:hover {
+      background: var(--text-muted);
+    }
+  }
+}
+
+/* Focus states for accessibility */
+*:focus-visible {
+  outline: 2px solid var(--prettiops-purple);
+  outline-offset: 2px;
+}
+
+/* Animations */
+.fade-in-glass {
+  animation: fadeInGlass 0.5s ease forwards;
+}
+
+@keyframes fadeInGlass {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.slide-up-glass {
+  animation: slideUpGlass 0.3s ease forwards;
+}
+
+@keyframes slideUpGlass {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

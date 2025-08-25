@@ -224,7 +224,7 @@ final class Version20250101000003 extends AbstractMigration
             ('import'), ('export'), ('from'), ('as'), ('default'), ('new'), ('this'),
             ('true'), ('false'), ('null'), ('undefined'), ('void'), ('int'), ('string'),
             ('boolean'), ('array'), ('object'), ('try'), ('catch'), ('finally'), ('throw'),
-            ('async'), ('await'), ('promise'), ('then'), ('catch'), ('finally')");
+            ('async'), ('await'), ('promise'), ('then')");
     }
 
     public function down(Schema $schema): void

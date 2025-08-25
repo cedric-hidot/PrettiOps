@@ -8,6 +8,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Import component-specific stylesheets */
+@import './components/_snippet_card.scss';
+
 @layer components {
     /* Button Components */
     .btn {
@@ -40,7 +43,7 @@
         }
         
         &.btn-secondary {
-            @apply bg-white text-purple-600 border-purple-primary;
+            @apply bg-white text-purple-600 border-purple-600;
             
             &:hover:not(:disabled) {
                 @apply bg-purple-50 -translate-y-px;
@@ -78,7 +81,7 @@
         font-family: var(--font-body);
         
         &:focus {
-            @apply outline-none border-purple-primary;
+            @apply outline-none border-purple-600;
             box-shadow: 0 0 0 3px rgba(111, 0, 255, 0.1);
         }
         
@@ -96,7 +99,7 @@
         }
         
         &.form-select {
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20"><path stroke="%236b7280" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 8l4 4 4-4"/></svg>');
             @apply bg-no-repeat pr-10;
             background-position: right 0.5rem center;
             background-size: 1.5em 1.5em;

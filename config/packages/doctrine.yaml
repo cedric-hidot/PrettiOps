@@ -18,12 +18,25 @@ doctrine:
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
         auto_mapping: true
         mappings:
-            App:
+            # Domain Entity mappings for DDD structure
+            User:
                 type: attribute
                 is_bundle: false
-                dir: '%kernel.project_dir%/src/Entity'
-                prefix: 'App\Entity'
-                alias: App
+                dir: '%kernel.project_dir%/src/Domain/User/Entity'
+                prefix: 'App\Domain\User\Entity'
+                alias: User
+            Snippet:
+                type: attribute
+                is_bundle: false
+                dir: '%kernel.project_dir%/src/Domain/Snippet/Entity'
+                prefix: 'App\Domain\Snippet\Entity'
+                alias: Snippet
+            Share:
+                type: attribute
+                is_bundle: false
+                dir: '%kernel.project_dir%/src/Domain/Share/Entity'
+                prefix: 'App\Domain\Share\Entity'
+                alias: Share
         dql:
             string_functions:
                 # Enable PostgreSQL-specific functions

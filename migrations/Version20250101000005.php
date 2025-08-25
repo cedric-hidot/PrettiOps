@@ -70,7 +70,7 @@ final class Version20250101000005 extends AbstractMigration
                 content_lower := LOWER(NEW.content);
                 
                 -- API Keys
-                IF content_lower ~ \'api[_-]?key["\'"\'\':\s]*[=:]\s*["\'"\'\'']?[a-z0-9]{20,}\' THEN
+                IF content_lower ~ \'api[_-]?key.*[a-z0-9]{20,}\' THEN
                     detected_secrets := detected_secrets || \'["api_key"]\'::jsonb;
                 END IF;
                 
@@ -152,9 +152,7 @@ final class Version20250101000005 extends AbstractMigration
                     new_vals := to_jsonb(NEW) - ARRAY[\'password_hash\', \'two_factor_secret\', \'backup_codes\', \'access_token\', \'refresh_token\', \'oauth_data\'];
                 END IF;
                 
-                IF resource_type_name IN (\'users\', \'user_sessions\') OR 
-                   (old_vals ? \'email\') OR (new_vals ? \'email\') OR
-                   (old_vals ? \'ip_address\') OR (new_vals ? \'ip_address\') THEN
+                IF resource_type_name IN (\'users\', \'user_sessions\') THEN
                     contains_pii_data := TRUE;
                 END IF;
                 

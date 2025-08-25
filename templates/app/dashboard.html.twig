@@ -3,109 +3,82 @@
 {% block title %}Dashboard - PrettiOps{% endblock %}
 {% block description %}Manage your code snippets and track engagement with beautiful analytics{% endblock %}
 
-{% block body_class %}dashboard-page{% endblock %}
-{% block body_controllers %}dashboard snippet-card toolbar{% endblock %}
+{% block body_class %}dashboard-page liquid-glass-page{% endblock %}
+{% block body_controllers %}theme{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
-    {{ encore_entry_link_tags('dashboard') }}
+    {# Dashboard styles included in main app bundle #}
 {% endblock %}
 
-{% block navbar_center %}
-    <div class="search-container">
-        <input 
-            type="text" 
-            class="search-input" 
-            placeholder="Search snippets..."
-            data-controller="search"
-            data-action="input->search#filter"
-            data-search-target="input"
-            aria-label="Search snippets"
-        >
-        <span class="search-icon" aria-hidden="true">🔍</span>
-    </div>
-{% endblock %}
-
-{% block navbar_actions %}
-    <div class="navbar-nav">
-        <a href="{{ path('dashboard') }}" class="navbar-link active">Dashboard</a>
-        <a href="{{ path('editor') }}" class="navbar-link">Editor</a>
-        <a href="{{ path('analytics') }}" class="navbar-link">Analytics</a>
-        <a href="{{ path('settings') }}" class="navbar-link">Settings</a>
-        <div class="user-avatar" title="{{ app.user.fullName }}">
-            {{ app.user.initials }}
-        </div>
-    </div>
-{% endblock %}
 
 {% block content %}
-<main class="main-content" data-controller="dashboard">
+<main class="max-w-7xl mx-auto px-6 py-8" data-controller="dashboard">
     <!-- Dashboard Header -->
-    <div class="dashboard-header">
+    <div class="page-header-glass flex items-center justify-between">
         <div>
-            <h1 class="dashboard-title">Dashboard</h1>
-            <p class="dashboard-subtitle">Manage your code snippets and track engagement</p>
+            <h1 class="page-title">Dashboard</h1>
+            <p class="page-subtitle">Manage your code snippets and track engagement</p>
         </div>
-        <div class="dashboard-actions">
-            <a href="{{ path('analytics') }}" class="btn btn-secondary">
-                <span aria-hidden="true">📊</span>
+        <div class="flex items-center gap-4">
+            <a href="{{ path('analytics') }}" class="btn-secondary-glass">
+                <svg class="icon" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"/>
+                    <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"/>
+                </svg>
                 Analytics
             </a>
-            <a href="{{ path('editor') }}" class="btn btn-primary">
-                <span aria-hidden="true">➕</span>
+            <a href="{{ path('editor') }}" class="btn-primary-glass">
+                <svg class="icon" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"/>
+                </svg>
                 New Snippet
             </a>
         </div>
     </div>
 
     <!-- Stats Cards -->
-    <div class="stats-grid">
-        <div class="stat-card">
-            <div class="stat-value" data-dashboard-target="totalSnippets">{{ stats.totalSnippets ?? 0 }}</div>
-            <div class="stat-label">Total Snippets</div>
-            <div class="stat-change {% if stats.snippetsChange >= 0 %}positive{% else %}negative{% endif %}">
-                <span aria-hidden="true">{% if stats.snippetsChange >= 0 %}↗️{% else %}↘️{% endif %}</span>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div class="stats-glass-card fade-in-glass">
+            <div class="stats-number" data-dashboard-target="totalSnippets">{{ stats.totalSnippets ?? 0 }}</div>
+            <div class="stats-label">Total Snippets</div>
+            <div class="stats-change">
                 {% if stats.snippetsChange >= 0 %}+{% endif %}{{ stats.snippetsChange ?? 0 }} this week
             </div>
         </div>
         
-        <div class="stat-card">
-            <div class="stat-value" data-dashboard-target="totalViews">{{ stats.totalViews ?? 0 }}</div>
-            <div class="stat-label">Total Views</div>
-            <div class="stat-change {% if stats.viewsChange >= 0 %}positive{% else %}negative{% endif %}">
-                <span aria-hidden="true">{% if stats.viewsChange >= 0 %}↗️{% else %}↘️{% endif %}</span>
-                {% if stats.viewsChange >= 0 %}+{% endif %}{{ stats.viewsChangePercent ?? 0 }}% this month
+        <div class="stats-glass-card fade-in-glass" style="animation-delay: 0.1s">
+            <div class="stats-number" data-dashboard-target="totalViews">{{ stats.totalViews ?? 0 }}</div>
+            <div class="stats-label">Total Views</div>
+            <div class="stats-change">
+                {% if stats.viewsChangePercent >= 0 %}+{% endif %}{{ stats.viewsChangePercent ?? 0 }}% this month
             </div>
         </div>
         
-        <div class="stat-card">
-            <div class="stat-value" data-dashboard-target="emailSends">{{ stats.emailSends ?? 0 }}</div>
-            <div class="stat-label">Email Sends</div>
-            <div class="stat-change {% if stats.emailSendsChange >= 0 %}positive{% else %}negative{% endif %}">
-                <span aria-hidden="true">{% if stats.emailSendsChange >= 0 %}↗️{% else %}↘️{% endif %}</span>
+        <div class="stats-glass-card fade-in-glass" style="animation-delay: 0.2s">
+            <div class="stats-number" data-dashboard-target="emailSends">{{ stats.emailSends ?? 0 }}</div>
+            <div class="stats-label">Email Sends</div>
+            <div class="stats-change">
                 {% if stats.emailSendsChange >= 0 %}+{% endif %}{{ stats.emailSendsChange ?? 0 }} this week
             </div>
         </div>
         
-        <div class="stat-card">
-            <div class="stat-value" data-dashboard-target="activeLinks">{{ stats.activeLinks ?? 0 }}</div>
-            <div class="stat-label">Active Links</div>
-            <div class="stat-change {% if stats.activeLinksChange >= 0 %}positive{% else %}negative{% endif %}">
-                <span aria-hidden="true">{% if stats.activeLinksChange >= 0 %}↗️{% else %}↘️{% endif %}</span>
+        <div class="stats-glass-card fade-in-glass" style="animation-delay: 0.3s">
+            <div class="stats-number" data-dashboard-target="activeLinks">{{ stats.activeLinks ?? 0 }}</div>
+            <div class="stats-label">Active Links</div>
+            <div class="stats-change">
                 {% if stats.activeLinksChange >= 0 %}+{% endif %}{{ stats.activeLinksChange ?? 0 }} expired
             </div>
         </div>
     </div>
 
     <!-- Content Header with Filters -->
-    <div class="content-header">
-        <h2 class="content-title">Recent Snippets</h2>
-        <div class="filters">
+    <div class="glass-panel flex items-center justify-between mb-6">
+        <h2 class="text-xl font-semibold text-white">Recent Snippets</h2>
+        <div class="flex items-center gap-4">
             <select 
-                class="filter-select" 
-                data-controller="filter"
-                data-action="change->filter#apply change->dashboard#filterSnippets"
-                data-filter-type-value="language"
+                class="input-glass w-auto min-w-[140px]" 
+                data-action="change->dashboard#filterByLanguage"
                 data-dashboard-target="languageFilter"
                 aria-label="Filter by language"
             >
@@ -116,10 +89,8 @@
             </select>
             
             <select 
-                class="filter-select" 
-                data-controller="filter"
-                data-action="change->filter#apply change->dashboard#filterSnippets"
-                data-filter-type-value="status"
+                class="input-glass w-auto min-w-[120px]" 
+                data-action="change->dashboard#filterByStatus"
                 data-dashboard-target="statusFilter"
                 aria-label="Filter by status"
             >
@@ -130,9 +101,8 @@
             </select>
             
             <select 
-                class="filter-select" 
-                data-controller="sort"
-                data-action="change->sort#apply change->dashboard#sortSnippets"
+                class="input-glass w-auto min-w-[130px]" 
+                data-action="change->dashboard#sortSnippets"
                 data-dashboard-target="sortFilter"
                 aria-label="Sort snippets"
             >
@@ -146,7 +116,7 @@
 
     <!-- Snippet Grid -->
     <div 
-        class="snippet-grid" 
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" 
         data-dashboard-target="snippetGrid"
         data-search-target="container"
     >
@@ -162,14 +132,20 @@
             {% endfor %}
         {% else %}
             <!-- Empty State -->
-            <div class="empty-state" data-dashboard-target="emptyState">
-                <div class="empty-icon" aria-hidden="true">📝</div>
-                <h3 class="empty-title">No snippets yet</h3>
-                <p class="empty-description">
+            <div class="col-span-full glass-panel text-center py-16" data-dashboard-target="emptyState">
+                <div class="mb-6">
+                    <svg class="w-16 h-16 mx-auto text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-white mb-2">No snippets yet</h3>
+                <p class="text-gray-300 mb-6 max-w-md mx-auto">
                     Create your first code snippet to get started with beautiful email sharing.
                 </p>
-                <a href="{{ path('editor') }}" class="btn btn-primary">
-                    <span aria-hidden="true">➕</span>
+                <a href="{{ path('editor') }}" class="btn-primary-glass">
+                    <svg class="icon" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"/>
+                    </svg>
                     Create Your First Snippet
                 </a>
             </div>
@@ -256,7 +232,7 @@
 
 {% block javascripts %}
     {{ parent() }}
-    {{ encore_entry_script_tags('dashboard') }}
+    {# Dashboard JavaScript included in main app bundle #}
     
     <script>
         // Initialize dashboard data

@@ -275,10 +275,10 @@
             }
             
             // Handle registration errors from backend
-            {% if form.vars.errors|length > 0 %}
+            {% if errors|length > 0 %}
                 if (window.notificationManager) {
-                    {% for error in form.vars.errors %}
-                        window.notificationManager.error('{{ error.message }}');
+                    {% for error in errors %}
+                        window.notificationManager.error('{{ error }}');
                     {% endfor %}
                 }
             {% endif %}

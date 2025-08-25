@@ -1,0 +1,229 @@
+/**
+ * Snippet Card Component Styles
+ */
+.snippet-card {
+  @apply bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden transition-all duration-200;
+  
+  &:hover {
+    @apply shadow-md border-purple-200;
+  }
+  
+  &--clickable {
+    @apply cursor-pointer;
+    
+    &:focus {
+      @apply outline-none ring-2 ring-purple-500 ring-offset-2;
+    }
+  }
+  
+  &--sm {
+    @apply text-sm;
+  }
+  
+  &--lg {
+    @apply text-lg;
+  }
+}
+
+.snippet-header {
+  @apply p-4 pb-2;
+  
+  .snippet-title {
+    @apply font-semibold text-gray-900 mb-2;
+  }
+  
+  .snippet-meta {
+    @apply flex items-center gap-3 text-sm text-gray-500 mb-3;
+  }
+  
+  .snippet-language {
+    @apply px-2 py-1 bg-purple-100 text-purple-700 rounded text-xs font-medium;
+  }
+  
+  .snippet-toolbar-container {
+    @apply flex items-center justify-between;
+  }
+}
+
+.snippet-body {
+  @apply px-4 pb-2;
+  
+  .snippet-description {
+    @apply text-gray-600 mb-3;
+  }
+  
+  .snippet-tags {
+    @apply flex gap-2 mb-3;
+  }
+  
+  .snippet-tag {
+    @apply px-2 py-1 bg-gray-100 text-gray-600 rounded text-xs;
+  }
+  
+  .snippet-preview {
+    @apply mb-3;
+  }
+  
+  .snippet-code {
+    @apply bg-gray-50 border border-gray-200 rounded p-3 text-sm font-mono overflow-auto;
+    max-height: 200px;
+    
+    code {
+      @apply text-gray-700;
+    }
+  }
+}
+
+.snippet-footer {
+  @apply px-4 py-3 bg-gray-50 flex items-center justify-between text-sm text-gray-500;
+  
+  .snippet-stats {
+    @apply flex items-center gap-4;
+  }
+  
+  .stat-item {
+    @apply flex items-center gap-1;
+  }
+}
+
+.snippet-status {
+  @apply flex items-center gap-2;
+  
+  .status-dot {
+    @apply w-2 h-2 rounded-full;
+    
+    &--active {
+      @apply bg-green-500;
+    }
+    
+    &--expired {
+      @apply bg-red-500;
+    }
+    
+    &--expiring {
+      @apply bg-yellow-500;
+    }
+  }
+  
+  .status-text {
+    @apply text-xs text-gray-500;
+  }
+}
+
+.snippet-toolbar {
+  @apply flex gap-1;
+  
+  &--sm {
+    .snippet-tool {
+      @apply p-1 text-sm;
+    }
+  }
+  
+  &--vertical {
+    @apply flex-col;
+  }
+}
+
+.snippet-tool {
+  @apply p-2 text-gray-500 hover:text-purple-600 hover:bg-purple-50 rounded transition-colors duration-150;
+  
+  &:focus {
+    @apply outline-none ring-2 ring-purple-500 ring-offset-1;
+  }
+}
+
+.snippet-grid {
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6;
+}
+
+/* Dashboard specific styles */
+.dashboard-header {
+  @apply flex items-center justify-between mb-6;
+}
+
+.dashboard-title {
+  @apply text-2xl font-bold text-gray-900;
+}
+
+.dashboard-subtitle {
+  @apply text-gray-600 mt-1;
+}
+
+.dashboard-actions {
+  @apply flex gap-3;
+}
+
+.stats-grid {
+  @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8;
+}
+
+.stat-card {
+  @apply bg-white p-6 rounded-lg border border-gray-200 shadow-sm;
+}
+
+.stat-value {
+  @apply text-3xl font-bold text-gray-900 mb-1;
+}
+
+.stat-label {
+  @apply text-sm text-gray-600 mb-2;
+}
+
+.stat-change {
+  @apply text-sm font-medium;
+  
+  &.positive {
+    @apply text-green-600;
+  }
+  
+  &.negative {
+    @apply text-red-600;
+  }
+}
+
+.content-header {
+  @apply flex items-center justify-between mb-6;
+}
+
+.content-title {
+  @apply text-xl font-semibold text-gray-900;
+}
+
+.filters {
+  @apply flex gap-3;
+}
+
+.filter-select {
+  @apply px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent;
+}
+
+.empty-state,
+.no-results-state {
+  @apply text-center py-12;
+  
+  .empty-icon {
+    @apply text-4xl mb-4;
+  }
+  
+  .empty-title {
+    @apply text-xl font-semibold text-gray-900 mb-2;
+  }
+  
+  .empty-description {
+    @apply text-gray-600 mb-6;
+  }
+  
+  .empty-actions {
+    @apply flex gap-3 justify-center;
+  }
+}
+
+.loading-state {
+  @apply text-center py-12;
+  
+  .loading-spinner {
+    @apply w-8 h-8 border-4 border-purple-200 border-t-purple-600 rounded-full animate-spin mx-auto mb-4;
+  }
+}
+
+/* Hidden utility is already provided by Tailwind - no need to redefine */

@@ -101,7 +101,8 @@ class ErrorBoundary {
     this.maxErrorsPerWindow = 10;
     this.errorCounts = new Map();
     this.setupGlobalHandlers();
-    this.setupPerformanceMonitoring();
+    // Disable performance monitoring in development to prevent infinite loops
+    // this.setupPerformanceMonitoring();
   }
 
   /**

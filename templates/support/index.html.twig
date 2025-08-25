@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Support & Help - PrettiOps{% endblock %}
+
+{% block body %}
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold text-gray-900 mb-8">Support & Help</h1>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-white border border-gray-200 rounded-xl shadow-sm p-6">
+            <h2 class="text-xl font-semibold mb-4">📚 Documentation</h2>
+            <p class="text-gray-600 mb-4">Find comprehensive guides and tutorials.</p>
+            <a href="{{ path('docs_integrations') }}" class="text-blue-600 hover:text-blue-700">View Documentation →</a>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-xl shadow-sm p-6">
+            <h2 class="text-xl font-semibold mb-4">🔌 API Reference</h2>
+            <p class="text-gray-600 mb-4">Complete API documentation for developers.</p>
+            <a href="{{ path('api_docs') }}" class="text-blue-600 hover:text-blue-700">View API Docs →</a>
+        </div>
+    </div>
+    
+    <div class="mt-8 bg-blue-50 border border-blue-200 rounded-xl p-6">
+        <h2 class="text-xl font-semibold text-blue-900 mb-4">Need More Help?</h2>
+        <p class="text-blue-800 mb-4">Contact our support team for personalized assistance.</p>
+        <p class="text-blue-700">
+            Email: support@prettiops.com<br>
+            Response time: Within 24 hours
+        </p>
+    </div>
+</div>
+{% endblock %}

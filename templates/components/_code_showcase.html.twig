@@ -33,33 +33,29 @@
                 <div class="po-tab-menu dark bg-gray-900 rounded-t-2xl flex overflow-x-auto">
                     <button 
                         class="po-tab-btn dark px-6 py-4 text-sm font-medium text-gray-300 hover:text-white border-b-2 border-transparent focus:outline-none focus:border-purple-500 transition-all duration-200 whitespace-nowrap"
-                        data-code-showcase-target="tabButton"
                         data-tab="gmail-integration"
-                        data-action="click->code-showcase#switchTab"
+                        onclick="switchTab('gmail-integration')"
                     >
                         Gmail Integration
                     </button>
                     <button 
                         class="po-tab-btn dark px-6 py-4 text-sm font-medium text-gray-300 hover:text-white border-b-2 border-transparent focus:outline-none focus:border-purple-500 transition-all duration-200 whitespace-nowrap"
-                        data-code-showcase-target="tabButton"
                         data-tab="snippet-editor"
-                        data-action="click->code-showcase#switchTab"
+                        onclick="switchTab('snippet-editor')"
                     >
                         Snippet Editor
                     </button>
                     <button 
                         class="po-tab-btn dark px-6 py-4 text-sm font-medium text-gray-300 hover:text-white border-b-2 border-transparent focus:outline-none focus:border-purple-500 transition-all duration-200 whitespace-nowrap"
-                        data-code-showcase-target="tabButton"
                         data-tab="secure-sharing"
-                        data-action="click->code-showcase#switchTab"
+                        onclick="switchTab('secure-sharing')"
                     >
                         Secure Sharing
                     </button>
                     <button 
                         class="po-tab-btn dark px-6 py-4 text-sm font-medium text-gray-300 hover:text-white border-b-2 border-transparent focus:outline-none focus:border-purple-500 transition-all duration-200 whitespace-nowrap active"
-                        data-code-showcase-target="tabButton"
                         data-tab="ide-export"
-                        data-action="click->code-showcase#switchTab"
+                        onclick="switchTab('ide-export')"
                     >
                         IDE Export
                     </button>
@@ -105,7 +101,9 @@
                                 </div>
                                 <div class="demo-visual bg-gray-100 rounded-xl p-4">
                                     <div class="bg-white rounded-lg shadow-sm">
-                                        <img src="https://via.placeholder.com/500x300/6f00ff/ffffff?text=Gmail+Demo" alt="Gmail Integration Demo" class="w-full h-auto rounded-lg">
+                                        <div class="w-full h-64 bg-gradient-to-br from-purple-600 to-purple-700 rounded-lg flex items-center justify-center text-white font-semibold text-lg">
+                                            Gmail Demo Preview
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -142,7 +140,9 @@ console.log('✨ Beautiful code!');</code></pre>
                                 </div>
                                 <div class="demo-visual bg-gray-100 rounded-xl p-4">
                                     <div class="bg-white rounded-lg shadow-sm">
-                                        <img src="https://via.placeholder.com/500x300/6f00ff/ffffff?text=Editor+Demo" alt="Editor Demo" class="w-full h-auto rounded-lg">
+                                        <div class="w-full h-64 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center text-white font-semibold text-lg">
+                                            Editor Demo Preview
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -186,7 +186,9 @@ console.log('✨ Beautiful code!');</code></pre>
                                 </div>
                                 <div class="demo-visual bg-gray-100 rounded-xl p-4">
                                     <div class="bg-white rounded-lg shadow-sm">
-                                        <img src="https://via.placeholder.com/500x300/6f00ff/ffffff?text=Sharing+Demo" alt="Secure Sharing Demo" class="w-full h-auto rounded-lg">
+                                        <div class="w-full h-64 bg-gradient-to-br from-green-600 to-green-700 rounded-lg flex items-center justify-center text-white font-semibold text-lg">
+                                            Secure Sharing Preview
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -195,7 +197,7 @@ console.log('✨ Beautiful code!');</code></pre>
                     
                     {# IDE Export Demo - Default Active #}
                     <div 
-                        class="po-tab-pane" 
+                        class="po-tab-pane active" 
                         data-code-showcase-target="tabPane"
                         data-tab="ide-export"
                     >
@@ -209,26 +211,28 @@ console.log('✨ Beautiful code!');</code></pre>
                                     </p>
                                     <div class="integration-grid grid grid-cols-2 gap-4">
                                         <div class="integration-item flex items-center gap-2 p-3 bg-gray-50 rounded-lg">
-                                            <img src="https://via.placeholder.com/24x24/007ACC/ffffff?text=VS" alt="VS Code" class="w-6 h-6">
+                                            <div class="w-6 h-6 bg-blue-500 rounded flex items-center justify-center text-white text-xs font-bold">VS</div>
                                             <span class="text-sm font-medium">VS Code</span>
                                         </div>
                                         <div class="integration-item flex items-center gap-2 p-3 bg-gray-50 rounded-lg">
-                                            <img src="https://via.placeholder.com/24x24/000000/ffffff?text=IJ" alt="IntelliJ" class="w-6 h-6">
+                                            <div class="w-6 h-6 bg-gray-900 rounded flex items-center justify-center text-white text-xs font-bold">IJ</div>
                                             <span class="text-sm font-medium">IntelliJ</span>
                                         </div>
                                         <div class="integration-item flex items-center gap-2 p-3 bg-gray-50 rounded-lg">
-                                            <img src="https://via.placeholder.com/24x24/FF6900/ffffff?text=PM" alt="Postman" class="w-6 h-6">
+                                            <div class="w-6 h-6 bg-orange-500 rounded flex items-center justify-center text-white text-xs font-bold">PM</div>
                                             <span class="text-sm font-medium">Postman</span>
                                         </div>
                                         <div class="integration-item flex items-center gap-2 p-3 bg-gray-50 rounded-lg">
-                                            <img src="https://via.placeholder.com/24x24/181717/ffffff?text=GH" alt="GitHub" class="w-6 h-6">
+                                            <div class="w-6 h-6 bg-gray-800 rounded flex items-center justify-center text-white text-xs font-bold">GH</div>
                                             <span class="text-sm font-medium">GitHub</span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="demo-visual bg-gray-100 rounded-xl p-4">
                                     <div class="bg-white rounded-lg shadow-sm">
-                                        <img src="https://via.placeholder.com/500x300/6f00ff/ffffff?text=IDE+Export+Demo" alt="IDE Export Demo" class="w-full h-auto rounded-lg">
+                                        <div class="w-full h-64 bg-gradient-to-br from-purple-600 to-purple-700 rounded-lg flex items-center justify-center text-white font-semibold text-lg">
+                                            IDE Export Demo
+                                        </div>
                                     </div>
                                 </div>
                             </div>

@@ -3,8 +3,8 @@
 {% block title %}{{ snippet.title|default('New Snippet') }} - Code Editor - PrettiOps{% endblock %}
 {% block description %}Create and edit beautiful code snippets with syntax highlighting and real-time email preview{% endblock %}
 
-{% block body_class %}editor-page{% endblock %}
-{% block body_controllers %}editor snippet toolbar theme{% endblock %}
+{% block body_class %}editor-page liquid-glass-page{% endblock %}
+{% block body_controllers %}codemirror-editor snippet toolbar theme{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -32,7 +32,7 @@
         <button 
             class="btn btn-ghost btn-sm" 
             data-controller="save-indicator"
-            data-action="click->editor#save"
+            data-action="click->codemirror-editor#save"
             data-save-indicator-target="button"
         >
             <span data-save-indicator-target="icon">💾</span>
@@ -41,8 +41,8 @@
         
         <button 
             class="btn btn-secondary btn-sm" 
-            data-action="click->editor#share"
-            data-editor-target="shareBtn"
+            data-action="click->codemirror-editor#share"
+            data-codemirror-editor-target="shareBtn"
         >
             <span aria-hidden="true">🔗</span>
             Share
@@ -50,8 +50,8 @@
         
         <button 
             class="btn btn-primary btn-sm" 
-            data-action="click->editor#send"
-            data-editor-target="sendBtn"
+            data-action="click->codemirror-editor#send"
+            data-codemirror-editor-target="sendBtn"
         >
             <span aria-hidden="true">📧</span>
             Send
@@ -64,7 +64,7 @@
 {% endblock %}
 
 {% block content %}
-<div class="main-layout" data-controller="editor" data-editor-snippet-id-value="{{ snippet.id|default('') }}">
+<div class="main-layout" data-controller="codemirror-editor" data-codemirror-editor-snippet-id-value="{{ snippet.id|default('') }}" data-codemirror-editor-language-value="{{ snippet.language|default('javascript') }}" data-codemirror-editor-theme-value="dark" data-codemirror-editor-content-value="{{ snippet.content|default('// Start coding here...') }}" data-codemirror-editor-auto-save-value="true">
     <!-- Sidebar -->
     <div class="sidebar">
         <!-- Language Selection -->
@@ -74,12 +74,12 @@
                 <select 
                     class="form-select" 
                     data-controller="language-selector"
-                    data-action="change->language-selector#change change->editor#updateLanguage"
+                    data-action="change->language-selector#change change->codemirror-editor#updateLanguage"
                     data-language-selector-target="select"
-                    data-editor-target="languageSelect"
+                    data-codemirror-editor-target="languageSelect"
                     aria-label="Programming language"
                 >
-                    {% for language in languages %}
+                    {% for language in supported_languages %}
                         <option 
                             value="{{ language.value }}" 
                             {% if snippet.language|default('javascript') == language.value %}selected{% endif %}
@@ -103,7 +103,7 @@
                             value="{{ theme.value }}" 
                             class="theme-radio"
                             data-controller="theme-selector"
-                            data-action="change->theme-selector#change change->editor#updateTheme"
+                            data-action="change->theme-selector#change change->codemirror-editor#updateTheme"
                             {% if theme.value == 'dark' %}checked{% endif %}
                         >
                         <div class="theme-preview theme-preview--{{ theme.value }}" aria-hidden="true"></div>
@@ -148,7 +148,7 @@
                     class="form-input" 
                     id="snippet-tags" 
                     placeholder="auth, jwt, security"
-                    value="{{ snippet.tags|join(', ')|default('') }}"
+                    value="{{ snippet ? (snippet.tags|join(', ')) : '' }}"
                     data-controller="tag-input auto-save"
                     data-action="input->auto-save#save"
                     data-auto-save-field-value="tags"
@@ -167,7 +167,7 @@
                     data-action="input->auto-save#save"
                     data-auto-save-field-value="description"
                     data-auto-save-snippet-id-value="{{ snippet.id|default('') }}"
-                >{{ snippet.description|default('') }}</textarea>
+                >{{ snippet ? snippet.description : '' }}</textarea>
             </div>
             
             <div class="form-group">
@@ -196,15 +196,15 @@
             <div class="toolbar-left">
                 <span 
                     class="snippet-language" 
-                    data-editor-target="languageDisplay"
+                    data-codemirror-editor-target="languageDisplay"
                 >
                     {{ snippet.language|default('JavaScript')|title }}
                 </span>
-                <span class="editor-stat" data-editor-target="lineCount">
+                <span class="editor-stat" data-codemirror-editor-target="lineCount">
                     Lines: {{ snippet.lineCount|default(0) }}
                 </span>
-                <span class="editor-stat" data-editor-target="charCount">
-                    Characters: {{ snippet.content|length|default(0) }}
+                <span class="editor-stat" data-codemirror-editor-target="charCount">
+                    Characters: {{ snippet ? (snippet.content|length) : 0 }}
                 </span>
             </div>
             
@@ -212,7 +212,7 @@
                 <button 
                     class="btn btn-ghost btn-sm" 
                     title="Format Code"
-                    data-action="click->editor#format"
+                    data-action="click->codemirror-editor#format"
                 >
                     <span aria-hidden="true">🎨</span>
                     Format
@@ -220,7 +220,7 @@
                 <button 
                     class="btn btn-ghost btn-sm" 
                     title="Validate Syntax"
-                    data-action="click->editor#validate"
+                    data-action="click->codemirror-editor#validate"
                 >
                     <span aria-hidden="true">✅</span>
                     Validate
@@ -228,8 +228,8 @@
                 <button 
                     class="btn btn-ghost btn-sm" 
                     title="Expand Editor"
-                    data-action="click->editor#toggleExpand"
-                    data-editor-target="expandBtn"
+                    data-action="click->codemirror-editor#toggleExpand"
+                    data-codemirror-editor-target="expandBtn"
                 >
                     <span aria-hidden="true">⛶</span>
                     Expand
@@ -237,57 +237,54 @@
             </div>
         </div>
         
-        <div class="editor-container" data-editor-target="container">
-            <!-- Monaco Editor will be initialized here -->
+        <div class="editor-container" data-codemirror-editor-target="container" data-theme="{{ snippet.theme|default('dark') }}">
+            <!-- CodeMirror Editor will be initialized here -->
             <div 
-                class="monaco-editor-placeholder" 
-                data-editor-target="editor"
-                data-editor-language-value="{{ snippet.language|default('javascript') }}"
-                data-editor-theme-value="dark"
-                data-editor-content-value="{{ snippet.content|default('// Start coding here...') }}"
+                class="codemirror-editor-placeholder" 
+                data-codemirror-editor-target="editor"
             ></div>
         </div>
     </div>
 
     <!-- Preview Pane -->
-    <div class="preview-pane" data-editor-target="previewPane">
+    <div class="preview-pane" data-codemirror-editor-target="previewPane">
         <div class="preview-header">
             <h2 class="preview-title">Preview</h2>
             <div class="preview-tabs">
                 <button 
                     class="preview-tab active" 
                     data-tab="email"
-                    data-action="click->editor#switchPreviewTab"
-                    data-editor-target="previewTab"
+                    data-action="click->codemirror-editor#switchPreviewTab"
+                    data-codemirror-editor-target="previewTab"
                 >
                     Email
                 </button>
                 <button 
                     class="preview-tab" 
                     data-tab="web"
-                    data-action="click->editor#switchPreviewTab"
-                    data-editor-target="previewTab"
+                    data-action="click->codemirror-editor#switchPreviewTab"
+                    data-codemirror-editor-target="previewTab"
                 >
                     Web
                 </button>
                 <button 
                     class="preview-tab" 
                     data-tab="raw"
-                    data-action="click->editor#switchPreviewTab"
-                    data-editor-target="previewTab"
+                    data-action="click->codemirror-editor#switchPreviewTab"
+                    data-codemirror-editor-target="previewTab"
                 >
                     Raw
                 </button>
             </div>
         </div>
         
-        <div class="preview-content" data-editor-target="previewContent">
+        <div class="preview-content" data-codemirror-editor-target="previewContent">
             <!-- Email Preview -->
             <div class="email-preview" data-preview-type="email">
                 <div class="email-header">
                     <strong>From:</strong> {{ app.user.email }}<br>
-                    <strong>To:</strong> <span data-editor-target="emailTo">team@company.com</span><br>
-                    <strong>Subject:</strong> <span data-editor-target="emailSubject">{{ snippet.title|default('Code Snippet') }}</span>
+                    <strong>To:</strong> <span data-codemirror-editor-target="emailTo">team@company.com</span><br>
+                    <strong>Subject:</strong> <span data-codemirror-editor-target="emailSubject">{{ snippet.title|default('Code Snippet') }}</span>
                 </div>
                 <div class="email-body">
                     <div class="email-text">
@@ -295,7 +292,7 @@
                         I've created a code snippet that I think could be useful. Take a look and let me know your thoughts:
                     </div>
                     
-                    <div data-editor-target="emailSnippetPreview">
+                    <div data-codemirror-editor-target="emailSnippetPreview">
                         <!-- Snippet preview will be rendered here -->
                     </div>
                     
@@ -316,13 +313,16 @@
     {{ encore_entry_script_tags('editor') }}
     
     <script>
-        // Initialize editor data
+        // Initialize CodeMirror editor configuration
         window.editorConfig = {
             snippetId: {{ snippet.id|default('null') }},
             language: '{{ snippet.language|default('javascript') }}',
             theme: 'dark',
             autoSave: true,
-            securityEnabled: {{ snippet.securityEnabled|default(true) ? 'true' : 'false' }}
+            securityEnabled: {{ snippet.securityEnabled|default(true) ? 'true' : 'false' }},
+            content: `{{ snippet.content|default('// Start coding here...')|raw }}`,
+            fontSize: 14,
+            fontFamily: "'Fira Code', 'SF Mono', 'Monaco', 'Consolas', monospace"
         };
     </script>
 {% endblock %}

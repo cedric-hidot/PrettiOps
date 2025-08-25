@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <title>Pricing - PrettiOps</title>
+    <meta name="description" content="Simple, transparent pricing for beautiful code emails. Start free and scale as you grow.">
+    
+    <!-- Tailwind CSS CDN for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Inter:wght@400;500;600&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Custom CSS for PrettiOps */
+        :root {
+            --purple-600: #9333ea;
+            --purple-700: #7c3aed;
+            --purple-50: #faf5ff;
+        }
+        
+        body {
+            font-family: 'DM Sans', sans-serif;
+        }
+        
+        .font-display {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .font-mono {
+            font-family: 'Fira Code', monospace;
+        }
+        
+        /* Pricing card animations */
+        .pricing-card {
+            transition: all 0.3s ease;
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        
+        .pricing-card.popular {
+            transform: scale(1.05);
+            border: 2px solid #9333ea;
+        }
+        
+        .pricing-card.popular:hover {
+            transform: scale(1.05) translateY(-8px);
+        }
+        
+        /* Toggle switch */
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background-color: #9333ea;
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+        
+        /* Feature highlight animations */
+        .feature-highlight {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+        
+        .feature-highlight:nth-child(1) { animation-delay: 0.1s; }
+        .feature-highlight:nth-child(2) { animation-delay: 0.2s; }
+        .feature-highlight:nth-child(3) { animation-delay: 0.3s; }
+        .feature-highlight:nth-child(4) { animation-delay: 0.4s; }
+        .feature-highlight:nth-child(5) { animation-delay: 0.5s; }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body class="font-body text-gray-700 bg-gray-50 min-h-screen flex flex-col">
+    
+    <!-- Background pattern -->
+    <div class="fixed inset-0 z-0 opacity-20 pointer-events-none">
+        <div class="w-full h-full" style="background-image: linear-gradient(rgba(111, 0, 255, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(111, 0, 255, 0.1) 1px, transparent 1px); background-size: 20px 20px;"></div>
+    </div>
+    
+    <!-- Navigation -->
+    <nav class="relative z-20 bg-white/90 backdrop-blur-md border-b border-gray-200" role="banner">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex items-center justify-between h-20">
+                
+                <!-- Logo -->
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-purple-600 to-purple-700 rounded-xl flex items-center justify-center">
+                        <span class="text-white font-bold text-lg">P</span>
+                    </div>
+                    <span class="text-2xl font-bold text-gray-900 font-display">PrettiOps</span>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden lg:flex items-center space-x-8">
+                    <div class="flex items-center space-x-8">
+                        <a href="#features" class="text-gray-700 hover:text-purple-700 font-medium transition-colors duration-200">Features</a>
+                        <a href="#pricing" class="text-purple-700 font-medium">Pricing</a>
+                        <a href="#resources" class="text-gray-700 hover:text-purple-700 font-medium transition-colors duration-200">Resources</a>
+                    </div>
+                    
+                    <div class="flex items-center gap-4">
+                        <a href="#login" class="text-gray-700 hover:text-purple-700 font-medium transition-colors duration-200">Sign In</a>
+                        <a href="#register" class="inline-flex items-center gap-2 px-6 py-3 bg-purple-600 text-white rounded-xl font-semibold hover:bg-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl">
+                            Get Started Free
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <main class="flex-1 relative z-10" role="main">
+        
+        <!-- Hero Section -->
+        <section class="relative overflow-hidden py-20 lg:py-28 bg-gradient-to-br from-white via-purple-50/50 to-gray-50">
+            <div class="max-w-4xl mx-auto px-6 text-center">
+                <h1 class="text-4xl lg:text-6xl font-bold text-gray-900 mb-8 leading-tight">
+                    Simple, Transparent
+                    <span class="bg-gradient-to-r from-purple-600 to-purple-800 bg-clip-text text-transparent">Pricing</span>
+                </h1>
+                
+                <p class="text-xl lg:text-2xl text-gray-600 mb-12 max-w-3xl mx-auto">
+                    Start free and scale as you grow. No hidden fees, no lock-in contracts. 
+                    Perfect for individuals, teams, and enterprises.
+                </p>
+                
+                <!-- Billing Toggle -->
+                <div class="flex items-center justify-center gap-4 mb-16">
+                    <span class="text-lg font-medium text-gray-700">Monthly</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="billingToggle" onchange="toggleBilling()">
+                        <span class="slider"></span>
+                    </label>
+                    <span class="text-lg font-medium text-gray-700">
+                        Yearly
+                        <span class="inline-block ml-2 px-2 py-1 bg-green-100 text-green-800 text-sm font-semibold rounded-full">Save 20%</span>
+                    </span>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Pricing Cards -->
+        <section class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    
+                    <!-- Freemium Plan -->
+                    <div class="pricing-card bg-white rounded-2xl shadow-lg p-8 relative">
+                        <div class="mb-8">
+                            <h3 class="text-2xl font-bold text-gray-900 mb-2">Freemium</h3>
+                            <p class="text-gray-600">Perfect for getting started</p>
+                        </div>
+                        
+                        <div class="mb-8">
+                            <div class="flex items-baseline">
+                                <span class="text-4xl font-bold text-gray-900">€0</span>
+                                <span class="text-gray-600 ml-2">per month</span>
+                            </div>
+                        </div>
+                        
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-start gap-3">
+                                <svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <span class="text-gray-700">10 snippets/month</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <span class="text-gray-700">Basic syntax highlighting</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <span class="text-gray-700">7-day link expiry</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <span class="text-gray-700">Community support</span>
+                            </li>
+                        </ul>
+                        
+                        <button class="w-full py-3 px-6 bg-gray-100 text-gray-900 rounded-xl font-semibold hover:bg-gray-200 transition-all duration-200">
+                            Get Started Free
+                        </button>
+                    </div>
+                    
+                    <!-- Pro Plan -->
+                    <div class="pricing-card popular bg-white rounded-2xl shadow-xl p-8 relative">
+                        <!-- Popular badge -->
+                        <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                            <span class="bg-purple-600 text-white px-4 py-2 rounded-full text-sm font-semibold">Most Popular</span>
+                        </div>
+                        
+                        <div class="mb-8">
+                            <h3 class="text-2xl font-bold text-gray-900 mb-2">Pro</h3>
+                            <p class="text-gray-600">For individuals and small teams</p>
+                        </div>
+                        
+                        <div class="mb-8">
+                            <div class="flex items-baseline">
+                                <span class="text-4xl font-bold text-gray-900 monthly-price">€9</span>
+                                <span class="text-4xl font-bold text-gray-900 yearly-price hidden">€7</span>
+                                <span class="text-gray-600 ml-2">per month</span>
+                            </div>
+                            <div class="yearly-savings hidden text-sm text-green-600 mt-1">Save €21.60/year</div>
+                        </div>
+                        
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-start gap-3">
+                                <svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <span class="text-gray-700">Unlimited snippets</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <span class="text-gray-700">All themes & languages</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <span class="text-gray-700">Secret masking</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <span class="text-gray-700">Basic integrations</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <span class="text-gray-700">Email support</span>
+                            </li>
+                        </ul>
+                        
+                        <button class="w-full py-3 px-6 bg-purple-600 text-white rounded-xl font-semibold hover:bg-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl">
+                            Start Free Trial
+                        </button>
+                    </div>
+                    
+                    <!-- Team Plan -->
+                    <div class="pricing-card bg-white rounded-2xl shadow-lg p-8 relative">
+                        <div class="mb-8">
+                            <h3 class="text-2xl font-bold text-gray-900 mb-2">Team</h3>
+                            <p class="text-gray-600">For growing teams</p>
+                        </div>
+                        
+                        <div class="mb-8">
+                            <div class="flex items-baseline">
+                                <span class="text-4xl font-bold text-gray-900 monthly-price">€25</span>
+                                <span class="text-4xl font-bold text-gray-900 yearly-price hidden">€20</span>
+                                <span class="text-gray-600 ml-2">per user/month</span>
+                            </div>
+                            <div class="yearly-savings hidden text-sm text-green-600 mt-1">Save €60/user/year</div>
+                        </div>
+                        
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-start gap-3">
+                                <svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <span class="text-gray-700">Everything in Pro</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <span class="text-gray-700">Team collaboration</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <span class="text-gray-700">SSO integration</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <span class="text-gray-700">Advanced analytics</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <span class="text-gray-700">Priority support</span>
+                            </li>
+                        </ul>
+                        
+                        <button class="w-full py-3 px-6 bg-purple-600 text-white rounded-xl font-semibold hover:bg-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl">
+                            Start Team Trial
+                        </button>
+                    </div>
+                    
+                    <!-- Enterprise Plan -->
+                    <div class="pricing-card bg-white rounded-2xl shadow-lg p-8 relative">
+                        <div class="mb-8">
+                            <h3 class="text-2xl font-bold text-gray-900 mb-2">Enterprise</h3>
+                            <p class="text-gray-600">For large organizations</p>
+                        </div>
+                        
+                        <div class="mb-8">
+                            <div class="flex items-baseline">
+                                <span class="text-4xl font-bold text-gray-900">Custom</span>
+                            </div>
+                            <div class="text-gray-600">pricing</div>
+                        </div>
+                        
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-start gap-3">
+                                <svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <span class="text-gray-700">Everything in Team</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <span class="text-gray-700">On-premise deployment</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <span class="text-gray-700">Dedicated support</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <span class="text-gray-700">SLA guarantee</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <span class="text-gray-700">Custom integrations</span>
+                            </li>
+                        </ul>
+                        
+                        <button class="w-full py-3 px-6 bg-gray-900 text-white rounded-xl font-semibold hover:bg-gray-800 transition-all duration-200">
+                            Contact Sales
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Feature Comparison -->
+        <section class="py-20 bg-gray-50">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-4">
+                        Compare Features
+                    </h2>
+                    <p class="text-xl text-gray-600">
+                        See what's included in each plan
+                    </p>
+                </div>
+                
+                <!-- Feature Comparison Table -->
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-4 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Features</th>
+                                    <th class="px-6 py-4 text-center text-sm font-medium text-gray-500 uppercase tracking-wider">Freemium</th>
+                                    <th class="px-6 py-4 text-center text-sm font-medium text-gray-500 uppercase tracking-wider">Pro</th>
+                                    <th class="px-6 py-4 text-center text-sm font-medium text-gray-500 uppercase tracking-wider">Team</th>
+                                    <th class="px-6 py-4 text-center text-sm font-medium text-gray-500 uppercase tracking-wider">Enterprise</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr class="feature-highlight">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Monthly snippets</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700 text-center">10</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700 text-center">Unlimited</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700 text-center">Unlimited</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700 text-center">Unlimited</td>
+                                </tr>
+                                <tr class="feature-highlight">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Syntax highlighting</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center">
+                                        <svg class="w-5 h-5 text-green-500 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                        </svg>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center">
+                                        <svg class="w-5 h-5 text-green-500 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                        </svg>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center">
+                                        <svg class="w-5 h-5 text-green-500 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                        </svg>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center">
+                                        <svg class="w-5 h-5 text-green-500 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                        </svg>
+                                    </td>
+                                </tr>
+                                <tr class="feature-highlight">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Secret masking</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center">
+                                        <svg class="w-5 h-5 text-gray-400 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                        </svg>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center">
+                                        <svg class="w-5 h-5 text-green-500 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                        </svg>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center">
+                                        <svg class="w-5 h-5 text-green-500 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                        </svg>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center">
+                                        <svg class="w-5 h-5 text-green-500 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                        </svg>
+                                    </td>
+                                </tr>
+                                <tr class="feature-highlight">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Team collaboration</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center">
+                                        <svg class="w-5 h-5 text-gray-400 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                        </svg>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center">
+                                        <svg class="w-5 h-5 text-gray-400 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                        </svg>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center">
+                                        <svg class="w-5 h-5 text-green-500 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                        </svg>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center">
+                                        <svg class="w-5 h-5 text-green-500 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                        </svg>
+                                    </td>
+                                </tr>
+                                <tr class="feature-highlight">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">On-premise deployment</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center">
+                                        <svg class="w-5 h-5 text-gray-400 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                        </svg>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center">
+                                        <svg class="w-5 h-5 text-gray-400 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                        </svg>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center">
+                                        <svg class="w-5 h-5 text-gray-400 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                        </svg>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center">
+                                        <svg class="w-5 h-5 text-green-500 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                        </svg>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- FAQ Section -->
+        <section class="py-20 bg-white">
+            <div class="max-w-4xl mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-4">
+                        Frequently Asked Questions
+                    </h2>
+                    <p class="text-xl text-gray-600">
+                        Everything you need to know about our pricing
+                    </p>
+                </div>
+                
+                <div class="space-y-8">
+                    <div class="border border-gray-200 rounded-xl p-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-3">
+                            Can I change plans anytime?
+                        </h3>
+                        <p class="text-gray-600">
+                            Yes! You can upgrade or downgrade your plan at any time. Changes take effect immediately, 
+                            and you'll be prorated for any unused time on your current plan.
+                        </p>
+                    </div>
+                    
+                    <div class="border border-gray-200 rounded-xl p-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-3">
+                            Is there a free trial?
+                        </h3>
+                        <p class="text-gray-600">
+                            All paid plans come with a 14-day free trial. No credit card required. 
+                            You can explore all features before committing to a subscription.
+                        </p>
+                    </div>
+                    
+                    <div class="border border-gray-200 rounded-xl p-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-3">
+                            What happens to my data if I cancel?
+                        </h3>
+                        <p class="text-gray-600">
+                            Your data remains accessible for 30 days after cancellation. You can export all your 
+                            snippets and data during this period. We're fully GDPR compliant.
+                        </p>
+                    </div>
+                    
+                    <div class="border border-gray-200 rounded-xl p-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-3">
+                            Do you offer discounts for nonprofits or students?
+                        </h3>
+                        <p class="text-gray-600">
+                            Yes! We offer 50% off for verified nonprofits and educational institutions. 
+                            Contact our support team with your verification documents.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- CTA Section -->
+        <section class="py-20 bg-purple-600">
+            <div class="max-w-4xl mx-auto px-6 text-center">
+                <h2 class="text-3xl lg:text-4xl font-bold text-white mb-6">
+                    Ready to Transform Your Code Emails?
+                </h2>
+                <p class="text-xl text-purple-100 mb-8">
+                    Join thousands of developers who've already upgraded their technical communication. 
+                    Start your free trial today – no credit card required.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="#register" class="inline-flex items-center gap-2 px-8 py-4 bg-white text-purple-600 rounded-xl font-semibold hover:bg-gray-100 transition-all duration-200 shadow-lg hover:shadow-xl">
+                        <span class="relative z-10">Start Free Trial</span>
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                        </svg>
+                    </a>
+                    <a href="#contact" class="inline-flex items-center gap-2 px-8 py-4 bg-transparent text-white border-2 border-white rounded-xl font-semibold hover:bg-white hover:text-purple-600 transition-all duration-200">
+                        <span class="relative z-10">Contact Sales</span>
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                        </svg>
+                    </a>
+                </div>
+                
+                <div class="flex flex-wrap justify-center items-center gap-8 mt-12 pt-8 border-t border-purple-500">
+                    <div class="flex items-center gap-2 text-purple-100">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        Free 14-day trial
+                    </div>
+                    <div class="flex items-center gap-2 text-purple-100">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        No credit card required
+                    </div>
+                    <div class="flex items-center gap-2 text-purple-100">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        Cancel anytime
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200">
+        <div class="max-w-7xl mx-auto px-6 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Brand Column -->
+                <div>
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-8 h-8 bg-gradient-to-br from-purple-600 to-purple-700 rounded-md flex items-center justify-center">
+                            <span class="text-white font-bold text-sm">P</span>
+                        </div>
+                        <span class="text-xl font-bold text-gray-900 font-display">PrettiOps</span>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-4 max-w-xs">
+                        Transform your technical emails with beautiful code snippets and professional formatting.
+                    </p>
+                </div>
+                
+                <!-- Product Column -->
+                <div>
+                    <h3 class="font-semibold text-gray-900 text-sm uppercase tracking-wider mb-4">Product</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#features" class="text-gray-600 hover:text-purple-600 text-sm transition-colors">Features</a></li>
+                        <li><a href="#pricing" class="text-purple-600 text-sm font-medium">Pricing</a></li>
+                        <li><a href="#integrations" class="text-gray-600 hover:text-purple-600 text-sm transition-colors">Integrations</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Resources Column -->
+                <div>
+                    <h3 class="font-semibold text-gray-900 text-sm uppercase tracking-wider mb-4">Resources</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#documentation" class="text-gray-600 hover:text-purple-600 text-sm transition-colors">Documentation</a></li>
+                        <li><a href="#tutorials" class="text-gray-600 hover:text-purple-600 text-sm transition-colors">Tutorials</a></li>
+                        <li><a href="#blog" class="text-gray-600 hover:text-purple-600 text-sm transition-colors">Blog</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Company Column -->
+                <div>
+                    <h3 class="font-semibold text-gray-900 text-sm uppercase tracking-wider mb-4">Company</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#about" class="text-gray-600 hover:text-purple-600 text-sm transition-colors">About Us</a></li>
+                        <li><a href="#contact" class="text-gray-600 hover:text-purple-600 text-sm transition-colors">Contact</a></li>
+                        <li><a href="#privacy" class="text-gray-600 hover:text-purple-600 text-sm transition-colors">Privacy</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Bottom Section -->
+            <div class="border-t border-gray-200 mt-8 pt-8 text-center">
+                <p class="text-gray-500 text-sm">&copy; 2025 PrettiOps. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- JavaScript -->
+    <script>
+        function toggleBilling() {
+            const toggle = document.getElementById('billingToggle');
+            const monthlyPrices = document.querySelectorAll('.monthly-price');
+            const yearlyPrices = document.querySelectorAll('.yearly-price');
+            const yearlySavings = document.querySelectorAll('.yearly-savings');
+            
+            if (toggle.checked) {
+                // Show yearly prices
+                monthlyPrices.forEach(el => el.classList.add('hidden'));
+                yearlyPrices.forEach(el => el.classList.remove('hidden'));
+                yearlySavings.forEach(el => el.classList.remove('hidden'));
+            } else {
+                // Show monthly prices
+                monthlyPrices.forEach(el => el.classList.remove('hidden'));
+                yearlyPrices.forEach(el => el.classList.add('hidden'));
+                yearlySavings.forEach(el => el.classList.add('hidden'));
+            }
+        }
+        
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('PrettiOps pricing page loaded successfully!');
+        });
+    </script>
+</body>
+</html>

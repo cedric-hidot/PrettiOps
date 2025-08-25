@@ -50,11 +50,11 @@
   }
 ]) %}
 
-<section class="py-20 bg-gradient-to-br from-gray-50 to-white relative overflow-hidden">
+<section class="glass-section relative overflow-hidden">
   <!-- Background Elements -->
   <div class="absolute inset-0 bg-noise-light opacity-30 pointer-events-none"></div>
   
-  <div class="max-w-7xl mx-auto px-6">
+  <div class="glass-container">
     <!-- Section Header -->
     <div class="text-center mb-16">
       <div class="tt-label-tag-group mb-6">
@@ -63,12 +63,12 @@
         </div>
       </div>
       
-      <h2 class="heading-large text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+      <h2 class="glass-title h1 mb-6">
         Everything you need for
-        <span class="text-gradient-primary">professional code sharing</span>
+        <span style="color: var(--glass-accent);">professional code sharing</span>
       </h2>
       
-      <p class="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+      <p class="glass-text lead max-w-3xl mx-auto leading-relaxed">
         PrettiOps combines powerful features with beautiful design to transform 
         how you share and present code in your technical communications.
       </p>
@@ -76,14 +76,14 @@
 
     <!-- Feature Cards Grid -->
     <div 
-      class="tt-feature-list grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+      class="glass-grid cols-3"
       data-controller="feature-card"
       data-feature-card-reveal-on-scroll-value="true"
       data-feature-card-animation-delay-value="150"
     >
       {% for feature in features %}
         <div 
-          class="tt-feature-card group cursor-pointer"
+          class="glass-feature-card group cursor-pointer"
           data-feature-card-target="card"
           data-index="{{ loop.index0 }}"
           tabindex="0"
@@ -102,7 +102,7 @@
 
           <!-- Feature Icon -->
           <div 
-            class="tt-feature-icon w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg transform transition-transform duration-300 group-hover:scale-110"
+            class="glass-icon w-16 h-16 mx-auto mb-6 transform transition-transform duration-300 group-hover:scale-110"
             data-feature-card-target="icon"
           >
             {% if feature.icon == 'code' %}
@@ -138,12 +138,12 @@
           <div class="tt-feature-content" data-feature-card-target="content">
             <h3 
               id="feature-{{ loop.index }}-title"
-              class="heading-small text-xl font-semibold text-gray-900 mb-4 group-hover:text-purple-700 transition-colors duration-300"
+              class="glass-title h3 mb-4 group-hover:text-purple-700 transition-colors duration-300"
             >
               {{ feature.title }}
             </h3>
             
-            <p class="text-gray-600 leading-relaxed mb-6">
+            <p class="glass-text leading-relaxed mb-6">
               {{ feature.description }}
             </p>
 
@@ -179,8 +179,8 @@
     <div class="text-center mt-16">
       <div class="inline-flex items-center gap-4">
         <a 
-          href="{{ path('app_register') }}" 
-          class="tt-button btn-primary px-8 py-3 rounded-xl font-semibold transition-all duration-300 hover:shadow-glow-purple"
+          href="{{ path('register') }}" 
+          class="glass-btn primary large inline-flex items-center justify-center gap-2 transition-all duration-300"
         >
           <div class="btn-content">Get Started Free</div>
           <div class="btn-primary-arrow">→</div>
@@ -188,7 +188,7 @@
         
         <a 
           href="{{ path('features') }}" 
-          class="tt-button btn-secondary px-8 py-3 rounded-xl font-semibold bg-white border border-gray-200 text-gray-700 hover:border-purple-200 hover:text-purple-700 transition-all duration-300"
+          class="glass-btn large inline-flex items-center justify-center gap-2 transition-all duration-300"
         >
           View All Features
         </a>

@@ -1,3 +1,4 @@
+import './bootstrap.js';
 /*
  * Welcome to your app's main JavaScript file!
  *
@@ -11,21 +12,21 @@ import './styles/app.scss';
 // Import design system CSS variables
 // import '../../design/design-system/tokens.css'; // TODO: Add this file or remove import
 
-// Start the Stimulus application
-import { startStimulusApp } from '@symfony/stimulus-bridge';
-
-export const app = startStimulusApp(require.context(
-    '@symfony/stimulus-bridge/lazy-controller-loader!./controllers',
-    true,
-    /\.(j|t)sx?$/
-));
+// Stimulus is already started in bootstrap.js, just import it here
+import { app } from './bootstrap.js';
 
 // Import Turbo for SPA-like navigation
 import * as Turbo from '@hotwired/turbo';
 
 // Configure Turbo
 Turbo.session.drive = true;
-Turbo.setProgressBarDelay(100);
+// Use modern configuration for progress bar delay
+if (Turbo.config && Turbo.config.progressBar) {
+    Turbo.config.progressBar.delay = 100;
+} else {
+    // Fallback for older versions
+    Turbo.setProgressBarDelay && Turbo.setProgressBarDelay(100);
+}
 
 // Global JavaScript utilities
 import './js/utils/error-boundary.js';

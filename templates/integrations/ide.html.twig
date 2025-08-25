@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}IDE Integration - PrettiOps{% endblock %}
+
+{% block body %}
+<div class="container mx-auto px-4 py-8">
+    <div class="mb-8">
+        <h1 class="text-3xl font-bold text-gray-900 mb-2">IDE Integration</h1>
+        <p class="text-gray-600">Export code snippets to your favorite IDEs and editors.</p>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-white border border-gray-200 rounded-xl shadow-sm p-6">
+            <h3 class="text-xl font-semibold mb-4">VS Code</h3>
+            <p class="text-gray-600 mb-4">Export snippets as VS Code snippets or live templates.</p>
+            <button class="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                Export to VS Code
+            </button>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-xl shadow-sm p-6">
+            <h3 class="text-xl font-semibold mb-4">WebStorm/PhpStorm</h3>
+            <p class="text-gray-600 mb-4">Export as JetBrains live templates.</p>
+            <button class="w-full px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
+                Export to WebStorm
+            </button>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-xl shadow-sm p-6">
+            <h3 class="text-xl font-semibold mb-4">Sublime Text</h3>
+            <p class="text-gray-600 mb-4">Export as Sublime Text snippets.</p>
+            <button class="w-full px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors">
+                Export to Sublime
+            </button>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-xl shadow-sm p-6">
+            <h3 class="text-xl font-semibold mb-4">Generic Export</h3>
+            <p class="text-gray-600 mb-4">Download as plain text or formatted files.</p>
+            <button class="w-full px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors">
+                Download Files
+            </button>
+        </div>
+    </div>
+</div>
+{% endblock %}

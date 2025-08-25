@@ -1,0 +1,305 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ snippet.title|default('New Snippet') }} - Code Editor - PrettiOps{% endblock %}
+{% block description %}Create and edit beautiful code snippets with syntax highlighting and real-time email preview{% endblock %}
+
+{% block body_class %}editor-page-new{% endblock %}
+{% block body_controllers %}codemirror-editor snippet toolbar theme{% endblock %}
+
+{# Hide the global navigation since we have our own editor header #}
+{% set hide_navigation = true %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('editor') }}
+{% endblock %}
+
+{% block body %}
+<!-- Disable Turbo completely for this page -->
+<meta name="turbo-visit-control" content="disable">
+<div class="editor-layout" data-controller="codemirror-editor" 
+     data-turbo-permanent="true"
+     data-turbo-cache="false"
+     data-codemirror-editor-snippet-id-value="{{ snippet.id|default('') }}" 
+     data-codemirror-editor-language-value="{{ snippet.language|default('javascript') }}" 
+     data-codemirror-editor-theme-value="dark" 
+     data-codemirror-editor-content-value="{{ snippet.content|default('') }}" 
+     data-codemirror-editor-auto-save-value="false">
+
+    <!-- Header with Navigation and Controls -->
+    <header class="editor-header">
+        <div class="header-content">
+            <!-- Brand -->
+            <div class="brand">
+                <a href="{{ path('app_dashboard') }}" class="brand-link">
+                    <div class="brand-icon">P</div>
+                    <span class="brand-text">PrettiOps</span>
+                </a>
+            </div>
+
+            <!-- Center Navigation -->
+            <nav class="header-nav">
+                <a href="{{ path('app_dashboard') }}" class="nav-link">Dashboard</a>
+                <a href="#" class="nav-link active">Editor</a>
+                <a href="#" class="nav-link">Analytics</a>
+                <a href="#" class="nav-link">Settings</a>
+            </nav>
+
+            <!-- Actions -->
+            <div class="header-actions">
+                <button class="btn-secondary btn-icon" title="Settings">
+                    <svg class="icon" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/>
+                        <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/>
+                    </svg>
+                </button>
+                <button class="btn-primary" data-action="click->codemirror-editor#save">
+                    <svg class="icon" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M7.707 10.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 11.586V6a1 1 0 10-2 0v5.586l-1.293-1.293z"/>
+                        <path d="M3 5a2 2 0 012-2h1a1 1 0 010 2H5v11a2 2 0 002 2h6a2 2 0 002-2V5h-1a1 1 0 110-2h1a2 2 0 012 2v12a2 2 0 01-2 2H5a2 2 0 01-2-2V5z"/>
+                    </svg>
+                    Save Snippet
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Editor Content -->
+    <main class="editor-main">
+        
+        <!-- Editor Controls Panel -->
+        <div class="editor-controls-panel">
+            <div class="controls-content">
+                <!-- Snippet Title -->
+                <div class="control-group">
+                    <label class="control-label">Snippet Title</label>
+                    <input type="text" 
+                           class="control-input" 
+                           placeholder="Untitled Snippet"
+                           value="{{ snippet.title|default('Untitled Snippet') }}"
+                           data-controller="auto-save"
+                           data-action="input->auto-save#save"
+                           data-auto-save-field-value="title"
+                           data-auto-save-snippet-id-value="{{ snippet.id|default('') }}">
+                </div>
+
+                <!-- Language Selection -->
+                <div class="control-group">
+                    <label class="control-label">Programming Language</label>
+                    <div class="control-select-wrapper">
+                        <select class="control-select" 
+                                data-codemirror-editor-target="languageSelect"
+                                data-action="change->codemirror-editor#updateLanguage">
+                            {% for language in supported_languages %}
+                                <option value="{{ language.value }}" 
+                                        {% if snippet.language|default('javascript') == language.value %}selected{% endif %}>
+                                    {{ language.label }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                        <svg class="select-icon" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Theme Selection -->
+                <div class="control-group">
+                    <label class="control-label">Editor Theme</label>
+                    <div class="theme-selector-wrapper">
+                        <div class="theme-scroll-container">
+                            {% for theme in editor_themes %}
+                                <button class="theme-option {{ theme.value == 'dark' ? 'active' : '' }}" 
+                                        data-theme="{{ theme.value }}"
+                                        data-action="click->codemirror-editor#updateTheme"
+                                        title="{{ theme.label }}">
+                                    <div class="theme-preview theme-preview--{{ theme.value }}"></div>
+                                    <span class="theme-name">{{ theme.label }}</span>
+                                </button>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Security & Settings -->
+                <div class="control-group">
+                    <div class="security-toggle">
+                        <div class="security-content">
+                            <div class="security-icon">
+                                <svg class="icon" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                            <div class="security-text">
+                                <h4>Security Mode</h4>
+                                <p>Auto-hide sensitive data like API keys and tokens</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" 
+                                       class="toggle-input"
+                                       data-codemirror-editor-target="securityToggle"
+                                       data-action="change->codemirror-editor#updateSecurity"
+                                       {% if snippet.securityEnabled|default(true) %}checked{% endif %}>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Code Editor and Preview Split -->
+        <div class="editor-content-area">
+            
+            <!-- Tab Navigation -->
+            <div class="tab-navigation">
+                <button class="tab-button active" data-tab="editor" data-action="click->codemirror-editor#switchTab">
+                    <svg class="icon" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/>
+                    </svg>
+                    Code Editor
+                </button>
+                <button class="tab-button" data-tab="preview" data-action="click->codemirror-editor#switchTab">
+                    <svg class="icon" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M2 5a2 2 0 012-2h8a2 2 0 012 2v10a2 2 0 002 2H4a2 2 0 01-2-2V5zm3 1h6v4H5V6zm6 6H5v2h6v-2z" clip-rule="evenodd"/>
+                        <path d="M15 7h1a2 2 0 012 2v5.5a1.5 1.5 0 01-3 0V9a1 1 0 00-1-1h-1V7z"/>
+                    </svg>
+                    Email Preview
+                </button>
+            </div>
+
+            <!-- Split View Container -->
+            <div class="split-view-container">
+                
+                <!-- Left Panel - Code Editor -->
+                <div class="editor-panel" data-codemirror-editor-target="editorPanel">
+                    <div class="panel-header">
+                        <div class="panel-title">
+                            <span class="language-badge" data-codemirror-editor-target="languageDisplay">
+                                {{ snippet.language|default('JavaScript')|title }}
+                            </span>
+                            <div class="editor-stats">
+                                <span class="stat" data-codemirror-editor-target="lineCount">Lines: {{ snippet.lineCount|default(0) }}</span>
+                                <span class="stat" data-codemirror-editor-target="charCount">Characters: {{ snippet ? (snippet.content|length) : 0 }}</span>
+                            </div>
+                        </div>
+                        <div class="panel-actions">
+                            <button class="btn-icon" title="Format Code" data-action="click->codemirror-editor#format">
+                                <svg class="icon" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/>
+                                </svg>
+                            </button>
+                            <button class="btn-icon" title="Validate Syntax" data-action="click->codemirror-editor#validate">
+                                <svg class="icon" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="panel-content">
+                        <div class="code-editor-container" data-codemirror-editor-target="container">
+                            <div class="codemirror-editor-placeholder" data-codemirror-editor-target="editor"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resize Handle -->
+                <div class="resize-handle" data-codemirror-editor-target="resizeHandle"></div>
+
+                <!-- Right Panel - Email Preview -->
+                <div class="preview-panel" data-codemirror-editor-target="previewPanel">
+                    <div class="panel-header">
+                        <div class="panel-title">
+                            <span class="preview-badge">Email Preview</span>
+                        </div>
+                        <div class="panel-actions">
+                            <button class="btn-icon" title="Send Email" data-action="click->codemirror-editor#send">
+                                <svg class="icon" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+                                    <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+                                </svg>
+                            </button>
+                            <button class="btn-icon" title="Share Link" data-action="click->codemirror-editor#share">
+                                <svg class="icon" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M15 8a3 3 0 10-2.977-2.63l-4.94 2.47a3 3 0 100 4.319l4.94 2.47a3 3 0 10.895-1.789l-4.94-2.47a3.027 3.027 0 000-.74l4.94-2.47C13.456 7.68 14.19 8 15 8z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="panel-content">
+                        <div class="email-preview-container" data-codemirror-editor-target="previewContent">
+                            <!-- Email Preview Content -->
+                            <div class="email-card">
+                                <div class="email-header">
+                                    <div class="email-meta">
+                                        <div class="email-from">
+                                            <strong>From:</strong> {{ app.user.email }}
+                                        </div>
+                                        <div class="email-to">
+                                            <strong>To:</strong> <span data-codemirror-editor-target="emailTo">team@company.com</span>
+                                        </div>
+                                        <div class="email-subject">
+                                            <strong>Subject:</strong> <span data-codemirror-editor-target="emailSubject">{{ snippet.title|default('Code Snippet') }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="email-body">
+                                    <div class="email-text">
+                                        <p>Hi team,</p>
+                                        <p>I've created a code snippet that I think could be useful. Take a look and let me know your thoughts:</p>
+                                    </div>
+                                    
+                                    <div class="snippet-preview-card" data-codemirror-editor-target="emailSnippetPreview">
+                                        <!-- Snippet preview will be rendered here -->
+                                        <div class="snippet-placeholder">
+                                            <svg class="placeholder-icon" viewBox="0 0 20 20" fill="currentColor">
+                                                <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/>
+                                            </svg>
+                                            <p>Start typing to see your code preview</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="email-text">
+                                        <p>Looking forward to your feedback!</p>
+                                        <p>Best,<br>{{ app.user.fullName }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('editor') }}
+    
+    <script>
+        // Completely disable Turbo for this page to prevent DOM conflicts
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof Turbo !== 'undefined') {
+                Turbo.session.drive = false;
+                // Also disable Turbo completely
+                if (Turbo.session && Turbo.session.adapter) {
+                    Turbo.session.adapter.enabled = false;
+                }
+            }
+        });
+        
+        // Initialize CodeMirror editor configuration
+        window.editorConfig = {
+            snippetId: {{ snippet.id|default('null') }},
+            language: '{{ snippet.language|default('javascript') }}',
+            theme: 'dark',
+            autoSave: false,
+            securityEnabled: {{ snippet.securityEnabled|default(true) ? 'true' : 'false' }},
+            content: {{ snippet.content|default('')|json_encode|raw }},
+            fontSize: 14,
+            fontFamily: "'Fira Code', 'SF Mono', 'Monaco', 'Consolas', monospace"
+        };
+    </script>
+{% endblock %}

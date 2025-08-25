@@ -76,15 +76,19 @@ export default class extends Controller {
         this.isOpen = true
         
         if (this.hasMenuTarget) {
-            // Make menu visible
-            this.menuTarget.classList.remove('opacity-0', 'invisible')
+            // Make menu visible immediately for clickability
+            this.menuTarget.classList.remove('opacity-0', 'invisible', 'hidden')
             this.menuTarget.classList.add('opacity-100', 'visible')
+            this.menuTarget.style.display = 'block'
+            this.menuTarget.style.pointerEvents = 'auto'
             
             // Add entrance animation
             this.menuTarget.style.transform = 'translateX(-50%) translateY(-10px)'
+            this.menuTarget.style.opacity = '0'
             
             requestAnimationFrame(() => {
                 this.menuTarget.style.transform = 'translateX(-50%) translateY(0)'
+                this.menuTarget.style.opacity = '1'
                 this.menuTarget.style.transition = `all ${this.animationDurationValue}ms cubic-bezier(0.4, 0, 0.2, 1)`
             })
         }
@@ -111,11 +115,14 @@ export default class extends Controller {
         if (this.hasMenuTarget) {
             // Add exit animation
             this.menuTarget.style.transform = 'translateX(-50%) translateY(-10px)'
+            this.menuTarget.style.opacity = '0'
             this.menuTarget.style.transition = `all ${this.animationDurationValue}ms cubic-bezier(0.4, 0, 0.2, 1)`
             
             setTimeout(() => {
                 this.menuTarget.classList.remove('opacity-100', 'visible')
-                this.menuTarget.classList.add('opacity-0', 'invisible')
+                this.menuTarget.classList.add('opacity-0', 'invisible', 'hidden')
+                this.menuTarget.style.display = 'none'
+                this.menuTarget.style.pointerEvents = 'none'
             }, this.animationDurationValue)
         }
         

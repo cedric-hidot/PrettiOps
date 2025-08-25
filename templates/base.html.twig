@@ -15,7 +15,7 @@
     <meta property="og:description" content="{% block og_description %}{{ block('description') }}{% endblock %}">
     <meta property="og:type" content="{% block og_type %}website{% endblock %}">
     <meta property="og:url" content="{% block og_url %}{{ app.request.uri }}{% endblock %}">
-    <meta property="og:image" content="{% block og_image %}{{ absolute_url(asset('images/og-image.png')) }}{% endblock %}">
+    <meta property="og:image" content="{% block og_image %}{% endblock %}">
     <meta property="og:site_name" content="PrettiOps">
     <meta property="og:locale" content="{{ app.request.locale|default('en_US') }}">
     
@@ -27,6 +27,7 @@
     
     {# PWA Meta Tags #}
     <meta name="theme-color" content="#6f00ff" id="theme-color-meta">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="PrettiOps">
@@ -35,15 +36,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     
-    {# Favicon #}
-    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/favicon-32x32.png') }}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/favicon-16x16.png') }}">
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('images/apple-touch-icon.png') }}">
+    {# Favicon - icons disabled to avoid 404 errors #}
     <link rel="manifest" href="{{ asset('manifest.json') }}">
     
-    {# Fonts - Using design system fonts #}
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Inter:wght@400;500;600&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+    {# Enhanced Typography - PrettiOps Design System #}
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@300;400;500;600&display=swap" rel="stylesheet">
     
     {# CSS Assets #}
     {% block stylesheets %}
@@ -77,79 +74,35 @@
         }
         </script>
     {% endblock %}
-</head>
-<body 
-    class="font-body text-gray-700 bg-gray-50 min-h-screen flex flex-col {% block body_class %}{% endblock %}"
-    data-controller="{% block body_controllers %}theme{% endblock %}"
-    {% block body_attributes %}{% endblock %}
->
-    {# Skip to main content link for accessibility #}
-    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 z-50 bg-purple-600 text-white px-4 py-2 rounded-md skip-to-main">
-        Skip to main content
-    </a>
     
-    {# Background pattern (subtle grid) #}
-    <div class="fixed inset-0 z-0 opacity-20 pointer-events-none">
-        <div class="w-full h-full" style="background-image: linear-gradient(rgba(111, 0, 255, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(111, 0, 255, 0.1) 1px, transparent 1px); background-size: 20px 20px;"></div>
-    </div>
-    
-    {# Navigation #}
-    {% block navigation %}
-        {% if not hide_navigation|default(false) %}
-            {% include 'components/_navbar.html.twig' %}
-        {% endif %}
-    {% endblock %}
-    
-    {# Main Content #}
-    <main id="main-content" class="flex-1 relative z-10 {% block main_class %}{% endblock %}" role="main">
-        {# Flash Messages #}
-        {% if not hide_flash_messages|default(false) %}
-            {% include 'components/_flash_messages.html.twig' %}
-        {% endif %}
-        
-        {# Page Content #}
-        {% block content %}
-            {% block body %}{% endblock %}
-        {% endblock %}
-    </main>
-    
-    {# Footer #}
-    {% block footer %}
-        {% if not hide_footer|default(false) %}
-            {% include 'components/_footer.html.twig' %}
-        {% endif %}
-    {% endblock %}
-    
-    {# Loading Overlay #}
-    <div id="loading-overlay" class="hidden fixed inset-0 z-50 bg-gray-900 bg-opacity-50 flex items-center justify-center">
-        <div class="bg-white rounded-lg p-6 flex items-center gap-3">
-            <div class="loading-spinner"></div>
-            <span class="text-gray-700 font-medium">Loading...</span>
-        </div>
-    </div>
-    
-    {# JavaScript Assets #}
-    {% block javascripts %}
+    {# JavaScript Assets - Load in head for better performance #}
+    {% block head_scripts %}
         {{ encore_entry_script_tags('app') }}
-        {% if block('page_scripts') is defined %}
-            {% block page_scripts %}{% endblock %}
-        {% endif %}
     {% endblock %}
     
-    {# Turbo Drive Configuration #}
+    {# Turbo Drive Configuration - Moved to head for better performance #}
     <script>
         // Configure Turbo for better UX
         document.addEventListener('turbo:before-visit', function() {
-            document.getElementById('loading-overlay').classList.remove('hidden');
+            const loadingOverlay = document.getElementById('loading-overlay');
+            if (loadingOverlay) {
+                loadingOverlay.classList.remove('hidden');
+            }
         });
         
         document.addEventListener('turbo:load', function() {
-            document.getElementById('loading-overlay').classList.add('hidden');
+            const loadingOverlay = document.getElementById('loading-overlay');
+            if (loadingOverlay) {
+                loadingOverlay.classList.add('hidden');
+            }
         });
         
         // Error handling
         document.addEventListener('turbo:fetch-request-error', function(event) {
-            document.getElementById('loading-overlay').classList.add('hidden');
+            const loadingOverlay = document.getElementById('loading-overlay');
+            if (loadingOverlay) {
+                loadingOverlay.classList.add('hidden');
+            }
             
             if (window.notificationManager) {
                 window.notificationManager.error('Network error occurred. Please check your connection.');
@@ -177,6 +130,81 @@
             }
         });
     </script>
+</head>
+<body 
+    class="font-body text-gray-700 bg-gray-50 min-h-screen flex flex-col {% block body_class %}{% endblock %}"
+    data-controller="{% block body_controllers %}theme{% endblock %}"
+    {% block body_attributes %}{% endblock %}
+>
+    {# Skip links for accessibility - Hidden by default, visible on focus #}
+    <div class="sr-only focus-within:not-sr-only">
+        <a href="#main-content" class="focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-purple-600 focus:text-white focus:px-4 focus:py-2 focus:rounded-md">
+            Skip to main content
+        </a>
+        <a href="#navigation" class="focus:absolute focus:top-4 focus:left-48 focus:z-50 focus:bg-purple-600 focus:text-white focus:px-4 focus:py-2 focus:rounded-md">
+            Skip to navigation
+        </a>
+    </div>
+    
+    {# Background pattern (subtle grid) #}
+    <div class="fixed inset-0 z-0 opacity-20 pointer-events-none">
+        <div class="w-full h-full" style="background-image: linear-gradient(rgba(111, 0, 255, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(111, 0, 255, 0.1) 1px, transparent 1px); background-size: 20px 20px;"></div>
+    </div>
+    
+    {# Navigation #}
+    {% block navigation %}
+        {% if not hide_navigation|default(false) %}
+            {% include 'components/_navbar.html.twig' %}
+        {% endif %}
+    {% endblock %}
+    
+    {# Notification System #}
+    <div 
+        id="notification-manager" 
+        class="fixed top-4 right-4 z-50"
+        data-controller="notification"
+        data-notification-position-value="top-right"
+        data-notification-max-notifications-value="5"
+        data-notification-auto-hide-delay-value="4000"
+        data-notification-pause-on-hover-value="true"
+    >
+        <div data-notification-target="container" aria-live="polite" aria-label="Notifications"></div>
+    </div>
+    
+    {# Main Content #}
+    <main id="main-content" class="flex-1 relative z-10 {% if not hide_navigation|default(false) %}pt-[72px]{% endif %} {% block main_class %}{% endblock %}" role="main">
+        {# Flash Messages #}
+        {% if not hide_flash_messages|default(false) %}
+            {% include 'components/_flash_messages.html.twig' %}
+        {% endif %}
+        
+        {# Page Content #}
+        {% block content %}
+            {% block body %}{% endblock %}
+        {% endblock %}
+    </main>
+    
+    {# Footer #}
+    {% block footer %}
+        {% if not hide_footer|default(false) %}
+            {% include 'components/_footer.html.twig' %}
+        {% endif %}
+    {% endblock %}
+    
+    {# Loading Overlay #}
+    <div id="loading-overlay" class="hidden fixed inset-0 z-50 bg-gray-900 bg-opacity-50 flex items-center justify-center">
+        <div class="bg-white rounded-lg p-6 flex items-center gap-3">
+            <div class="loading-spinner"></div>
+            <span class="text-gray-700 font-medium">Loading...</span>
+        </div>
+    </div>
+    
+    {# JavaScript Assets for page-specific scripts #}
+    {% block javascripts %}
+        {% if block('page_scripts') is defined %}
+            {% block page_scripts %}{% endblock %}
+        {% endif %}
+    {% endblock %}
     
     {# Analytics and tracking #}
     {% block analytics %}

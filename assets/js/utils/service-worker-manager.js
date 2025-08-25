@@ -65,7 +65,7 @@ class ServiceWorkerManager {
    *   notifyOnUpdate: false
    * });
    */
-  async register(swUrl = '/build/service-worker.js', options = {}) {
+  async register(swUrl = '/service-worker.js', options = {}) {
     if (!('serviceWorker' in navigator)) {
       console.warn('Service Worker not supported');
       return null;
